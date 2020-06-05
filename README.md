@@ -7,3 +7,7 @@
  bundle install
  rails db:setup
  rails s
+
+#Test Framework Setup
+ bundle exec guard
+

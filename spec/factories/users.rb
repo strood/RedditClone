@@ -13,8 +13,6 @@
 FactoryBot.define do
   factory :user do
     username { "TestUsername" }
-    session_token { "tstseshtoken" }
-    password_digest { "tstpassdig" }
-    admin { false }
+    password { "good_pass" }
   end
 end
