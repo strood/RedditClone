@@ -11,6 +11,7 @@
 #  updated_at      :datetime         not null
 #
 require 'rails_helper'
+require 'rspec/rails'
 
 RSpec.describe User, type: :model do
   # pending "add some examples to (or delete) #{__FILE__}"

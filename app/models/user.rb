@@ -19,6 +19,8 @@ class User < ApplicationRecord
 
     validates :password, length: { minimum:6, allow_nil: true }
 
+    after_initialize :ensure_session_token
+
 
     # Password setter with BCrpyt, and set as digest. Can be verifed for length
     # and will be passed as nil
@@ -29,13 +31,24 @@ class User < ApplicationRecord
 
 
     # Checkec password with BCrypt "new"check on its built on is_password method.
-    def self.is_password?(password)
+    def is_password?(password)
       BCrypt::Password.new(self.password_digest).is_password?(password)
     end
 
     def User.find_by_credentials(username, password)
       # return nil unless
+
     end
 
+
+    def self.generate_session_token
+      SecureRandom::urlsafe_base64(16)
+    end
+
+    private
+
+    def ensure_session_token
+      
+    end
 
 end
