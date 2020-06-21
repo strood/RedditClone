@@ -15,8 +15,9 @@ class User < ApplicationRecord
 
     validates :username, presence: true, uniqueness: true
     validates :password_digest, presence: { message: 'Password can\'t be blank'}
-
-    validates :session_token, :password_digest, :session_token, :admin, presence: true
+    validates :session_token, :password_digest, :session_token, presence: true
+    # Need to allow blank otherwise false doesnt work as default.
+    validates :admin, presence: true, allow_blank: true
 
     validates :password, length: { minimum:6, allow_nil: true }
 

@@ -7,16 +7,17 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(params[:id])
+    @user = User.find(params[:id])
     render :show
   end
 
 
   def create
-    @user = User.new(user_params, admin: false)
-    # @user.admin = false
+    @user = User.new(user_params)
+    @user.admin = false
 
     if @user.save!
+      # @user.update_attribute(:admin, false)
       login!(@user)
       flash[:notice] = ["Hello #{@user.username}, welcome to Reddit"]
       redirect_to user_url(@user)
@@ -25,6 +26,9 @@ class UsersController < ApplicationController
       redirect_to new_user_url
     end
   end
+
+  # TODO: make update if we want to have a character edit page, but not
+  #  yet sold on that idea.
 
   private
 
