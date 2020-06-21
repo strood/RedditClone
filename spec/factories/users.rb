@@ -6,13 +6,15 @@
 #  username        :string           not null
 #  session_token   :string           not null
 #  password_digest :string           not null
-#  admin           :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  admin           :boolean          default(FALSE)
 #
 FactoryBot.define do
   factory :user do
     username { "TestUsername" }
     password { "good_pass" }
+    admin { false }
   end
+
 end

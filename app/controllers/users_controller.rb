@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  before_action :require_current_user!, except: [:create, :new]
 
   def new
     @user = User.new
@@ -13,9 +13,11 @@ class UsersController < ApplicationController
 
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params, admin: false)
+    # @user.admin = false
 
     if @user.save!
+      login!(@user)
       flash[:notice] = ["Hello #{@user.username}, welcome to Reddit"]
       redirect_to user_url(@user)
     else
@@ -29,4 +31,6 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username, :password)
   end
+
+  # TODO: Write filter method to make sure user can only view their own user#show page
 end

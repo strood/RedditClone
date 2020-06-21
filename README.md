@@ -6,6 +6,7 @@
  bundle update
  bundle install
  rails db:setup
+ rails webpacker:install
  rails s
 
 #Test Framework Setup

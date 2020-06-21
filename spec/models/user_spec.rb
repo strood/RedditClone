@@ -6,9 +6,9 @@
 #  username        :string           not null
 #  session_token   :string           not null
 #  password_digest :string           not null
-#  admin           :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  admin           :boolean          default(FALSE)
 #
 require 'rails_helper'
 require 'rspec/rails'
@@ -59,14 +59,14 @@ RSpec.describe User, type: :model do
         expect(user.is_password?('good_pass')).to be true
       end
       it "verifies when password is not correct when compared to digest" do
-        expect(user.is_password('bad_password')).to be false
+        expect(user.is_password?('bad_password')).to be false
       end
     end
 
     # User lookup by username and passwordd, verifies password integrity
     describe 'find_by_credentials' do
       before { user.save! }
-      it 'returns user  when correct info given' do
+      it 'returns user when correct info given' do
         expect(User.find_by_credentials(user.username, user.password))
           .to eq(user)
       end
@@ -76,7 +76,7 @@ RSpec.describe User, type: :model do
       end
 
       it "returns nil if incorrect username given" do
-        expect(User.find_by_credentials('bad_password', user.password)).to eq(nil)
+        expect(User.find_by_credentials('bad_username', "bad_pass")).to eq(nil)
       end
 
     end
