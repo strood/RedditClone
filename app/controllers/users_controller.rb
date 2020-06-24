@@ -13,16 +13,21 @@ class UsersController < ApplicationController
 
 
   def create
+
     @user = User.new(user_params)
     @user.admin = false
-
-    if @user.save!
-      # @user.update_attribute(:admin, false)
-      login!(@user)
-      flash[:notice] = ["Hello #{@user.username}, welcome to Reddit"]
-      redirect_to user_url(@user)
+    if !params[:user][:password].nil? && User.pass_valid?(params[:user][:password])
+      if @user.save!
+        # @user.update_attribute(:admin, false)
+        login!(@user)
+        flash[:notice] = ["Hello #{@user.username}, welcome to Reddit"]
+        redirect_to user_url(@user)
+      else
+        flash[:errors] = ["Invalid credentials, please try again"]
+        redirect_to new_user_url
+      end
     else
-      flash[:errors] = ["Invalid credentials, please try again"]
+      flash[:errors] = ["Invalid password, please try again"]
       redirect_to new_user_url
     end
   end

@@ -32,6 +32,11 @@ class User < ApplicationRecord
       user.is_password?(password) ? user : nil
     end
 
+    # Password validation, can add further checks in here if needed
+    def User.pass_valid?(password)
+      password.length >= 6
+    end
+
     # Password setter with BCrpyt, and set as digest. Can be verifed for length
     # and will be passed as nil
     def password=(password)
@@ -50,7 +55,7 @@ class User < ApplicationRecord
     # Randomize user session and cleanup cookie token so session cant be hijacked
     def reset_session_token
       self.session_token = User.generate_session_token
-      self.save!
+      self.save(validate: false)
       self.session_token
     end
 

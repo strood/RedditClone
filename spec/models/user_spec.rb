@@ -79,5 +79,24 @@ RSpec.describe User, type: :model do
       end
 
     end
+
+    #Reset session token sets a new user session, and returns the new session tokay
+    describe 'reset_session_token' do
+      it 'generates a new session token for the given user' do
+        og_token = user.session_token
+        user.reset_session_token
+        expect(user.session_token == og_token).to eq(false)
+      end
+      it 'returns the newly created session token when called.' do
+        expect(user.reset_session_token).to eq(user.session_token)
+      end
+    end
+
+    describe '.pass_valid?(password)' do
+      it 'verifies a password is at least 6 characters in length' do
+        expect(User.pass_valid?("12345")).to eq(false)
+        expect(User.pass_valid?("123456")).to eq(true)
+      end
+    end
   end
 end
