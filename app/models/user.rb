@@ -19,7 +19,7 @@ class User < ApplicationRecord
     # Need to allow blank otherwise false doesnt work as default.
     validates :admin, presence: true, allow_blank: true
 
-    validates :password, length: { minimum:6, allow_nil: true }
+    validates :password, length: { minimum: 6, allow_nil: true }
 
     after_initialize :ensure_session_token
 

@@ -10,7 +10,9 @@
   </head>
 
   <body>
-    <%= yield :userbar %>
+    <%= render "shared/userbar" %>
+    <%= render "shared/errors" %>
+    <%= render "shared/messages" %>
 
     <%= yield %>
   </body>

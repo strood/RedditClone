@@ -19,4 +19,13 @@ class ApplicationController < ActionController::Base
   def require_current_user!
     redirect_to new_session_url if current_user.nil?
   end
+
+  def require_no_user!
+    redirect_to user_url(current_user) if current_user
+  end
+
+  def require_owning_user!
+    flash[:error] = ['Only able to view your own account page']
+    redirect_to user_url(current_user) if current_user.id != params[:id].to_i
+  end
 end

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :require_current_user!, except: [:create, :new]
+  before_action :require_no_user!, only: [:create, :new]
+  before_action :require_owning_user!, only: [:show]
 
   def new
     @user = User.new
@@ -20,7 +22,7 @@ class UsersController < ApplicationController
       if @user.save!
         # @user.update_attribute(:admin, false)
         login!(@user)
-        flash[:notice] = ["Hello #{@user.username}, welcome to Reddit"]
+        flash[:notice] = ["Hello #{@user.username}, welcome to Raddit"]
         redirect_to user_url(@user)
       else
         flash[:errors] = ["Invalid credentials, please try again"]
@@ -32,9 +34,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # TODO: make update if we want to have a character edit page, but not
-  #  yet sold on that idea.
-
   private
 
   def user_params
@@ -42,4 +41,5 @@ class UsersController < ApplicationController
   end
 
   # TODO: Write filter method to make sure user can only view their own user#show page
+
 end
