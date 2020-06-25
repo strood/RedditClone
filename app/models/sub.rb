@@ -18,9 +18,12 @@ class Sub < ApplicationRecord
     foreign_key: :moderator,
     class_name: :User
 
-  validates_associated :user
+  validates_associated :moderator
 
-  has_many :posts
+  has_many :posts,
+    primary_key: :id,
+    foreign_key: :sub,
+    class_name: :Post,
+    dependent: :destroy
 
-  
 end

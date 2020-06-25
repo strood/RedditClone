@@ -13,6 +13,6 @@ FactoryBot.define do
   factory :sub do
     title { Faker::Creature::Animal.name }
     description { Faker::Lorem.sentence(word_count: 5) }
-    moderator { Faker::Number.within(range: 1..10)}
+    moderator { User.find_by(username: "tuna") }
   end
 end
