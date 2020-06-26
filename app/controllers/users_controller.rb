@@ -40,6 +40,5 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :password)
   end
 
-  # TODO: Write filter method to make sure user can only view their own user#show page
 
 end
