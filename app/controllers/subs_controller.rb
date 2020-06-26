@@ -7,6 +7,7 @@ class SubsController < ApplicationController
 
   def show
     @sub = Sub.find(params[:id])
+
     render :show
   end
 
@@ -17,7 +18,7 @@ class SubsController < ApplicationController
 
   def create
     @sub = Sub.create(sub_params)
-    @sub.moderator = current_user.id
+    @sub.moderator = current_user
 
   if @sub.save!
     flash[:notice] = ["Sub #{@sub.title} successfully created!"]

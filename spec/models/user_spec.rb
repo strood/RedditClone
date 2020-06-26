@@ -38,6 +38,11 @@ RSpec.describe User, type: :model do
 
   # Associations
   # TODO: Test associations once written
+  describe 'associations' do
+    it { should have_many(:comments) } #comments they are writer of
+    it { should have_many(:subs) } #Subs they are the moderator of
+    it { should have_many(:posts) } #posts they are the author of
+  end
 
   # Class Methods
 

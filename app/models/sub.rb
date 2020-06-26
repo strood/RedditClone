@@ -20,10 +20,5 @@ class Sub < ApplicationRecord
 
   validates_associated :moderator
 
-  has_many :posts,
-    primary_key: :id,
-    foreign_key: :sub,
-    class_name: :Post,
-    dependent: :destroy
 
 end

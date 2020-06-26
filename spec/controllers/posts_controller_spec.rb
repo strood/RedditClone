@@ -3,21 +3,10 @@ require 'rails_helper'
 RSpec.describe PostsController, type: :controller do
 
   describe "GET #show" do
-    context "with valid post id in params" do
-
-      it "renders the show page for the given post" do
-        get :show, { params: {id: 1} }
-        expect(response).to have_http_status(200)
-        expect(response).to render_template(:show)
-      end
-    end
-    context "with in1valid post id in params" do
-
-      it "redirects to subs index page" do
-        get :show, { params: { id: -52 }  }
-        expect(response).to have_http_status(302)
-        expect(response).to render_template(:index)
-      end
+    it "renders the show page for the given post" do
+      get :show, { params: {id: Post.first.id } }
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:show)
     end
   end
 
