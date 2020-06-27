@@ -15,7 +15,6 @@ FactoryBot.define do
     title { Faker::Lorem.sentence(word_count: 2) }
     url { Faker::Lorem.characters(number: 10) }
     content { Faker::Lorem.sentence(word_count: 10) }
-    sub { Sub.new(title: "TestSub", description: "Test-sub-description") }
     author { User.find_by(username: "tuna") }
   end
 end

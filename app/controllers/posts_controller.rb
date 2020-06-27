@@ -43,7 +43,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.destroy!
       flash[:notice] = ["Post deleted"]
-      redirect_to sub_url(@post.sub)
+      redirect_to subs_url # TODO Change this to be the destroyed posts sub
     else
       flash[:errors] = ["Unable to delete post"]
       redirect_to post_url(@post)

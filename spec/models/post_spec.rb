@@ -32,8 +32,8 @@ RSpec.describe Post, type: :model do
   # Associations
   describe 'associations' do
     it { should have_many(:comments) }
-    it { should mave_many(:subs) }
     it { should belong_to(:author) }
+    it { should have_many(:subs) }
 
   end
   # Class methods
