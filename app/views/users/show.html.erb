@@ -1,3 +1,23 @@
-<h1><%= @user.username %></h1>
+<h1><%= @user.username %>'s UserPage</h1>
 
-<p>Welcome to your userpage!</p>
+<!-- Will set up a few different features to show up in user pages based on
+      who it is that is viewing the page.
+      ADMIN: a way to toggle user to admin status, (possibly a ban/delete/mute button)
+      The User: if viewing own page, present ways to delete posts, diff post stats
+      Random: base access to view users posts, as we will implement as default-->
+<h2>Owned Subs</h2>
+<ul>
+  <% if !@user.subs.nil? %>
+    <% @user.subs.each do |sub| %>
+    <li>
+      <a href="<%= sub_url(sub) %>">
+        <%= sub.title %>
+      </a>
+    </li>
+    <% end %>
+  <% else %>
+    <li>
+      No subs owned! - <a href="<%= new_sub_url %>">Create One!</a>
+    </li>
+  <% end %>
+</ul>

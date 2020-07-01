@@ -1,0 +1,28 @@
+<h1>Welcome to <%= @sub.title %></h1>
+<h3>
+  <%= @sub.description %>
+</h3>
+<h3>Mod:
+  <%= @sub.user.username  %>
+</h3>
+
+<h2>POSTS:</h2>
+<ul>
+  <% @sub.sub_posts.each do |sub_post| %>
+  <li>
+    <a href="<%= post_url(sub_post) %>">
+      <%= sub_post.title %>
+    </a>
+    <ul>
+      <li>
+        Poster:
+        <a href="<%= user_url(sub_post.author) %>">
+          <%= sub_post.author.username %>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <% end %>
+</ul>
+
+<a href="<%= new_post_url %>">Create New Post</a>

@@ -9,7 +9,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(:posts, :subs).find(params[:id])
+    # @subs = Sub.find_by(moderator: @user.id)
+    # @posts = Post.find_by(author: @user.id)
     render :show
   end
 
@@ -40,6 +42,5 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :password)
   end
 
-  # TODO: Write filter method to make sure user can only view their own user#show page
 
 end

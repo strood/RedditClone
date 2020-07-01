@@ -23,6 +23,19 @@ class User < ApplicationRecord
 
     after_initialize :ensure_session_token
 
+    has_many :subs,
+      primary_key: :id,
+      foreign_key: :user_id,
+      class_name: :Sub
+
+    has_many :posts,
+      primary_key: :id,
+      foreign_key: :user_id,
+      class_name: :Post
+
+    has_many :comments,
+      dependent: :destroy
+
     # (username<str>, passowrd<str>) => User/nil
     # Search for user by indexed username, then verify password
     def User.find_by_credentials(username, password)
@@ -63,6 +76,7 @@ class User < ApplicationRecord
     def self.generate_session_token
       SecureRandom::urlsafe_base64(16)
     end
+
 
     private
 
