@@ -6,7 +6,22 @@
 <h3><%= @post.url %></h3>
 <h3>Content:</h3>
 <p><%= @post.content %></p>
-<h3>Subs:</h3>
+<br>
+<h3>Comments</h3>
+<ul>
+<% @post.comments.each do |comment| %>
+  <li>
+    <%= comment.author %> says:
+    ---------
+    <%= comment.content %>
+  </li>
+<% end %>
+</ul>
+
+<a href="<%= new_post_comment_url(@post.id) %>">Add Comment</a>
+
+<br>
+<h3>Belongs to these subs:</h3>
 <ul>
   <% @post.posted_subs.each do |sub| %>
   <li>
