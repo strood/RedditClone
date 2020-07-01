@@ -1,27 +1,11 @@
 <h1>Post:</h1>
 <h2><%= @post.title %></h2>
-<h4>Author:</h4>
-<h4><%= @post.author.username %></h4>
-<h3>URL:</h3>
-<h3><%= @post.url %></h3>
-<h3>Content:</h3>
-<p><%= @post.content %></p>
-<br>
-<h3>Comments</h3>
-<ul>
-<% @post.comments.each do |comment| %>
-  <li>
-    <%= comment.author.username %> says:
-    <br>
-    <%= comment.content %>
-  </li>
+
+<% if current_user == @post.author %>
+  <a href="<%= edit_post_url(@post) %>">Edit post</a>
 <% end %>
-</ul>
 
-<a href="<%= new_post_comment_url(@post.id) %>">Add Comment</a>
-
-<br>
-<h3>Belongs to these subs:</h3>
+<h3>Posted in:</h3>
 <ul>
   <% @post.posted_subs.each do |sub| %>
   <li>
@@ -31,3 +15,41 @@
   </li>
   <% end %>
 </ul>
+
+<h4>Author:</h4>
+<h4>
+  <a href="<%= user_url(@post.author) %>">
+    <%= @post.author.username %>
+  </a>
+</h4>
+
+<h3>URL:</h3>
+<h3><%= @post.url %></h3>
+
+<h3>Content:</h3>
+<p><%= @post.content %></p>
+
+<h3>Comments</h3>
+<ul>
+  <% @post.comments.where(parent_comment_id: nil).each do |comment| %>
+  <div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
+    <li>
+      <%= comment.author.username %> says:
+      <br>
+      <%= comment.content %> (<%= comment.child_comments.length %>)
+      <br>
+      <a href="<%= comment_url(comment) %>" style="font-size: 12px;">- View comment thread</a>
+
+    </li>
+  </div>
+  <% end %>
+</ul>
+
+<form class="comment_form" action="<%= comments_url %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="comment[post_id]" value="<%= @post.id %>">
+
+  <textarea name="comment[content]" rows="8" cols="80"></textarea>
+
+  <input type="submit" name="" value="Reply">
+</form>

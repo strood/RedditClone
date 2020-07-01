@@ -1,9 +1,13 @@
 <h1>Welcome to <%= @sub.title %></h1>
+<% if current_user == @sub.moderator %>
+  <a href="<%= edit_sub_url(@sub) %>">Edit sub</a>
+<% end %>
+
 <h3>
   <%= @sub.description %>
 </h3>
 <h3>Mod:
-  <%= @sub.user.username  %>
+  <%= @sub.moderator.username  %>
 </h3>
 
 <h2>POSTS:</h2>
