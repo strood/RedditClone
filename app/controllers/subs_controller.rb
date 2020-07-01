@@ -6,8 +6,7 @@ class SubsController < ApplicationController
   end
 
   def show
-    @sub = Sub.find(params[:id])
-
+    @sub = Sub.includes(:sub_posts).find(params[:id])
     render :show
   end
 
@@ -18,7 +17,9 @@ class SubsController < ApplicationController
 
   def create
     @sub = Sub.create(sub_params)
-    @sub.moderator = current_user
+    @sub.user_id = current_user.id
+
+    # TODO:  possibly add an initial post to each new sub? just for fun
 
   if @sub.save!
     flash[:notice] = ["Sub #{@sub.title} successfully created!"]

@@ -25,12 +25,12 @@ class User < ApplicationRecord
 
     has_many :subs,
       primary_key: :id,
-      foreign_key: :moderator,
+      foreign_key: :user_id,
       class_name: :Sub
 
     has_many :posts,
       primary_key: :id,
-      foreign_key: :author,
+      foreign_key: :user_id,
       class_name: :Post
 
     has_many :comments,
@@ -76,6 +76,7 @@ class User < ApplicationRecord
     def self.generate_session_token
       SecureRandom::urlsafe_base64(16)
     end
+
 
     private
 

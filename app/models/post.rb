@@ -6,20 +6,23 @@
 #  title      :string           not null
 #  url        :string
 #  content    :text
-#  author     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :integer          not null
 #
 class Post < ApplicationRecord
-
-  validates :title, :author, presence: true
+  validates :title, :user_id, presence: true
 
   belongs_to :author,
     primary_key: :id,
-    foreign_key: :author,
+    foreign_key: :user_id,
     class_name: :User
 
-  validates_associated :author
+  has_many :post_subs
+
+  has_many :posted_subs,
+    through: :post_subs,
+    source: :sub
 
   has_many :comments
 
