@@ -22,22 +22,18 @@
       name="post[url]"
       value="<%= @post.url %>">
 
-
     <label for="content">Content *optional*:</label>
     <textarea id="description" name="post[content]" rows="8" cols="60"><%= @post.content %></textarea>
 
     <!-- This will be chanmged out for a checkbox list instead
           or a searchbar/ dropdown that then stacks the selected subs in
           boxes that can be 'X'/closed/removed independently.-->
-    <label for="sub">Sub:</label>
-    <select id="sub" name="post[sub_id]">
-      <option>-- Choose One --</option>
-      <% Sub.all.each do |sub| %>
-        <option value="<%= sub.id %>">
-          <%= h(sub.title) %>
-        </option>
-      <% end %>
-    </select>
+    <label for="subs">Subs:</label>
+    <% Sub.all.each do |sub| %>
+    <input type="checkbox" name="posted_sub_ids[]" value="<%= sub.id %>"
+      <%= sub.sub_post_ids.include?(@post.id) ? "checked" : "" %>>
+      <label for="post[subs]"><%= sub.title %></label>
+    <% end %>
 
     <br>
 

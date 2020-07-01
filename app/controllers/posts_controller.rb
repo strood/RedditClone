@@ -12,31 +12,26 @@ class PostsController < ApplicationController
 
   def create
 
-    @post = Post.create(post_params)
-    @post.user_id = current_user.id
+    @post = Post.new(post_params)
 
+    @post.user_id = current_user.id
+    puts "hi"
+    puts post_params
     # Will need to set this up to call a function that generates all the selected
     #  post_subs on the post creation page, for now, just the one
-    @post_sub = PostSub.new(sub_id: params[:post][:sub_id])
+    # TO DO THIS USE Post#sub_ids=, will make all changes auto
 
     # puts @post.attributes
 
     # verify post has at least one sub/ can just make sure we make at least one
     #  post sub in the above function once we build it.
-    if !@post_sub.sub_id
-      flash[:errors] = ["You must select at least one sub for your post"]
-      redirect_to new_post_url
-    elsif @post.save!
+
+    if @post.save!
       # now we have a post id to set, and can save our sub posts/ will make this
       # insert on each post sub when we have multiple
-      @post_sub.post_id = @post.id
-      if @post_sub.save!
-        flash[:notice] = ["Post successfully created!"]
-        redirect_to post_url(@post)
-      else
-        flash[:errors] = ["Issue making post_sub, please try again"]
-        redirect_to new_post_url
-      end
+      flash[:notice] = ["Post successfully created!"]
+      redirect_to post_url(@post)
+
     else
       flash[:errors] = ["Invalid credentials, please try again"]
       redirect_to new_post_url
@@ -50,6 +45,9 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
+
+    # This constructs our post_sub objects based on the selected subs in posts creation
+    @post.posted_sub_ids = params[:posted_sub_ids]
     if @post.update(post_params)
       flash[:notice] = ["Sucessfully updated post"]
       redirect_to post_url(@post)
