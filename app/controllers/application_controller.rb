@@ -26,8 +26,26 @@ class ApplicationController < ActionController::Base
     redirect_to user_url(current_user) if current_user
   end
 
-  def require_owning_user!
+  def require_user_is_user!
+    # TODO: Will likely change this to allow admins, and maybe more
     flash[:error] = ['Only able to view your own account page']
     redirect_to user_url(current_user) if current_user.id != params[:id].to_i
+  end
+
+  def require_user_owns_post!
+    flash[:error] = ['Only able to edit your own post!']
+    redirect_to user_url(current_user) if current_user != Post.find(params[:id]).author
+  end
+
+
+  def require_user_owns_sub!
+    flash[:error] = ['Only able to edit your own sub!']
+    redirect_to user_url(current_user) if current_user != Sub.find(params[:id]).moderator
+  end
+
+  def require_user_owns_comment! #Not used atm
+    flash[:error] = ['Only able to edit your own comments!']
+    redirect_to user_url(current_user) if current_user != Comment.find(params[:id]).author
+
   end
 end

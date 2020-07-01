@@ -1,4 +1,6 @@
 class SubsController < ApplicationController
+  before_action :require_current_user!
+  before_action :require_user_owns_sub!, only: [:edit]
 
   def index
     @subs = Sub.all

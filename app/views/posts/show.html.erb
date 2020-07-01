@@ -11,8 +11,8 @@
 <ul>
 <% @post.comments.each do |comment| %>
   <li>
-    <%= comment.author %> says:
-    ---------
+    <%= comment.author.username %> says:
+    <br>
     <%= comment.content %>
   </li>
 <% end %>

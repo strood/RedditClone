@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :require_current_user!
+  before_action :require_user_owns_post!, only: [:edit]
 
   def show
     @post = Post.find(params[:id])
@@ -15,17 +17,10 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     @post.user_id = current_user.id
-    puts "hi"
-    puts post_params
-    # Will need to set this up to call a function that generates all the selected
-    #  post_subs on the post creation page, for now, just the one
-    # TO DO THIS USE Post#sub_ids=, will make all changes auto
 
-    # puts @post.attributes
-
-    # verify post has at least one sub/ can just make sure we make at least one
-    #  post sub in the above function once we build it.
-
+    # Becuase we get additional methods from our association of posts and post_subs
+    #  when post.save gets called, Post.sub_ids= is also called, and our checked
+    #  subs are all created in relation to this post. handling all that for us.
     if @post.save!
       # now we have a post id to set, and can save our sub posts/ will make this
       # insert on each post sub when we have multiple

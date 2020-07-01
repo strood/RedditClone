@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :require_current_user!, except: [:create, :new]
   before_action :require_no_user!, only: [:create, :new]
-  before_action :require_owning_user!, only: [:show]
+  before_action :require_user_is_user!, only: [:show]
 
   def new
     @user = User.new
@@ -10,8 +10,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.includes(:posts, :subs).find(params[:id])
-    # @subs = Sub.find_by(moderator: @user.id)
-    # @posts = Post.find_by(author: @user.id)
     render :show
   end
 
@@ -20,6 +18,7 @@ class UsersController < ApplicationController
 
     @user = User.new(user_params)
     @user.admin = false
+
     if !params[:user][:password].nil? && User.pass_valid?(params[:user][:password])
       if @user.save!
         # @user.update_attribute(:admin, false)
