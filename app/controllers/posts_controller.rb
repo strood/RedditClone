@@ -21,17 +21,25 @@ class PostsController < ApplicationController
     # Becuase we get additional methods from our association of posts and post_subs
     #  when post.save gets called, Post.sub_ids= is also called, and our checked
     #  subs are all created in relation to this post. handling all that for us.
-    if @post.save!
-      # now we have a post id to set, and can save our sub posts/ will make this
-      # insert on each post sub when we have multiple
-      flash[:notice] = ["Post successfully created!"]
-      redirect_to post_url(@post)
+    if posted_sub_params
 
+      if @post.save!
+        # now we have a post id to set, and can save our sub posts/ will make this
+        # insert on each post sub when we have multiple
+        @post.posted_subs = posted_sub_params
+        flash[:notice] = ["Post successfully created!"]
+        redirect_to post_url(@post)
+      else
+        flash[:errors] = ["Invalid credentials, please try again"]
+        redirect_to new_post_url
+      end
     else
-      flash[:errors] = ["Invalid credentials, please try again"]
+      flash[:errors] = ["Post must belong to at least one sub"]
       redirect_to new_post_url
     end
+
   end
+
 
   def edit
     @post = Post.find(params[:id])
@@ -40,15 +48,19 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-
-    # This constructs our post_sub objects based on the selected subs in posts creation
-    @post.posted_sub_ids = params[:posted_sub_ids]
-    if @post.update(post_params)
-      flash[:notice] = ["Sucessfully updated post"]
-      redirect_to post_url(@post)
+    unless !params[:posted_sub_ids]
+      # This constructs our post_sub objects based on the selected subs in posts creation
+      @post.posted_sub_ids = params[:posted_sub_ids].each
+      if @post.update(post_params)
+        flash[:notice] = ["Sucessfully updated post"]
+        redirect_to post_url(@post)
+      else
+        flash[:errors] = ["Unable to update post"]
+        redirect_to edit_post_url(@post)
+      end
     else
-      flash[:errors] = ["Unable to update post"]
-      redirect_to post_url(@post)
+      flash[:errors] = ["Post must belong to at least one sub"]
+      redirect_to edit_post_url(@post)
     end
   end
 
@@ -69,4 +81,9 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title, :url, :content)
   end
+
+  def posted_sub_params
+    params.require(:sub).permit(:posted_sub_ids)
+  end
+
 end
