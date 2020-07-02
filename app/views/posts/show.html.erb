@@ -30,20 +30,10 @@
 <p><%= @post.content %></p>
 
 <h3>Comments</h3>
-<ul>
-  <% @post.comments.where(parent_comment_id: nil).each do |comment| %>
-  <div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
-    <li>
-      <%= comment.author.username %> says:
-      <br>
-      <%= comment.content %> (<%= comment.child_comments.length %>)
-      <br>
-      <a href="<%= comment_url(comment) %>" style="font-size: 12px;">- View comment thread</a>
 
-    </li>
-  </div>
-  <% end %>
-</ul>
+<% if @post.comments %>
+  <%= render 'comment', comment:@post.comments.where(parent_comment_id: nil) %>
+<% end %>
 
 <form class="comment_form" action="<%= comments_url %>" method="post">
   <%= auth_token %>
