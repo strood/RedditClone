@@ -12,7 +12,7 @@
 
 <h2>POSTS:</h2>
 <ul>
-  <% @sub.sub_posts.each do |sub_post| %>
+  <% @sub.sub_posts.includes(:author).each do |sub_post| %>
   <li>
     <a href="<%= post_url(sub_post) %>">
       <%= sub_post.title %>

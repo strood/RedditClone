@@ -1,18 +1,17 @@
+<% comments.each do |comment| %>
+  <div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
+    <ul>
+      <li>
 
-<% comment.each do |sub_comment| %>
-<div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
-  <ul>
-    <li>
+        <a href="<%= user_url(comment.author.id) %>"><%= comment.author.username %></a> says:
 
-      <a href="<%= user_url(sub_comment.author.id) %>"><%= sub_comment.author.username %></a> says:
+        <%= comment.content %>
+        - <a href="<%= comment_url(comment.id) %>" style="font-size:12px;">Reply</a>
 
-      <%= sub_comment.content %>
-       - <a href="<%= comment_url(sub_comment) %>" style="font-size:12px;">Reply</a>
-
-      <% if sub_comment.child_comments %>
-        <%= render 'comment', comment:sub_comment.child_comments %>
-        <% end %>
-      </li>
-  </ul>
-</div>
+        <% if @all_comments[comment.id] %>
+          <%= render 'comment', comments:@all_comments[comment.id] %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
 <% end %>

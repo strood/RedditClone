@@ -13,13 +13,7 @@
 
 <ul>
   <% if !@comment.child_comments.nil? %>
-    <% @comment.child_comments.each do |comment| %>
-      <li>
-          <%= comment.content %>
-          <br>
-          -<%= comment.author.username %>
-      </li>
-    <% end %>
+    <%= render 'comment', comment:@comment.child_comments %>
   <% else %>
     <li>
       No child_comments here yet

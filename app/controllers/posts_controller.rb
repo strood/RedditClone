@@ -1,9 +1,10 @@
-class PostsController < ApplicationController
+  class PostsController < ApplicationController
   before_action :require_current_user!
   before_action :require_user_owns_post!, only: [:edit]
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.includes(:author, :posted_subs).find(params[:id])
+    @all_comments = @post.comments_by_parent_id
     render :show
   end
 

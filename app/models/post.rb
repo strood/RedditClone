@@ -26,5 +26,14 @@ class Post < ApplicationRecord
 
   has_many :comments
 
-
+  # Returns a hash of comments, where keys are parent_comment_id, so comments
+  #  are grouped according to comment they belong to, making iteration faster
+  #  so we dont get N + 1 queries when vieiwpong posts w/ many comments
+  def comments_by_parent_id
+    @comment_hash  = Hash.new { |h, k| h[k] = [] }
+    self.comments.each do |comment|
+      @comment_hash[comment.parent_comment_id] << comment
+    end
+    @comment_hash
+  end
 end

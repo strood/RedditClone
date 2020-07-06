@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.includes(:child_comments).find(params[:id])
+    @comment = Comment.includes(:child_comments, :post, :author).find(params[:id])
     render :show
   end
 

@@ -1,0 +1,15 @@
+
+<% comment.includes(:author, :child_comments).each do |sub_comment| %>
+<div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
+  <ul>
+    <li>
+
+      <a href="<%= user_url(sub_comment.author.id) %>"><%= sub_comment.author.username %></a> says:
+
+      <%= sub_comment.content %>
+       - <a href="<%= comment_url(sub_comment) %>" style="font-size:12px;">Reply</a>
+
+      </li>
+  </ul>
+</div>
+<% end %>

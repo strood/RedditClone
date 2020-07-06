@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.includes(:posts, :subs).find(params[:id])
+    @user = User.includes(:subs).find(params[:id])
     render :show
   end
 

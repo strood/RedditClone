@@ -3,7 +3,7 @@ class SubsController < ApplicationController
   before_action :require_user_owns_sub!, only: [:edit]
 
   def index
-    @subs = Sub.all
+    @subs = Sub.includes(:moderator).all
     render :index
   end
 
