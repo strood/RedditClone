@@ -34,5 +34,19 @@ class Comment < ApplicationRecord
     foreign_key: :parent_comment_id,
     class_name: :Comment
 
+  has_many :votes,
+    as: :votable
+
+  def rating
+    @rating = 0
+    self.votes.each do |vote|
+      if vote.value > 0
+        @rating += 1
+      else
+        @rating -= 1
+      end
+    end
+    @rating
+  end
 
 end

@@ -3,7 +3,7 @@
   before_action :require_user_owns_post!, only: [:edit]
 
   def show
-    @post = Post.includes(:author, :posted_subs).find(params[:id])
+    @post = Post.includes(:author, :posted_subs, :votes).find(params[:id])
     @all_comments = @post.comments_by_parent_id
     render :show
   end
@@ -73,6 +73,28 @@
     else
       flash[:errors] = ["Unable to delete post"]
       redirect_to post_url(@post)
+    end
+  end
+
+  def upvote
+    upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Post", votable_id: params[:id])
+    if upvote.save!
+      flash[:notice] = ["Upvote successful!"]
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:errors] = ["Upvote unsuccessful, please try again"]
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
+  def downvote
+    downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Post", votable_id: params[:id])
+    if downvote.save!
+      flash[:notice] = ["Downvote successful!"]
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:notice] = ["Downvote successful!"]
+      redirect_back(fallback_location: root_path)
     end
   end
 

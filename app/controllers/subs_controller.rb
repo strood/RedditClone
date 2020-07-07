@@ -7,36 +7,38 @@ class SubsController < ApplicationController
     render :index
   end
 
+
   def show
-    @sub = Sub.includes(:sub_posts).find(params[:id])
+    @sub = Sub.includes(:moderator).find(params[:id])
     render :show
   end
+
 
   def new
     @sub = Sub.new
     render :new
   end
 
+
   def create
     @sub = Sub.create(sub_params)
     @sub.user_id = current_user.id
 
-    # TODO:  possibly add an initial post to each new sub? just for fun
-
-  if @sub.save!
-    flash[:notice] = ["Sub #{@sub.title} successfully created!"]
-    redirect_to sub_url(@sub)
-  else
-    flash[:errors] = ["Invalid credentials, please try again"]
-    redirect_to new_sub_url
+    if @sub.save!
+      flash[:notice] = ["Sub #{@sub.title} successfully created!"]
+      redirect_to sub_url(@sub)
+    else
+      flash[:errors] = ["Invalid credentials, please try again"]
+      redirect_to new_sub_url
+    end
   end
 
-  end
 
   def edit
     @sub = Sub.find(params[:id])
     render :edit
   end
+
 
   def update
     @sub = Sub.find(params[:id])

@@ -26,6 +26,9 @@ class Post < ApplicationRecord
 
   has_many :comments
 
+  has_many :votes,
+    as: :votable
+
   # Returns a hash of comments, where keys are parent_comment_id, so comments
   #  are grouped according to comment they belong to, making iteration faster
   #  so we dont get N + 1 queries when vieiwpong posts w/ many comments
@@ -36,4 +39,19 @@ class Post < ApplicationRecord
     end
     @comment_hash
   end
+
+  # Calculate a rating for a post based on history of all votes on it.
+  # Not adapted for (hotness) yet
+  def rating
+    @rating = 0
+    self.votes.each do |vote|
+      if vote.value > 0
+        @rating += 1
+      else
+        @rating -= 1
+      end
+    end
+    @rating
+  end
+
 end

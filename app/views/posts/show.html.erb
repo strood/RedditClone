@@ -1,5 +1,19 @@
 <h1>Post:</h1>
-<h2><%= @post.title %></h2>
+<h2><%= @post.title %> -- <%= @post.rating %></h2>
+<ul>
+  <li>
+    <form action="<%= upvote_post_url(@post) %>" method="post">
+      <%= auth_token %>
+      <input type="submit" name="submit" value="Upvote">
+    </form>
+  </li>
+  <li>
+    <form action="<%= downvote_post_url(@post) %>" method="post">
+      <%= auth_token %>
+      <input type="submit" name="submit" value="Downvote">
+    </form>
+  </li>
+</ul>
 
 <% if current_user == @post.author %>
   <a href="<%= edit_post_url(@post) %>">Edit post</a>

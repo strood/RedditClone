@@ -7,6 +7,21 @@
 
         <%= comment.content %>
         - <a href="<%= comment_url(comment.id) %>" style="font-size:12px;">Reply</a>
+        - <%= comment.rating %>
+        <ul>
+          <li>
+            <form action="<%= upvote_comment_url(comment) %>" method="post">
+              <%= auth_token %>
+              <input type="submit" name="submit" value="Upvote">
+            </form>
+          </li>
+          <li>
+            <form action="<%= downvote_comment_url(comment) %>" method="post">
+              <%= auth_token %>
+              <input type="submit" name="submit" value="Downvote">
+            </form>
+          </li>
+        </ul>
 
         <% if @all_comments[comment.id] %>
           <%= render 'comment', comments:@all_comments[comment.id] %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_180329) do
+ActiveRecord::Schema.define(version: 2020_07_07_010037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 2020_07_01_180329) do
     t.boolean "admin", default: false
     t.index ["session_token"], name: "index_users_on_session_token"
     t.index ["username"], name: "index_users_on_username"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "value", null: false
+    t.integer "user_id", null: false
+    t.string "votable_type", null: false
+    t.bigint "votable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
   end
 
 end

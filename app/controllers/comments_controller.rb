@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.includes(:child_comments, :post, :author).find(params[:id])
+    @comment = Comment.includes(:child_comments, :post, :author, :votes).find(params[:id])
     render :show
   end
 
@@ -27,6 +27,28 @@ class CommentsController < ApplicationController
     else
       flash[:errors] = ["Invalid params, please try again"]
       redirect_to new_post_comment_url(@comment.post_id)
+    end
+  end
+
+  def upvote
+    upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Comment", votable_id: params[:id])
+    if upvote.save!
+      flash[:notice] = ["Upvote successful!"]
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:errors] = ["Upvote unsuccessful, please try again"]
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
+  def downvote
+    downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Comment", votable_id: params[:id])
+    if downvote.save!
+      flash[:notice] = ["Downvote successful!"]
+      redirect_back(fallback_location: root_path)
+    else
+      flash[:notice] = ["Downvote successful!"]
+      redirect_back(fallback_location: root_path)
     end
   end
 
