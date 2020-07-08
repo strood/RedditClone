@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
     validates :username, presence: true, uniqueness: true
     validates :password_digest, presence: { message: 'Password can\'t be blank'}
-    validates :session_token, :password_digest, :session_token, presence: true
+    validates :session_token, :password_digest, presence: true
     # Need to allow blank otherwise false doesnt work as default.
     validates :admin, presence: true, allow_blank: true
 
@@ -35,6 +35,11 @@ class User < ApplicationRecord
 
     has_many :comments,
       dependent: :destroy
+
+    has_many :votes,
+      dependent: :destroy
+
+    # TODO: Add associations to user for their likes and sub follows ect.
 
     # (username<str>, passowrd<str>) => User/nil
     # Search for user by indexed username, then verify password

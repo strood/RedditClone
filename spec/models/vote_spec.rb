@@ -13,5 +13,31 @@
 require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # What to test?
+  #   Validations
+  #   Associations
+  #   Class Methods
+  #   Error Messages
+
+  # Subject to be used for testing, made with factorybot. /factories/users.rb
+  subject(:vote) do
+    build(:vote)
+  end
+
+    # Validations
+  describe 'validations' do
+    it { should validate_presence_of(:value) }
+    it { should validate_presence_of(:user_id) }
+    it { should validate_presence_of(:votable_type) }
+    it { should validate_presence_of(:votable_id) }
+  end
+
+  # Associations
+  describe 'associations' do
+    it { should belong_to(:votable) }
+    it { should belong_to(:voter) }
+  end
+
+
+
 end

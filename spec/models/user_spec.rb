@@ -14,15 +14,13 @@ require 'rails_helper'
 require 'rspec/rails'
 
 RSpec.describe User, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
-
   # What to test?
   #   Validations
   #   Associations
   #   Class Methods
   #   Error Messages
 
-  # Subject to be used for testting, made with factorybot. /factories/users.rb
+  # Subject to be used for testing, made with factorybot. /factories/users.rb
   subject(:user) do
     build(:user)
   end
@@ -37,19 +35,21 @@ RSpec.describe User, type: :model do
   end
 
   # Associations
-  # TODO: Test associations once written
   describe 'associations' do
     it { should have_many(:comments) } #comments they are writer of
     it { should have_many(:subs) } #Subs they are the moderator of
     it { should have_many(:posts) } #posts they are the author of
+    it { should have_many(:votes) } #votes they are the issuer of
   end
 
   # Class Methods
 
+  # password=(password)
   it "creates a password_digest when a password is given" do
     expect(user.password_digest).to_not be_nil
   end
 
+  # ensure_session_token
   it "creates a session_token before validation" do
     user.valid?
     expect(user.session_token).to_not be_nil

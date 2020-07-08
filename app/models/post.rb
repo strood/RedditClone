@@ -43,16 +43,17 @@ class Post < ApplicationRecord
 
   # Calculate a rating for a post based on history of all votes on it.
   # Not adapted for (hotness) yet
-  def rating
-    @rating = 0
-    self.votes.each do |vote|
-      if vote.value > 0
-        @rating += 1
-      else
-        @rating -= 1
-      end
-    end
-    @rating
-  end
+  # No longer used, but may frame hotness from the idea of it so just preserving
+  # def rating
+  #   @rating = 0
+  #   self.votes.each do |vote|
+  #     if vote.value > 0
+  #       @rating += 1
+  #     else
+  #       @rating -= 1
+  #     end
+  #   end
+  #   @rating
+  # end
 
 end

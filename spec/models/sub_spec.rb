@@ -28,12 +28,13 @@ RSpec.describe Sub, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:description) }
-    it { should validate_presence_of(:moderator) }
+    it { should validate_presence_of(:user_id) }
   end
   # Associations
   describe 'associations' do
     it { should belong_to(:moderator) }
-    it { should have_many(:posts) }
+    it { should have_many(:post_subs) }
+    it { should have_many(:sub_posts) }
 
   end
 

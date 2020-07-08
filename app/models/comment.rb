@@ -38,16 +38,19 @@ class Comment < ApplicationRecord
   has_many :votes,
     as: :votable
 
-  def rating
-    @rating = 0
-    self.votes.each do |vote|
-      if vote.value > 0
-        @rating += 1
-      else
-        @rating -= 1
-      end
-    end
-    @rating
-  end
+    # Calculate a rating for a comment based on history of all votes on it.
+    # Not adapted for (hotness) yet
+    # No longer used, but may frame hotness from the idea of it so just preserving
+    # def rating
+    #   @rating = 0
+    #   self.votes.each do |vote|
+    #     if vote.value > 0
+    #       @rating += 1
+    #     else
+    #       @rating -= 1
+    #     end
+    #   end
+    #   @rating
+    # end
 
 end
