@@ -39,7 +39,6 @@ class User < ApplicationRecord
     has_many :votes,
       dependent: :destroy
 
-    # TODO: Add associations to user for their likes and sub follows ect.
 
     # (username<str>, passowrd<str>) => User/nil
     # Search for user by indexed username, then verify password

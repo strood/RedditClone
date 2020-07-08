@@ -70,7 +70,7 @@
     @post = Post.find(params[:id])
     if @post.destroy!
       flash[:notice] = ["Post deleted"]
-      redirect_to subs_url # TODO Change this to be the destroyed posts sub
+      redirect_to sub_url(@post.posted_sub_ids.first)
     else
       flash[:errors] = ["Unable to delete post"]
       redirect_to post_url(@post)
