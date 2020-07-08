@@ -1,9 +1,14 @@
 require 'rails_helper'
 
+# NOTE: In order for tests to  pass you must first disable:
+#  before_action :require_current_user! - in posts_controller.rb
+# AND
+# before_action :require_user_owns_post!, only: [:edit]
+
 RSpec.describe PostsController, type: :controller do
 
   describe "GET #show" do
-    it "renders the show page for the given post" do
+    it "renders the show page for the given post - IF FAILING CHECK NOTES AT TOP OF SPEC FILE" do
       p = Post.create!(title: Faker::Name.name, author: User.first)
       get :show, { params: {id: p.id } }
       expect(response).to have_http_status(200)
@@ -18,7 +23,7 @@ RSpec.describe PostsController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
-  
+
   # TODO:
   # Becuase i use @current_user to set the author in the controller, I cant
   # seem to get the author to set on creation, making me unable to test the function
@@ -57,7 +62,7 @@ RSpec.describe PostsController, type: :controller do
         p = Post.create!(title: Faker::Name.name, author: User.first)
         put :update, :params => { id: p.id, :post => { :title => "new-title" } }
         expect(response).to have_http_status(302)
-        expect(response).to redirect_to("/posts/#{p.id}")
+        expect(response).to redirect_to("/posts/#{p.id}/edit")
       end
   end
 

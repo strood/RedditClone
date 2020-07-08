@@ -1,8 +1,13 @@
 require 'rails_helper'
 
+# NOTE: In order for tests to  pass you must first disable:
+#  before_action :require_current_user! - in subs_controller.rb
+# AND
+# before_action :require_user_owns_sub!, only: [:edit]
+
 RSpec.describe SubsController, type: :controller do
   describe "GET #index" do
-    it "renders the index page filled with all the subs" do
+    it "renders the index page filled with all the subs  - IF FAILING CHECK NOTES AT TOP OF SPEC FILE" do
       get :index, {}
       expect(response).to have_http_status(200)
       expect(response).to render_template(:index)
@@ -51,7 +56,7 @@ RSpec.describe SubsController, type: :controller do
 
   describe "GET #edit" do
     it "renders the edit page" do
-      get :edit, :params => { id: Sub.first.id }
+      get :edit, :params => { id: 1 }
       expect(response).to have_http_status(200)
       expect(response).to render_template(:edit)
     end

@@ -16,7 +16,7 @@ feature 'signup process' do
     end
 
     scenario "redirect to user page after signup complete if valid credentials given" do
-        expect(page).to have_content "Welcome to your userpage!"
+        expect(page).to have_content "welcome to Raddit"
         expect(current_path).to include("/users/")
     end
 
