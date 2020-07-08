@@ -13,7 +13,7 @@
 
 <ul>
   <% if !@comment.child_comments.nil? %>
-    <%= render 'comment', comment:@comment.child_comments %>
+    <%= render 'comment', comment:@comment.child_comments.order(:score) %>
   <% else %>
     <li>
       No child_comments here yet

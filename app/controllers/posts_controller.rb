@@ -3,7 +3,7 @@
   before_action :require_user_owns_post!, only: [:edit]
 
   def show
-    @post = Post.includes(:author, :posted_subs, :votes).find(params[:id])
+    @post = Post.includes(:author, :posted_subs).find(params[:id])
     @all_comments = @post.comments_by_parent_id
     render :show
   end
@@ -22,12 +22,13 @@
     # Becuase we get additional methods from our association of posts and post_subs
     #  when post.save gets called, Post.sub_ids= is also called, and our checked
     #  subs are all created in relation to this post. handling all that for us.
-    if posted_sub_params
+    unless params[:posted_sub_ids].nil?
 
       if @post.save!
         # now we have a post id to set, and can save our sub posts/ will make this
         # insert on each post sub when we have multiple
-        @post.posted_subs = posted_sub_params
+        @post.posted_sub_ids = params[:posted_sub_ids].each
+        # @post.posted_subs = posted_sub_params
         flash[:notice] = ["Post successfully created!"]
         redirect_to post_url(@post)
       else
@@ -78,6 +79,9 @@
 
   def upvote
     upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Post", votable_id: params[:id])
+    @post = Post.find(params[:id])
+    @post.increment(:score)
+    @post.save
     if upvote.save!
       flash[:notice] = ["Upvote successful!"]
       redirect_back(fallback_location: root_path)
@@ -89,6 +93,9 @@
 
   def downvote
     downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Post", votable_id: params[:id])
+    @post = Post.find(params[:id])
+    @post.decrement(:score)
+    @post.save
     if downvote.save!
       flash[:notice] = ["Downvote successful!"]
       redirect_back(fallback_location: root_path)
@@ -98,15 +105,12 @@
     end
   end
 
-  private
 
+  private
 
   def post_params
     params.require(:post).permit(:title, :url, :content)
   end
 
-  def posted_sub_params
-    params.require(:sub).permit(:posted_sub_ids)
-  end
 
 end

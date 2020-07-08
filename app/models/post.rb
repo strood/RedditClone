@@ -9,6 +9,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :integer          not null
+#  score      :integer          default(0)
 #
 class Post < ApplicationRecord
   validates :title, :user_id, presence: true

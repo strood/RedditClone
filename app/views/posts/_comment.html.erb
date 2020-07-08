@@ -1,4 +1,4 @@
-<% comments.each do |comment| %>
+<% comments.reverse.each do |comment| %>
   <div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
     <ul>
       <li>
@@ -7,7 +7,8 @@
 
         <%= comment.content %>
         - <a href="<%= comment_url(comment.id) %>" style="font-size:12px;">Reply</a>
-        - <%= comment.rating %>
+        - Score: <%= comment.score %>
+
         <ul>
           <li>
             <form action="<%= upvote_comment_url(comment) %>" method="post">
@@ -24,7 +25,7 @@
         </ul>
 
         <% if @all_comments[comment.id] %>
-          <%= render 'comment', comments:@all_comments[comment.id] %>
+          <%= render 'comment', comments:@all_comments[comment.id].sort_by(&:score)%>
           <% end %>
         </li>
       </ul>

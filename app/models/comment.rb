@@ -9,6 +9,7 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  parent_comment_id :integer
+#  score             :integer          default(0)
 #
 class Comment < ApplicationRecord
   validates :content, :user_id, :post_id, presence: true

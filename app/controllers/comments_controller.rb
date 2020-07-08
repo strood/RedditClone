@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_action :require_current_user!
-  # before_action :require_user_owns_comment!, only: [:edit] #Uncomment if we want to add
 
   def new
     @comment = Comment.new
@@ -9,7 +8,7 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.includes(:child_comments, :post, :author, :votes).find(params[:id])
+    @comment = Comment.includes(:child_comments, :post, :author).find(params[:id])
     render :show
   end
 
@@ -32,6 +31,9 @@ class CommentsController < ApplicationController
 
   def upvote
     upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Comment", votable_id: params[:id])
+    @comment = Comment.find(params[:id])
+    @comment.increment(:score)
+    @comment.save
     if upvote.save!
       flash[:notice] = ["Upvote successful!"]
       redirect_back(fallback_location: root_path)
@@ -43,6 +45,9 @@ class CommentsController < ApplicationController
 
   def downvote
     downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Comment", votable_id: params[:id])
+    @comment = Comment.find(params[:id])
+    @comment.decrement(:score)
+    @comment.save
     if downvote.save!
       flash[:notice] = ["Downvote successful!"]
       redirect_back(fallback_location: root_path)
@@ -57,5 +62,6 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:content, :post_id, :parent_comment_id)
   end
+
 
 end

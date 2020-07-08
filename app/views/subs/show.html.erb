@@ -12,13 +12,13 @@
 
 <h2>POSTS:</h2>
 <ul>
-  <% @sub.sub_posts.includes(:author, :votes).each do |sub_post| %>
+  <% @sub.sub_posts.order(:score).includes(:author, :votes).reverse.each do |sub_post| %>
   <li>
     <a href="<%= post_url(sub_post) %>">
       <%= sub_post.title %>
     </a>
-    Votes:
-    <%= sub_post.rating %>
+    Score:
+    <%= sub_post.score %>
     <ul>
       <li>
         Poster:

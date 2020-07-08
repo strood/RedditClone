@@ -1,5 +1,5 @@
 
-<% comment.includes(:author, :child_comments).each do |sub_comment| %>
+<% comment.includes(:author, :child_comments).reverse.each do |sub_comment| %>
 <div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
   <ul>
     <li>
