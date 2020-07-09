@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.includes(:child_comments, :post, :author).find(params[:id])
+    @comment = Comment.friendly.includes(:child_comments, :post, :author).find(params[:id])
     render :show
   end
 
@@ -30,8 +30,8 @@ class CommentsController < ApplicationController
   end
 
   def upvote
-    upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Comment", votable_id: params[:id])
-    @comment = Comment.find(params[:id])
+    @comment = Comment.friendly.find(params[:id])
+    upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Comment", votable_id: @comment.id)
     @comment.increment(:score)
     @comment.save
     if upvote.save!
@@ -44,8 +44,8 @@ class CommentsController < ApplicationController
   end
 
   def downvote
-    downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Comment", votable_id: params[:id])
-    @comment = Comment.find(params[:id])
+    @comment = Comment.friendly.find(params[:id])
+    downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Comment", votable_id: @comment.id)
     @comment.decrement(:score)
     @comment.save
     if downvote.save!

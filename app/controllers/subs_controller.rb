@@ -9,7 +9,7 @@ class SubsController < ApplicationController
 
 
   def show
-    @sub = Sub.includes(:moderator).find(params[:id])
+    @sub = Sub.friendly.includes(:moderator).find(params[:id])
     render :show
   end
 
@@ -35,13 +35,13 @@ class SubsController < ApplicationController
 
 
   def edit
-    @sub = Sub.find(params[:id])
+    @sub = Sub.friendly.find(params[:id])
     render :edit
   end
 
 
   def update
-    @sub = Sub.find(params[:id])
+    @sub = Sub.friendly.find(params[:id])
     if @sub.update(sub_params)
       flash[:notice] = ["Sucessfully updated #{@sub.title}"]
       redirect_to sub_url(@sub)
@@ -52,7 +52,7 @@ class SubsController < ApplicationController
   end
 
   def destroy
-    @sub = Sub.find(params[:id])
+    @sub = Sub.friendly.find(params[:id])
     if @sub.destroy!
       flash[:notice] = ["Sub: #{@sub.title} successfully deleted"]
       redirect_to subs_url

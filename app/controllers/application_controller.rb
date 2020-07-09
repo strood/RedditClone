@@ -34,13 +34,13 @@ class ApplicationController < ActionController::Base
 
   def require_user_owns_post!
     flash[:error] = ['Only able to edit your own post!']
-    redirect_to user_url(current_user) if current_user != Post.find(params[:id]).author
+    redirect_to user_url(current_user) if current_user != Post.friendly.find(params[:id]).author
   end
 
 
   def require_user_owns_sub!
     flash[:error] = ['Only able to edit your own sub!']
-    redirect_to user_url(current_user) if current_user != Sub.find(params[:id]).moderator
+    redirect_to user_url(current_user) if current_user != Sub.friendly.find(params[:id]).moderator
   end
 
   def require_user_owns_comment! #Not used atm

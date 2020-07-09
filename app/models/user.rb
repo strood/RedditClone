@@ -11,6 +11,10 @@
 #  admin           :boolean          default(FALSE)
 #
 class User < ApplicationRecord
+    extend FriendlyId
+    friendly_id :username
+    validates_format_of :username, :with => /\A[a-z0-9]+\z/i
+
     attr_reader :password
 
     validates :username, presence: true, uniqueness: true

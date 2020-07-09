@@ -3,7 +3,7 @@
   before_action :require_user_owns_post!, only: [:edit]
 
   def show
-    @post = Post.includes(:author, :posted_subs).find(params[:id])
+    @post = Post.friendly.includes(:author, :posted_subs).find(params[:id])
     @all_comments = @post.comments_by_parent_id
     render :show
   end
@@ -44,12 +44,12 @@
 
 
   def edit
-    @post = Post.find(params[:id])
+    @post = Post.friendly.find(params[:id])
     render :edit
   end
 
   def update
-    @post = Post.find(params[:id])
+    @post = Post.friendly.find(params[:id])
     unless !params[:posted_sub_ids]
       # This constructs our post_sub objects based on the selected subs in posts creation
       @post.posted_sub_ids = params[:posted_sub_ids].each
@@ -67,7 +67,7 @@
   end
 
   def destroy
-    @post = Post.find(params[:id])
+    @post = Post.friendly.find(params[:id])
     if @post.destroy!
       flash[:notice] = ["Post deleted"]
       redirect_to sub_url(@post.posted_sub_ids.first)
@@ -78,8 +78,8 @@
   end
 
   def upvote
-    upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Post", votable_id: params[:id])
-    @post = Post.find(params[:id])
+    @post = Post.friendly.find(params[:id])
+    upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Post", votable_id: @post.id)
     @post.increment(:score)
     @post.save
     if upvote.save!
@@ -92,8 +92,8 @@
   end
 
   def downvote
-    downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Post", votable_id: params[:id])
-    @post = Post.find(params[:id])
+    @post = Post.friendly.find(params[:id])
+    downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Post", votable_id: @post.id)
     @post.decrement(:score)
     @post.save
     if downvote.save!

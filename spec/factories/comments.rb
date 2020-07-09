@@ -10,6 +10,7 @@
 #  updated_at        :datetime         not null
 #  parent_comment_id :integer
 #  score             :integer          default(0)
+#  slug              :string
 #
 FactoryBot.define do
   factory :comment do

@@ -10,9 +10,12 @@
 #  updated_at        :datetime         not null
 #  parent_comment_id :integer
 #  score             :integer          default(0)
+#  slug              :string
 #
 class Comment < ApplicationRecord
-  validates :content, :user_id, :post_id, presence: true
+  validates :content, :user_id, :post_id, :slug, presence: true
+  extend FriendlyId
+  friendly_id :slug_candidates, :use => :slugged
 
   belongs_to :post,
     primary_key: :id,
@@ -37,6 +40,14 @@ class Comment < ApplicationRecord
 
   has_many :votes,
     as: :votable
+
+  def slug_candidates
+    [
+      :content,
+      [:content, :post],
+      [:content, :post, :author]
+    ]
+  end
 
     # Calculate a rating for a comment based on history of all votes on it.
     # Not adapted for (hotness) yet

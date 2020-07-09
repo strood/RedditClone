@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #  user_id    :integer          not null
 #  score      :integer          default(0)
+#  slug       :string
 #
 FactoryBot.define do
   factory :post do

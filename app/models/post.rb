@@ -10,9 +10,13 @@
 #  updated_at :datetime         not null
 #  user_id    :integer          not null
 #  score      :integer          default(0)
+#  slug       :string
 #
 class Post < ApplicationRecord
-  validates :title, :user_id, presence: true
+  extend FriendlyId
+  friendly_id :title, :use => :slugged
+
+  validates :title, :user_id, :slug, presence: true
 
   belongs_to :author,
     primary_key: :id,

@@ -8,10 +8,14 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  user_id     :integer          not null
+#  slug        :string
 #
 class Sub < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, :use => :slugged
 
-  validates :title, :description, :user_id, presence: true
+
+  validates :title, :description, :user_id, :slug, presence: true
 
   belongs_to :moderator,
     primary_key: :id,

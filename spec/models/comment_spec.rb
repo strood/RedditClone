@@ -10,6 +10,7 @@
 #  updated_at        :datetime         not null
 #  parent_comment_id :integer
 #  score             :integer          default(0)
+#  slug              :string
 #
 require 'rails_helper'
 
@@ -30,6 +31,7 @@ RSpec.describe Comment, type: :model do
     it { should validate_presence_of(:content) }
     it { should validate_presence_of(:user_id) }
     it { should validate_presence_of(:post_id) }
+    it { should validate_presence_of(:slug) }
   end
 
   # Associations

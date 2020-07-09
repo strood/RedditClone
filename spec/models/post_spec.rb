@@ -10,6 +10,7 @@
 #  updated_at :datetime         not null
 #  user_id    :integer          not null
 #  score      :integer          default(0)
+#  slug       :string
 #
 require 'rails_helper'
 
@@ -23,11 +24,13 @@ RSpec.describe Post, type: :model do
   subject(:post) do
     build(:post)
   end
-  
+
   # Using shoulda-matchers to do easy validations testing
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:user_id) }
+    it { should validate_presence_of(:slug) }
+    
   end
 
   # Associations
