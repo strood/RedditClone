@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+
 # NOTE: In order for tests to  pass you must first disable:
 #  before_action :require_current_user! - in posts_controller.rb
 # AND
@@ -62,15 +63,16 @@ RSpec.describe PostsController, type: :controller do
         p = Post.create!(title: Faker::Name.name, author: User.first)
         put :update, :params => { id: p.id, :post => { :title => "new-title" } }
         expect(response).to have_http_status(302)
-        expect(response).to redirect_to("/posts/#{p.id}/edit")
+        expect(response).to redirect_to("/posts/#{ActiveSupport::Inflector.parameterize(p.title)}/edit")
       end
   end
 
   describe "DELETE #destroy" do
-    it "redirects to the sub it belonged to on success" do
+    it "redirects to the sub index page on success" do
       p = Post.create!(title: Faker::Name.name, author: User.first)
       delete :destroy, params: { id: p.id }
       expect(response).to have_http_status(302)
+      expect(response).to redirect_to("/subs")
     end
   end
 end

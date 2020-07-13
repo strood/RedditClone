@@ -10,7 +10,7 @@ feature 'signup process' do
   feature 'signing up a new user' do
     before(:each) do
       visit new_user_url
-      fill_in 'user[username]', :with => Faker::Name.name
+      fill_in 'user[username]', :with => Faker::Name.first_name
       fill_in 'user[password]', :with => 'password'
       click_on "Create User"
     end

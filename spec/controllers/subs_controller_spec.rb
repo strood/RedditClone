@@ -16,7 +16,7 @@ RSpec.describe SubsController, type: :controller do
 
   describe "GET #show" do
     it "renders the show page for the given sub" do
-      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.first )
+      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.last )
       get :show, :params => { :id => s.id }
       expect(response).to have_http_status(200)
       expect(response).to render_template(:show)
@@ -56,7 +56,8 @@ RSpec.describe SubsController, type: :controller do
 
   describe "GET #edit" do
     it "renders the edit page" do
-      get :edit, :params => { id: 1 }
+      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.last )
+      get :edit, :params => { id: 2 }
       expect(response).to have_http_status(200)
       expect(response).to render_template(:edit)
     end
@@ -64,16 +65,16 @@ RSpec.describe SubsController, type: :controller do
 
   describe "PATCH and PUT #update" do
     it "redirects to the sub show page on success" do
-      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.first )
+      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.last )
       put :update, :params => { id: s.id, :sub => { :title => "New-title" } }
       expect(response).to have_http_status(302)
-      expect(response).to redirect_to("/subs/#{s.id}")
+      expect(response).to redirect_to("/subs/#{ActiveSupport::Inflector.parameterize(s.title)}")
     end
   end
 
   describe "DELETE #destroy" do
     it "redirects to the subs index page on success" do
-      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.first )
+      s = Sub.create!(title: Faker::Name.name, description: Faker::Lorem.sentence(word_count: 5), moderator: User.last )
       delete :destroy, params: { id: s.id }
       expect(response).to have_http_status(302)
       expect(response).to redirect_to("/subs")
