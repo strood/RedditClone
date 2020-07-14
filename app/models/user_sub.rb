@@ -17,7 +17,7 @@ class UserSub < ApplicationRecord
     foreign_key: :user_id,
     class_name: :User
 
-  validates_associated :subscriber
+  validates_associated :user
 
   belongs_to :sub,
     primary_key: :id,
