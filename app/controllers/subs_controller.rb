@@ -62,6 +62,40 @@ class SubsController < ApplicationController
     end
   end
 
+  def subscribe
+    @sub = Sub.friendly.find(params[:id])
+    unless UserSub.find_by(sub_id: @sub.id, user_id: current_user.id)
+      @user_sub = UserSub.new(sub_id: @sub.id, user_id: current_user.id)
+      if @user_sub.save!
+        flash[:notice] = ["Subscribed!"]
+        redirect_back(fallback_location: root_path)
+      else
+        flash[:errors] = ["Unable to subscribe"]
+        redirect_back(fallback_location: root_path)
+      end
+    else
+      flash[:errors] = ["You already subscribe to #{ @sub.title }"]
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
+  def unsubscribe
+    @sub = Sub.friendly.find(params[:id])
+    @user_sub = UserSub.find_by(sub_id: @sub.id, user_id: current_user.id)
+    if @user_sub
+      if @user_sub.destroy!
+        flash[:notice] = ["Unsubscribed!"]
+        redirect_back(fallback_location: root_path)
+      else
+        flash[:errors] = ["Unable to unsubscribe"]
+        redirect_back(fallback_location: root_path)
+      end
+    else
+      flash[:errors] = ["You are not subscribed to #{ @sub.title }"]
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
   private
 
   def sub_params

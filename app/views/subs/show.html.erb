@@ -2,7 +2,20 @@
 <% if current_user == @sub.moderator %>
   <a href="<%= edit_sub_url(@sub) %>">Edit sub</a>
 <% end %>
-
+<ul>
+  <li>
+    <form action="<%= subscribe_sub_url(@sub) %>" method="post">
+      <%= auth_token %>
+      <input type="submit" name="submit" value="Subscribe">
+    </form>
+  </li>
+  <li>
+    <form action="<%= unsubscribe_sub_url(@sub) %>" method="post">
+      <%= auth_token %>
+      <input type="submit" name="submit" value="Unsubscribe">
+    </form>
+  </li>
+</ul>
 <h3>
   <%= @sub.description %>
 </h3>
