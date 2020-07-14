@@ -25,10 +25,10 @@
     unless params[:posted_sub_ids].nil?
 
       if @post.save!
-        # now we have a post id to set, and can save our sub posts/ will make this
-        # insert on each post sub when we have multiple
+        # now we have a post id to set, and can save our sub posts, done
+        #  for us through the methods we gained from the post_subs association mentions above
         @post.posted_sub_ids = params[:posted_sub_ids].each
-        # @post.posted_subs = posted_sub_params
+
         flash[:notice] = ["Post successfully created!"]
         redirect_to post_url(@post)
       else

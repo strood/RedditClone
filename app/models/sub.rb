@@ -31,4 +31,10 @@ class Sub < ApplicationRecord
     through: :post_subs,
     source: :post
 
+  has_many :user_subs
+
+  has_many :subscribers,
+    through: :user_subs,
+    source: :user
+
 end

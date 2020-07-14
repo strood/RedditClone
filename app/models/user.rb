@@ -43,6 +43,13 @@ class User < ApplicationRecord
     has_many :votes,
       dependent: :destroy
 
+    has_many :user_subs,
+      dependent: :destroy
+
+    has_many :subscriptions,
+      through: :user_subs,
+      source: :sub
+
 
     # (username<str>, passowrd<str>) => User/nil
     # Search for user by indexed username, then verify password
