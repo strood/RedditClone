@@ -92,6 +92,17 @@ class User < ApplicationRecord
       SecureRandom::urlsafe_base64(16)
     end
 
+    def votescore
+      @votescore ||= self.generate_vote_score
+    end
+
+    def generate_vote_score
+      @votescore = 0
+      self.posts.each { |post| @votescore += post.votes.length }
+      self.comments.each { |comment| @votescore += comment.votes.length }
+      @votescore
+    end
+
 
     private
 

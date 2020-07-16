@@ -32,13 +32,14 @@ class CommentsController < ApplicationController
   def upvote
     @comment = Comment.friendly.find(params[:id])
     upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Comment", votable_id: @comment.id)
-    @comment.increment(:score)
-    @comment.save
-    if upvote.save!
+    begin
+      upvote.save!
+      @comment.increment(:score)
+      @comment.save
       flash[:notice] = ["Upvote successful!"]
       redirect_back(fallback_location: root_path)
-    else
-      flash[:errors] = ["Upvote unsuccessful, please try again"]
+    rescue
+      flash[:errors] = ["Already voted on this comment"]
       redirect_back(fallback_location: root_path)
     end
   end
@@ -46,13 +47,14 @@ class CommentsController < ApplicationController
   def downvote
     @comment = Comment.friendly.find(params[:id])
     downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Comment", votable_id: @comment.id)
-    @comment.decrement(:score)
-    @comment.save
-    if downvote.save!
+    begin
+      downvote.save!
+      @comment.decrement(:score)
+      @comment.save
       flash[:notice] = ["Downvote successful!"]
       redirect_back(fallback_location: root_path)
-    else
-      flash[:notice] = ["Downvote successful!"]
+    rescue
+      flash[:errors] = ["Already voted on this comment"]
       redirect_back(fallback_location: root_path)
     end
   end

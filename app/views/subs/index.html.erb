@@ -8,7 +8,7 @@
         </a>
       </h2>
       <p>
-        Mod:<%= sub.moderator.username %>
+        Mod:<a href="<%= user_url(sub.moderator) %>"><%= sub.moderator.username %></a>
       </p>
       <p>
         <%= sub.description %>

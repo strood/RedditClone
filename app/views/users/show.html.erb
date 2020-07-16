@@ -1,4 +1,7 @@
 <h1><%= @user.username %>'s UserPage</h1>
+<h2>VoteScore: <%= @user.votescore %></h2>
+<!-- Votescore will be like karma, the total likes their comments ansd posts have
+      received. -->
 
 <!-- Will set up a few different features to show up in user pages based on
       who it is that is viewing the page.
@@ -17,7 +20,74 @@
     <% end %>
   <% else %>
     <li>
-      No subs owned! - <a href="<%= new_sub_url %>">Create One!</a>
+      No Subs owned yet! - <a href="<%= new_sub_url %>">Create One!</a>
     </li>
+  <% end %>
+</ul>
+
+<h2>Posts</h2>
+<ul>
+  <% if !@user.posts.nil? %>
+    <% @user.posts.each do |post| %>
+    <li>
+      <a href="<%= post_url(post) %>">
+        <%= post.title %>
+      </a>
+    </li>
+    <% end %>
+  <% else %>
+    <li>
+      No Posts yet!
+    </li>
+  <% end %>
+</ul>
+
+<h2>Comments</h2>
+<ul>
+  <% if !@user.comments.nil? %>
+    <% @user.comments.each do |comment| %>
+    <li>
+      <a href="<%= comment_url(comment) %>">
+        <%= comment.content[0..15] %>
+      </a>
+    </li>
+    <% end %>
+  <% else %>
+    <li>No Comments yet!</li>
+  <% end %>
+</ul>
+
+<h2>Upvotes</h2>
+<ul>
+  <% if !@user.votes.nil? %>
+    <% @user.votes.each do |vote| %>
+      <% if vote.value > 0 %>
+      <li>
+        <a href="<%= vote.votable_type == 'Post' ? post_url(vote.votable) : comment_url(vote.votable) %>">
+          <%= vote.votable_type == 'Post' ? vote.votable.title : vote.votable.content[0..15] %>
+
+        </a>
+      </li>
+      <% end %>
+    <% end %>
+  <% else %>
+  <li>No Upvotes yet!</li>
+  <% end %>
+</ul>
+
+<h2>Downvotes</h2>
+<ul>
+  <% if !@user.votes.nil? %>
+    <% @user.votes.each do |vote| %>
+      <% if vote.value < 0 %>
+      <li>
+        <a href="<%= vote.votable_type == 'Post' ? post_url(vote.votable) : comment_url(vote.votable) %>">
+          <%= vote.votable_type == 'Post' ? vote.votable.title : vote.votable.content[0..15] %>
+        </a>
+      </li>
+      <% end %>
+    <% end %>
+  <% else %>
+    <li>No Downvotes yet!</li>
   <% end %>
 </ul>

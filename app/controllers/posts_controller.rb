@@ -80,13 +80,14 @@
   def upvote
     @post = Post.friendly.find(params[:id])
     upvote = Vote.new(user_id: current_user.id, value: 1, votable_type: "Post", votable_id: @post.id)
-    @post.increment(:score)
-    @post.save
-    if upvote.save!
+    begin
+      upvote.save!
+      @post.increment(:score)
+      @post.save
       flash[:notice] = ["Upvote successful!"]
       redirect_back(fallback_location: root_path)
-    else
-      flash[:errors] = ["Upvote unsuccessful, please try again"]
+    rescue
+      flash[:errors] = ["Already voted on this post"]
       redirect_back(fallback_location: root_path)
     end
   end
@@ -94,13 +95,14 @@
   def downvote
     @post = Post.friendly.find(params[:id])
     downvote = Vote.new(user_id: current_user.id, value: -1, votable_type: "Post", votable_id: @post.id)
-    @post.decrement(:score)
-    @post.save
-    if downvote.save!
+    begin
+      downvote.save!
+      @post.decrement(:score)
+      @post.save
       flash[:notice] = ["Downvote successful!"]
       redirect_back(fallback_location: root_path)
-    else
-      flash[:notice] = ["Downvote successful!"]
+    rescue
+      flash[:errors] = ["Already voted on this post"]
       redirect_back(fallback_location: root_path)
     end
   end
