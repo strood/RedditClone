@@ -8,6 +8,9 @@
       <a href="<%= subs_url %>">All Subs</a>
     </li>
     <li>
+      <a href="<%= subscriptions_user_url(current_user) %>">Your Subscriptions</a>
+    </li>
+    <li>
       <form action="<%= session_url %>" method="post">
         <input type="hidden" name="_method" value="DELETE">
         <%= auth_token %>

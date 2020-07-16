@@ -25,6 +25,22 @@
   <% end %>
 </ul>
 
+<h2>Subscriptions</h2>
+<ul>
+  <% if !@user.subscriptions.nil? %>
+    <% @user.subscriptions.each do |subscription| %>
+    <li>
+      <a href="<%= sub_url(subscription) %>">
+        <%= subscription.title %>
+      </a>
+    </li>
+    <% end %>
+  <% else %>
+    <li>
+      No Subscriptions yet! - <a href="<%= new_sub_url %>">Create One!</a>
+    </li>
+  <% end %>
+</ul>
 <h2>Posts</h2>
 <ul>
   <% if !@user.posts.nil? %>

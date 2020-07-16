@@ -103,6 +103,15 @@ class User < ApplicationRecord
       @votescore
     end
 
+    # Take array of subscruiptions and rank all posts in them by score
+    def self.subscription_posts(subscriptions)
+      @posts = []
+      subscriptions.each do |sub|
+        @posts += sub.sub_posts
+      end
+      @posts.sort_by { |post| post.score }
+    end
+
 
     private
 

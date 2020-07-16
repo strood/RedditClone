@@ -35,6 +35,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def subscriptions
+    @user = User.friendly.includes(:subscriptions).find(params[:id])
+    @posts = User.subscription_posts(@user.subscriptions)
+    render :subscriptions
+  end
+
   private
 
   def user_params
