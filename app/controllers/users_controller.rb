@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_current_user!, except: [:create, :new]
+  before_action :require_current_user!, except: [:create, :new, :show]
   before_action :require_no_user!, only: [:create, :new]
   before_action :require_user_is_user!, only: [:edit]
 

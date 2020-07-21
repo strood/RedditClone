@@ -1,5 +1,5 @@
   class PostsController < ApplicationController
-  before_action :require_current_user!
+  before_action :require_current_user!, except: [:show]
   before_action :require_user_owns_post!, only: [:edit]
 
   def show

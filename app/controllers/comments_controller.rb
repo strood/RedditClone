@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_current_user!
+  before_action :require_current_user!, only:[:new, :create, :upvote, :downvote]
 
   def new
     @comment = Comment.new

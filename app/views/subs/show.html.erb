@@ -24,6 +24,7 @@
 </h3>
 
 <h2>POSTS:</h2>
+
 <ul>
   <% @sub.sub_posts.order(:score).includes(:author, :votes).reverse.each do |sub_post| %>
   <li>
