@@ -102,5 +102,22 @@ RSpec.describe User, type: :model do
         expect(User.pass_valid?("123456")).to eq(true)
       end
     end
+
+    # Votescore related methods
+
+    describe 'votescore' do
+      it 'returns the votescore for the given user' do
+        expect(user.votescore).to eq(0)
+        expect(user.votescore).to be_an_instance_of(Integer)
+      end
+    end
+
+    # Subscription method
+
+    describe 'subscription_posts' do
+      it 'takes in an array of subscriptions and returns the posts sorted by score' do
+        expect(User.subscription_posts(user.subscriptions)).to be_an_instance_of(Array)
+      end
+    end
   end
 end
