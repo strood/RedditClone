@@ -3,13 +3,18 @@ class SubsController < ApplicationController
   before_action :require_user_owns_sub!, only: [:edit]
 
   def index
-    @subs = Sub.includes(:moderator).page(1).per(10)
+    @subs = Sub.order(:title).includes(:moderator).page params[:page]
     render :index
   end
 
 
   def show
     @sub = Sub.friendly.includes(:moderator).find(params[:id])
+    # Paginating the query directly led to mis-ordering, now we have it
+    # turning an array into a paginatable object then using that in the view, after
+    # being sorted beforehand, then ...reversed?
+    @sub_posts = @sub.sub_posts.includes(:author, :votes).order(:score).reverse
+    @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
     render :show
   end
 

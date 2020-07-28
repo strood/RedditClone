@@ -13,9 +13,14 @@
 #  slug       :string
 #
 class Post < ApplicationRecord
+  # Extend FriendlyID for nice URLs, set up slugged name.
   extend FriendlyId
   friendly_id :title, :use => :slugged
 
+  # Sets per-page limits for pagination with Kaminari Gem
+  paginates_per 10
+
+  # Validations and Associations
   validates :title, :user_id, :slug, presence: true
 
   belongs_to :author,
@@ -44,20 +49,5 @@ class Post < ApplicationRecord
     end
     @comment_hash
   end
-
-  # Calculate a rating for a post based on history of all votes on it.
-  # Not adapted for (hotness) yet
-  # No longer used, but may frame hotness from the idea of it so just preserving
-  # def rating
-  #   @rating = 0
-  #   self.votes.each do |vote|
-  #     if vote.value > 0
-  #       @rating += 1
-  #     else
-  #       @rating -= 1
-  #     end
-  #   end
-  #   @rating
-  # end
 
 end

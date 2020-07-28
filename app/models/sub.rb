@@ -11,10 +11,14 @@
 #  slug        :string
 #
 class Sub < ApplicationRecord
+  # Extend FriendlyID for nice URLs, set up slugged name.
   extend FriendlyId
   friendly_id :title, :use => :slugged
 
+  # Sets per-page limits for pagination with Kaminari Gem
+  paginates_per 10
 
+  # Validations and Associations 
   validates :title, :description, :user_id, :slug, presence: true
 
   belongs_to :moderator,
@@ -22,7 +26,7 @@ class Sub < ApplicationRecord
     foreign_key: :user_id,
     class_name: :User
 
-  # validates_associated :moderator
+  validates_associated :moderator
 
   has_many :post_subs,
     dependent: :destroy
