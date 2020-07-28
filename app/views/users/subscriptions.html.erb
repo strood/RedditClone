@@ -1,21 +1,31 @@
-<h1>Top posts from your subscriptions</h1>
+<h1>Top Foods from your subscribed Locations</h1>
 
 
 <ul>
   <% @posts.reverse.each do |post| %>
   <li>
-    <%= post.title %>
+    Food:
+    <a href="<%= post_url(post.id) %>">
+      <%= post.title %>
+    </a>
     <br>
     -----
-    Subs:
+    Locations:
     <% post.posted_subs.each do |sub| %>
-      <%= sub.title %>
+      <a href="<%= sub_url(sub.id) %>">
+        <%= sub.title %>
+      </a>
     <% end %>
     <br>
     -----
     Score:
     <%= post.score %>
     <br>
+    -----
+    Suggester:
+    <a href="<%= user_url(post.author) %>">
+      <%= post.author.username %>
+    </a>
   </li>
   <% end %>
 </ul>

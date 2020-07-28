@@ -10,13 +10,13 @@
       </li>
       <li>Logged in as: <a href="<%= user_url(current_user) %>"><%= current_user.username %></a></li>
       <li>
-        <a href="<%= new_sub_url %>">Create New Sub</a>
+        <a href="<%= new_sub_url %>">Add New Location</a>
       </li>
       <li>
-        <a href="<%= subs_url %>">All Subs</a>
+        <a href="<%= subs_url %>">All Locations</a>
       </li>
       <li>
-        <a href="<%= subscriptions_user_url(current_user) %>">Your Subscriptions</a>
+        <a href="<%= subscriptions_user_url(current_user) %>">Your Subscribed Locations</a>
       </li>
       <li>
         <form action="<%= session_url %>" method="post">
@@ -41,7 +41,7 @@
         <a href="<%= new_session_url %>">Log In</a>
       </li>
       <li>
-        <a href="<%= subs_url %>">All Subs</a>
+        <a href="<%= subs_url %>">All Locations</a>
       </li>
     </ul>
     <% end %>

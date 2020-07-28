@@ -29,7 +29,7 @@ ActiveRecord::Base.transaction do
   (1..50).each do |i|
     Faker::Number.between(from:10, to:20).times do
       title = Faker::Food.unique.dish
-      post = Post.create!(title: title, url: "www.wikipedia.com/" + title + "/" , content: Faker::Lorem.sentence(word_count: 5), user_id: Faker::Number.between(from:1, to:100))
+      post = Post.create!(title: title, url: "www.wikipedia.com/wiki/" + title.html_safe + "/" , content: Faker::Lorem.sentence(word_count: 5), user_id: Faker::Number.between(from:1, to:100))
       # Create a PostSub for each post, so each post is added to at least one sub at a time.
       PostSub.create!(post_id: post.id, sub_id: i)
     end
@@ -66,7 +66,7 @@ ActiveRecord::Base.transaction do
 
   # Post upvotes and downvotes
   (1..100).each do |user_id|
-    Faker::Number.between(from:1, to:5).times do
+    Faker::Number.between(from:5, to:10).times do
       # Between 1-5 post upvotes for each user, increment score on post after vote
       vote = Vote.create!(value: 1, user_id: user_id, votable_type: "Post", votable_id: Faker::Number.unique.between(from:1, to:Post.all.length))
       p = Post.find(vote.votable_id)
@@ -87,7 +87,7 @@ ActiveRecord::Base.transaction do
 
   # Comment upvotes and downvotes
   (1..100).each do |user_id|
-    Faker::Number.between(from:1, to:5).times do
+    Faker::Number.between(from:15, to:20).times do
       # Between 1-5 comment upvotes for each user, increment score on post after vote
       vote = Vote.create!(value: 1, user_id: user_id, votable_type: "Comment", votable_id: Faker::Number.unique.between(from:1, to:Comment.all.length))
       c = Comment.find(vote.votable_id)

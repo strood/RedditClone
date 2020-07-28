@@ -1,6 +1,6 @@
 <% action = (sub.persisted? ? sub_url(sub) : subs_url) %>
 <% method = (sub.persisted? ? 'patch' : 'post') %>
-<% message =(sub.persisted? ? 'Update Sub' : 'Create Sub') %>
+<% message =(sub.persisted? ? 'Update Location' : 'Add Location') %>
 
 
 <form action="<%= action %>" method="post">
@@ -10,7 +10,7 @@
       value="<%= method %>">
     <%= auth_token %>
 
-    <label for="title">Title:</label>
+    <label for="title">Name:</label>
     <input
       type="text"
       name="sub[title]"

@@ -1,6 +1,6 @@
-<h1>Welcome to <%= @sub.title %></h1>
+<h1>Location: <%= @sub.title %></h1>
 <% if current_user == @sub.moderator %>
-  <a href="<%= edit_sub_url(@sub) %>">Edit sub</a>
+  <a href="<%= edit_sub_url(@sub) %>">Edit Location</a>
 <% end %>
 <ul>
   <li>
@@ -17,13 +17,14 @@
   </li>
 </ul>
 <h3>
+  Description:
   <%= @sub.description %>
 </h3>
-<h3>Mod:
+<h3>Added by:
   <%= @sub.moderator.username  %>
 </h3>
 
-<h2>POSTS:</h2>
+<h2>FOODS:</h2>
 
 <ul>
   <% @sub.sub_posts.order(:score).includes(:author, :votes).reverse.each do |sub_post| %>
@@ -31,11 +32,12 @@
     <a href="<%= post_url(sub_post) %>">
       <%= sub_post.title %>
     </a>
+    <br>
     Score:
     <%= sub_post.score %>
     <ul>
       <li>
-        Poster:
+        Suggested by:
         <a href="<%= user_url(sub_post.author) %>">
           <%= sub_post.author.username %>
         </a>
@@ -57,4 +59,4 @@
   <% end %>
 </ul>
 
-<a href="<%= new_post_url %>">Create New Post</a>
+<a href="<%= new_post_url %>">Suggest New Food</a>

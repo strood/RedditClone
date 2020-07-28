@@ -8,7 +8,7 @@
       ADMIN: a way to toggle user to admin status, (possibly a ban/delete/mute button)
       The User: if viewing own page, present ways to delete posts, diff post stats
       Random: base access to view users posts, as we will implement as default-->
-<h2>Owned Subs</h2>
+<h2>Submitted Locations</h2>
 <ul>
   <% if !@user.subs.nil? %>
     <% @user.subs.each do |sub| %>
@@ -20,12 +20,12 @@
     <% end %>
   <% else %>
     <li>
-      No Subs owned yet! - <a href="<%= new_sub_url %>">Create One!</a>
+      No Locations suggested yet! - <a href="<%= new_sub_url %>">Add One!</a>
     </li>
   <% end %>
 </ul>
 
-<h2>Subscriptions</h2>
+<h2>Subscribed Locations</h2>
 <ul>
   <% if !@user.subscriptions.nil? %>
     <% @user.subscriptions.each do |subscription| %>
@@ -41,7 +41,7 @@
     </li>
   <% end %>
 </ul>
-<h2>Posts</h2>
+<h2>Foods</h2>
 <ul>
   <% if !@user.posts.nil? %>
     <% @user.posts.each do |post| %>
@@ -53,7 +53,7 @@
     <% end %>
   <% else %>
     <li>
-      No Posts yet!
+      No Foods yet!
     </li>
   <% end %>
 </ul>

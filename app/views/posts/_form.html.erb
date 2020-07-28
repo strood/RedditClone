@@ -1,6 +1,6 @@
 <% action = (post.persisted? ? post_url(post) : posts_url) %>
 <% method = (post.persisted? ? 'patch' : 'post') %>
-<% message =(post.persisted? ? 'Update Post' : 'Create Post') %>
+<% message =(post.persisted? ? 'Update Food' : 'Add Food') %>
 
 
 <form action="<%= action %>" method="post">
@@ -16,19 +16,13 @@
       name="post[title]"
       value="<%= @post.title %>">
 
-    <label for="url">URL *optional*: </label>
-    <input
-      type="text"
-      name="post[url]"
-      value="<%= @post.url %>">
-
-    <label for="content">Content *optional*:</label>
+    <label for="content">Notes *optional*:</label>
     <textarea id="description" name="post[content]" rows="8" cols="60"><%= @post.content %></textarea>
 
     <!-- This will be chanmged out for a checkbox list instead
           or a searchbar/ dropdown that then stacks the selected subs in
           boxes that can be 'X'/closed/removed independently.-->
-    <label for="subs">Subs:</label>
+    <label for="subs">Suggested Eating Locations:</label>
     <% Sub.all.each do |sub| %>
     <input type="checkbox" name="posted_sub_ids[]" value="<%= sub.id %>"
       <%= sub.sub_post_ids.include?(@post.id) ? "checked" : "" %>>

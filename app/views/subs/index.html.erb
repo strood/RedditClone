@@ -1,4 +1,4 @@
-<h1>All Subs</h1>
+<h1>All Locations</h1>
 <ul>
 <% @subs.each do |sub| %>
   <li>
@@ -8,9 +8,10 @@
         </a>
       </h2>
       <p>
-        Mod:<a href="<%= user_url(sub.moderator) %>"><%= sub.moderator.username %></a>
+        Added by:<a href="<%= user_url(sub.moderator) %>"><%= sub.moderator.username %></a>
       </p>
       <p>
+        Description:
         <%= sub.description %>
       </p>
   </li>
