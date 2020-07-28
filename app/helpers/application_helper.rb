@@ -9,4 +9,10 @@ module ApplicationHelper
     html.html_safe
   end
 
+  # Use to add my fontawesome kit to head, otherwise breaks formatting.
+  def fontawesome_kit_tag
+    html = '<script src="https://kit.fontawesome.com/6e5c6d5ea6.js" crossorigin="anonymous"></script>'
+    html.html_safe
+  end
+  
 end

@@ -22,7 +22,7 @@ class Sub < ApplicationRecord
     foreign_key: :user_id,
     class_name: :User
 
-  validates_associated :moderator
+  # validates_associated :moderator
 
   has_many :post_subs,
     dependent: :destroy
