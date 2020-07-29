@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Foodit</title>
+    <title>Foody</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= fontawesome_kit_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">  
+</head>
 
   <body>
     <%= render "shared/userbar" %>
     <%= render "shared/errors" %>
     <%= render "shared/messages" %>
-
     <%= yield %>
     <%= render "shared/footer" %>
   </body>

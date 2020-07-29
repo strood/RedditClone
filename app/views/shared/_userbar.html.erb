@@ -1,13 +1,16 @@
 
 <header id='userbar'>
+  <a href="<%= subs_url %>">
+    <div class="logo_div">
+        <i class="fas fa-utensils"></i>
+        <p class="logo">
+          Foodie
+        </p>
+      </div>
+  </a>
 
   <% if !current_user.nil? %>
     <ul>
-      <li>
-        <a href="<%= subs_url %>">
-          <i class="fas fa-utensils"></i>
-        </a>
-      </li>
       <li>Logged in as: <a href="<%= user_url(current_user) %>"><%= current_user.username %></a></li>
       <li>
         <a href="<%= new_sub_url %>">Add New Location</a>
@@ -29,11 +32,6 @@
 
     <% else %>
     <ul>
-      <li>
-        <a href="<%= subs_url %>">
-          <i class="fas fa-utensils"></i>
-        </a>
-      </li>
       <li>
         <a href="<%= new_user_url %>">Sign Up</a>
       </li>

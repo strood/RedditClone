@@ -9,7 +9,50 @@
 * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
 * files in this directory. Styles in this file should be added after the last require_* statement.
 * It is generally better to create a new file per style scope.
-*
-*= require_tree .
+
+!!!! In order to get a css rest, i swapped order of the require statements, then
+included reset in thgis file, having the tree required after it makes sure these
+resets get overridded, instead of other way around
+
 *= require_self
+*= require_tree
 */
+
+/* STANDARD CSS RESET BELOW */
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small, aside {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-family: none;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+input[type="password"],
+input[type="email"],
+input[type="text"],
+input[type="submit"],
+textarea,
+button {
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ appearance: none;
+}
+
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
