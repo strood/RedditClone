@@ -14,21 +14,45 @@ footer {
 }
 .footer_list {
   padding: 5px 15px;
+  li:hover {
+    color: $yellow;
+  }
   li h3 {
     color: $yellow;
     margin-bottom: 5px;
+    margin-top: 0;
     font-size: 22px;
     font-weight: bolder;
   }
 }
 .footer_div {
+  flex: 0.25 0.5;
+  border-radius: 30px;
+  border: 1px solid $white;
+  margin-left: 15px;
+  min-width: 240px;
+  max-height: 160px;
   h3 {
-    color: $yellow;
+    background-color: $white;
+    border-bottom: 1px solid $white;
     font-size: 22px;
     margin-bottom: 5px;
+    margin-top: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    color: $medium-green;
   }
-  padding-top: 5px;
-  margin-left: 15px;
+  ul {
+    padding: 2px 25px;
+    border-radius: 30px;
+
+    li {
+      border-radius: 20px;
+    }
+  }
 }
 .base_footer {
   display: flex;
@@ -40,8 +64,10 @@ footer {
   footer{
 
     .info_footer {
-      flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
       .footer_div {
+        width: 50%;
       }
     }
   }

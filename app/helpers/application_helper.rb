@@ -14,5 +14,11 @@ module ApplicationHelper
     html = '<script src="https://kit.fontawesome.com/6e5c6d5ea6.js" crossorigin="anonymous"></script>'
     html.html_safe
   end
-  
+  # Use to add my google icon kit to head, otherwise breaks formatting.
+  def google_icons_kit
+    html = '<script src="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></script>'
+    html.html_safe
+  end
+
+
 end
