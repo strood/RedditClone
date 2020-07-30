@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       if @user.save!
         # @user.update_attribute(:admin, false)
         login!(@user)
-        flash[:notice] = ["Hello #{@user.username}, welcome to Raddit"]
+        flash[:notice] = ["Hello #{@user.username}, welcome to Foodie"]
         redirect_to user_url(@user)
       else
         flash[:errors] = ["Invalid credentials, please try again"]

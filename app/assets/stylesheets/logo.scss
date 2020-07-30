@@ -13,3 +13,7 @@
     font-family: $logo-font;
   }
 }
+
+.logo_div:hover {
+  pointer-events: none;
+}

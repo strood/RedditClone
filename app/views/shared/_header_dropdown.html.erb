@@ -1,17 +1,13 @@
 <ul id="header_dropdown" class="header_dropdown hidden">
   <li>
-    <p>
       <a href="<%= user_url(current_user) %>">
         <%= current_user.username %>
       </a>
-    </p>
   </li>
   <li>
-    <p>
       <a href="<%= subscriptions_user_url(current_user) %>">
         Your Locations
       </a>
-    </p>
   </li>
   <li>
     <form action="<%= session_url %>" method="post">

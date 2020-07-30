@@ -1,12 +1,7 @@
 
 <header id='userbar'>
   <a href="<%= subs_url %>">
-    <div class="logo_div">
-        <i class="fas fa-utensils"></i>
-        <p>
-          Foodie
-        </p>
-    </div>
+  <%= render 'shared/logo' %>
   </a>
 
   <% if !current_user.nil? %>

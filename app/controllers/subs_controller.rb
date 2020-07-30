@@ -1,5 +1,5 @@
 class SubsController < ApplicationController
-  before_action :require_current_user!, except: [:index, :show]
+  before_action :require_current_user!, except: [:index, :show], errors: ["Must be logged in."]
   before_action :require_user_owns_sub!, only: [:edit]
 
   def index

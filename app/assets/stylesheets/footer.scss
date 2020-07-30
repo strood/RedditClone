@@ -2,7 +2,47 @@
 
 footer {
   display: flex;
-  background-color: $dark-green;
+  flex-direction: column;
   color: $white;
+}
+.info_footer {
   justify-content: space-around;
+  padding: 50px 25px;
+  display: flex;
+  flex-direction: row;
+  background-color: $medium-green;
+}
+.footer_list {
+  padding: 5px 15px;
+  li h3 {
+    color: $yellow;
+    margin-bottom: 5px;
+    font-size: 22px;
+    font-weight: bolder;
+  }
+}
+.footer_div {
+  h3 {
+    color: $yellow;
+    font-size: 22px;
+    margin-bottom: 5px;
+  }
+  padding-top: 5px;
+  margin-left: 15px;
+}
+.base_footer {
+  display: flex;
+  padding: 15px;
+  background-color: $dark-green;
+}
+
+@media all and(max-width: 600px) {
+  footer{
+
+    .info_footer {
+      flex-wrap: wrap;
+      .footer_div {
+      }
+    }
+  }
 }

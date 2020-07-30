@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Foody</title>
+    <title>
+      Foodie
+    </title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= fontawesome_kit_tag %>
@@ -9,18 +11,25 @@
     <script type="text/javascript">
       function toggleHeaderDropdown() {
         var e = document.getElementById('header_dropdown');
+        var t = document.getElementById('option_dropdown');
         if(e.style.display == 'flex')
             e.style.display = 'none';
         else
             e.style.display = 'flex';
+            t.style.display = 'none';
       }
       function toggleOptionDropdown() {
 
         var e = document.getElementById('option_dropdown');
+        var t = document.getElementById('header_dropdown');
         if(e.style.display == 'flex')
             e.style.display = 'none';
         else
             e.style.display = 'flex';
+            t.style.display = 'none';
+      }
+      function getYear() {
+        document.write(new Date().getFullYear());
       }
     </script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -36,7 +45,7 @@
       <%= render "shared/errors" %>
       <%= render "shared/messages" %>
       <%= yield %>
-      <%= render "shared/footer" %>
-  </div>
+    </div>
+    <%= render "shared/footer" %>
   </body>
 </html>

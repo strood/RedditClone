@@ -1,61 +1,99 @@
 <footer>
-  <ul class="footer_list">
-    <li>
-      <h3>Learn More</h3>
-    </li>
-    <li>
-      <a href="/pages/about">
-        About
-      </a>
-    </li>
-    <li>
-      <a href="/pages/careers">
-        Careers
-      </a>
-    </li>
-    <li>
-      <a href="/pages/terms">
-        Terms
-      </a>
-    </li>
-    <li>
-      <a href="/pages/privacy">
-        Privacy Policy
-      </a>
-    </li>
-  </ul>
-  <ul class="footer_list">
-    <li>
-      <h3>Do More</h3>
-    </li>
-    <li>
-      <a href="<%= new_user_url %>">
-        Sign Up
-      </a>
-    </li>
-    <li>
-      <a href="<%= new_session_url %>">
-        Log In
-      </a>
-    </li>
-    <li>
-      <a href="<%= new_sub_url %>">
-        Add Location
-      </a>
-    </li>
-    <li>
-      <a href="<%= new_post_url %>">
-        Add Food
-      </a>
-    </li>
-  </ul>
-  <div class="footer_div">
-    <h3>Customer Care</h3>
-    <ul>
-      <li><i class="fas fa-phone"></i> - 403-824-2727</li>
-      <li><i class="fas fa-phone"></i> - 587-348-2281</li>
-      <li><i class="fas fa-phone"></i> - 629-554-2141</li>
-      <li><i class="far fa-envelope"></i> - care@foody.support</li>
+
+  <div class="info_footer">
+    <div class="footer_div">
+      <h3>Customer Care</h3>
+      <ul>
+        <li><i class="fas fa-phone"></i> - 403-824-2727</li>
+        <li><i class="fas fa-phone"></i> - 587-348-2281</li>
+        <li><i class="fas fa-phone"></i> - 629-554-2141</li>
+        <li><i class="far fa-envelope"></i> - care@foody.support</li>
+      </ul>
+    </div>
+    <ul class="footer_list">
+      <li>
+        <h3>Learn More</h3>
+      </li>
+      <li>
+        <a href="/pages/about">
+          About
+        </a>
+      </li>
+      <li>
+        <a href="/pages/careers">
+          Careers
+        </a>
+      </li>
+      <li>
+        <a href="/pages/terms">
+          Terms
+        </a>
+      </li>
+      <li>
+        <a href="/pages/privacy">
+          Privacy Policy
+        </a>
+      </li>
     </ul>
+    <ul class="footer_list">
+      <li>
+        <h3>Do More</h3>
+      </li>
+      <li>
+        <a href="<%= new_user_url %>">
+          Sign Up
+        </a>
+      </li>
+      <li>
+        <a href="<%= new_session_url %>">
+          Log In
+        </a>
+      </li>
+      <li>
+        <a href="<%= new_sub_url %>">
+          Add Location
+        </a>
+      </li>
+      <li>
+        <a href="<%= new_post_url %>">
+          Add Food
+        </a>
+      </li>
+    </ul>
+    <ul class="footer_list">
+      <li>
+        <h3>Get In Touch</h3>
+      </li>
+      <li>
+        <a href="#">
+          Contact
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          Facebook
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          Instagram
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          Twitter
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          Location
+        </a>
+      </li>
+    </ul>
+    <%= render 'shared/logo'%>
+  </div>
+  <div class="base_footer">
+    Food -
+    All Rights Reserved © 2020
   </div>
 </footer>

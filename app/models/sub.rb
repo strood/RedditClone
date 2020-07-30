@@ -16,9 +16,9 @@ class Sub < ApplicationRecord
   friendly_id :title, :use => :slugged
 
   # Sets per-page limits for pagination with Kaminari Gem
-  paginates_per 10
+  paginates_per 15
 
-  # Validations and Associations 
+  # Validations and Associations
   validates :title, :description, :user_id, :slug, presence: true
 
   belongs_to :moderator,
