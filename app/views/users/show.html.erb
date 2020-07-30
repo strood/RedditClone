@@ -1,13 +1,6 @@
 <h1><%= @user.username %>'s UserPage</h1>
 <h2>VoteScore: <%= @user.votescore %></h2>
-<!-- Votescore will be like karma, the total likes their comments ansd posts have
-      received. -->
 
-<!-- Will set up a few different features to show up in user pages based on
-      who it is that is viewing the page.
-      ADMIN: a way to toggle user to admin status, (possibly a ban/delete/mute button)
-      The User: if viewing own page, present ways to delete posts, diff post stats
-      Random: base access to view users posts, as we will implement as default-->
 <h2>Submitted Locations</h2>
 <ul>
   <% if !@user.subs.nil? %>

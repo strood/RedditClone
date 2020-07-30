@@ -6,17 +6,37 @@
     <%= csp_meta_tag %>
     <%= fontawesome_kit_tag %>
 
+    <script type="text/javascript">
+      function toggleHeaderDropdown() {
+        var e = document.getElementById('header_dropdown');
+        if(e.style.display == 'flex')
+            e.style.display = 'none';
+        else
+            e.style.display = 'flex';
+      }
+      function toggleOptionDropdown() {
+
+        var e = document.getElementById('option_dropdown');
+        if(e.style.display == 'flex')
+            e.style.display = 'none';
+        else
+            e.style.display = 'flex';
+      }
+    </script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/css2?family=Merienda+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 </head>
 
-  <body>
-    <%= render "shared/userbar" %>
-    <%= render "shared/errors" %>
-    <%= render "shared/messages" %>
-    <%= yield %>
-    <%= render "shared/footer" %>
+  <body id='body'>
+    <%= render "shared/header" %>
+    <div id="content" class="content">
+
+      <%= render "shared/errors" %>
+      <%= render "shared/messages" %>
+      <%= yield %>
+      <%= render "shared/footer" %>
+  </div>
   </body>
 </html>

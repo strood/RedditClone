@@ -1,18 +1,15 @@
 @import 'base';
 
-.logo {
-  font-family: $logo-font;
-  color: $white;
-  font-size: 39px;
-}
-
 .logo_div {
   display: flex;
+  font-size: 39px;
+  height: $header-height - 20px;
   padding: 10px;
   i {
-    color: $white;
-    font-size: 39px;
     padding-top: 4px;
     padding-right: 4px;
+  }
+  p {
+    font-family: $logo-font;
   }
 }

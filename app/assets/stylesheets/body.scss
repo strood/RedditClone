@@ -1,0 +1,11 @@
+@import 'base';
+/* Base Body Style and Structure*/
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: $main-font;
+}
+
+.content {
+  margin-top: $header-height;
+}
