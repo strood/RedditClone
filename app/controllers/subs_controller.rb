@@ -1,5 +1,5 @@
 class SubsController < ApplicationController
-  before_action :require_current_user!, except: [:index, :show], errors: ["Must be logged in."]
+  before_action :require_current_user!, except: [:index, :show]
   before_action :require_user_owns_sub!, only: [:edit]
 
   def index
@@ -28,13 +28,17 @@ class SubsController < ApplicationController
   def create
     @sub = Sub.create(sub_params)
     @sub.user_id = current_user.id
-
-    if @sub.save!
-      flash[:notice] = ["Sub #{@sub.title} successfully created!"]
-      redirect_to sub_url(@sub)
+    if !Sub.friendly.find_by(title: @sub.title).nil?
+      flash[:errors] = ["Location already added!"]
+      redirect_to sub_url(@sub.title)
     else
-      flash[:errors] = ["Invalid credentials, please try again"]
-      redirect_to new_sub_url
+      if @sub.save!
+        flash[:notice] = ["#{@sub.title} successfully added!"]
+        redirect_to sub_url(@sub)
+      else
+        flash[:errors] = ["Invalid details, please try again"]
+        redirect_to new_sub_url
+      end
     end
   end
 
@@ -47,19 +51,31 @@ class SubsController < ApplicationController
 
   def update
     @sub = Sub.friendly.find(params[:id])
-    if @sub.update(sub_params)
-      flash[:notice] = ["Sucessfully updated #{@sub.title}"]
-      redirect_to sub_url(@sub)
+    if @sub.title != params[:sub][:title]
+      if @sub.update(sub_params)
+        @sub2 = Sub.new(title: @sub.title, description: @sub.description, user_id: @sub.user_id)
+        @sub.destroy!
+        @sub2.save!
+        redirect_to sub_url(@sub2)
+      else
+        flash[:errors] = ["Unable to update #{ @sub.title }"]
+        redirect_to sub_url(@sub)
+      end
     else
-      flash[:errors] = ["Unable to update sub"]
-      redirect_to sub_url(@sub)
+      if @sub.update(sub_params)
+        flash[:notice] = ["Sucessfully updated #{@sub.title}"]
+        redirect_to sub_url(@sub)
+      else
+        flash[:errors] = ["Unable to update #{ @sub.title }"]
+        redirect_to sub_url(@sub)
+      end
     end
   end
 
   def destroy
     @sub = Sub.friendly.find(params[:id])
     if @sub.destroy!
-      flash[:notice] = ["Sub: #{@sub.title} successfully deleted"]
+      flash[:notice] = ["#{@sub.title} successfully deleted"]
       redirect_to subs_url
     else
       flash[:errors] = ["Unable to destroy #{@sub.title}"]
@@ -72,10 +88,10 @@ class SubsController < ApplicationController
     unless UserSub.find_by(sub_id: @sub.id, user_id: current_user.id)
       @user_sub = UserSub.new(sub_id: @sub.id, user_id: current_user.id)
       if @user_sub.save!
-        flash[:notice] = ["Subscribed!"]
+        flash[:notice] = ["Subscribed to #{ @sub.title }!"]
         redirect_back(fallback_location: root_path)
       else
-        flash[:errors] = ["Unable to subscribe"]
+        flash[:errors] = ["Unable to subscribe to #{ @sub.title }"]
         redirect_back(fallback_location: root_path)
       end
     else
@@ -89,10 +105,10 @@ class SubsController < ApplicationController
     @user_sub = UserSub.find_by(sub_id: @sub.id, user_id: current_user.id)
     if @user_sub
       if @user_sub.destroy!
-        flash[:notice] = ["Unsubscribed!"]
+        flash[:notice] = ["Unsubscribed from #{ @sub.title }!"]
         redirect_back(fallback_location: root_path)
       else
-        flash[:errors] = ["Unable to unsubscribe"]
+        flash[:errors] = ["Unable to unsubscribe from #{ @sub.title }"]
         redirect_back(fallback_location: root_path)
       end
     else

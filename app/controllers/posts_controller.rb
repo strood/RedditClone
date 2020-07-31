@@ -29,14 +29,14 @@
         #  for us through the methods we gained from the post_subs association mentions above
         @post.posted_sub_ids = params[:posted_sub_ids].each
 
-        flash[:notice] = ["Post successfully created!"]
+        flash[:notice] = ["#{@post.title} successfully added!"]
         redirect_to post_url(@post)
       else
-        flash[:errors] = ["Invalid credentials, please try again"]
+        flash[:errors] = ["Invalid details, please try again"]
         redirect_to new_post_url
       end
     else
-      flash[:errors] = ["Post must belong to at least one sub"]
+      flash[:errors] = ["Food must belong to at least one Location"]
       redirect_to new_post_url
     end
 
@@ -54,14 +54,14 @@
       # This constructs our post_sub objects based on the selected subs in posts creation
       @post.posted_sub_ids = params[:posted_sub_ids].each
       if @post.update(post_params)
-        flash[:notice] = ["Sucessfully updated post"]
+        flash[:notice] = ["Sucessfully updated #{@post.title}"]
         redirect_to post_url(@post)
       else
-        flash[:errors] = ["Unable to update post"]
+        flash[:errors] = ["Unable to update #{@post.title}"]
         redirect_to edit_post_url(@post)
       end
     else
-      flash[:errors] = ["Post must belong to at least one sub"]
+      flash[:errors] = ["Food must belong to at least one Location"]
       redirect_to edit_post_url(@post)
     end
   end
@@ -69,10 +69,10 @@
   def destroy
     @post = Post.friendly.find(params[:id])
     if @post.destroy!
-      flash[:notice] = ["Post deleted"]
+      flash[:notice] = ["#{@post.title} deleted"]
       redirect_to subs_url
     else
-      flash[:errors] = ["Unable to delete post"]
+      flash[:errors] = ["Unable to delete #{@post.title}"]
       redirect_to post_url(@post)
     end
   end
@@ -84,10 +84,10 @@
       upvote.save!
       @post.increment(:score)
       @post.save
-      flash[:notice] = ["Upvote successful!"]
+      flash[:notice] = ["Upvote #{@post.title} successful!"]
       redirect_back(fallback_location: root_path)
     rescue
-      flash[:errors] = ["Already voted on this post"]
+      flash[:errors] = ["Already voted on #{@post.title}"]
       redirect_back(fallback_location: root_path)
     end
   end
@@ -99,10 +99,10 @@
       downvote.save!
       @post.decrement(:score)
       @post.save
-      flash[:notice] = ["Downvote successful!"]
+      flash[:notice] = ["Downvote #{@post.title} successful!"]
       redirect_back(fallback_location: root_path)
     rescue
-      flash[:errors] = ["Already voted on this post"]
+      flash[:errors] = ["Already voted on #{@post.title}"]
       redirect_back(fallback_location: root_path)
     end
   end

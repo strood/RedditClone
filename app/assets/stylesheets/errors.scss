@@ -1,0 +1,25 @@
+@import 'base';
+.notice_bar {
+  display: flex;
+  flex-direction: column;
+  font-family: $main-font;
+  li {
+    display: flex;
+    justify-content: center;
+    color: $white;
+    font-size: 22px;
+    font-weight: bolder;
+  }
+}
+
+.error {
+  li {
+    background-color: red;
+  }
+}
+
+.message {
+  li {
+    background-color: $light-green;
+  }
+}

@@ -34,5 +34,5 @@ Rails.application.routes.draw do
 
   resource :session, only: [:new, :create, :destroy]
 
-  root to: redirect('/pages/landing')
+  root to: redirect('/pages/about')
 end

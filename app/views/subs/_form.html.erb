@@ -15,6 +15,7 @@
       type="text"
       name="sub[title]"
       value="<%= @sub.title %>">
+      <p style="color:red">**WARNING: Changing name will erase all foods for location**</p>
 
     <label for="description">Description:</label>
     <textarea id="description" name="sub[description]" rows="8" cols="60"><%= @sub.description %></textarea>

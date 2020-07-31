@@ -20,6 +20,7 @@ class Sub < ApplicationRecord
 
   # Validations and Associations
   validates :title, :description, :user_id, :slug, presence: true
+  validates :title, uniqueness: true
 
   belongs_to :moderator,
     primary_key: :id,
