@@ -1,6 +1,6 @@
-<h1>Location: <%= @sub.title %></h1>
+<h1>Sub: <%= @sub.title %></h1>
 <% if current_user == @sub.moderator %>
-  <a href="<%= edit_sub_url(@sub) %>">Edit Location</a>
+  <a href="<%= edit_sub_url(@sub) %>">Edit Sub</a>
 <% end %>
 <ul>
   <li>
@@ -20,11 +20,11 @@
   Description:
   <%= @sub.description %>
 </h3>
-<h3>Added by:
+<h3>Owner:
   <%= @sub.moderator.username  %>
 </h3>
 
-<h2>FOODS:</h2>
+<h2>Posts:</h2>
 
 <ul>
   <% @paginate_posts.each do |sub_post| %>
@@ -37,7 +37,7 @@
     <%= sub_post.score %>
     <ul>
       <li>
-        Suggested by:
+        Added by:
         <a href="<%= user_url(sub_post.author) %>">
           <%= sub_post.author.username %>
         </a>
@@ -61,4 +61,4 @@
 <%= paginate @paginate_posts %>
 
 
-<a href="<%= new_post_url %>">Suggest New Food</a>
+<a href="<%= new_post_url %>">Add Post</a>

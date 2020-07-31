@@ -28,9 +28,10 @@ class SubsController < ApplicationController
   def create
     @sub = Sub.create(sub_params)
     @sub.user_id = current_user.id
-    if !Sub.friendly.find_by(title: @sub.title).nil?
+    @sub_check = Sub.friendly.find_by(title: @sub.title)
+    if !@sub_check.nil?
       flash[:errors] = ["Location already added!"]
-      redirect_to sub_url(@sub.title)
+      redirect_to sub_url(@sub_check.id)
     else
       if @sub.save!
         flash[:notice] = ["#{@sub.title} successfully added!"]
@@ -51,24 +52,12 @@ class SubsController < ApplicationController
 
   def update
     @sub = Sub.friendly.find(params[:id])
-    if @sub.title != params[:sub][:title]
-      if @sub.update(sub_params)
-        @sub2 = Sub.new(title: @sub.title, description: @sub.description, user_id: @sub.user_id)
-        @sub.destroy!
-        @sub2.save!
-        redirect_to sub_url(@sub2)
-      else
-        flash[:errors] = ["Unable to update #{ @sub.title }"]
-        redirect_to sub_url(@sub)
-      end
+    if @sub.update(sub_params)
+      flash[:notice] = ["Sucessfully updated #{@sub.title}"]
+      redirect_to sub_url(@sub)
     else
-      if @sub.update(sub_params)
-        flash[:notice] = ["Sucessfully updated #{@sub.title}"]
-        redirect_to sub_url(@sub)
-      else
-        flash[:errors] = ["Unable to update #{ @sub.title }"]
-        redirect_to sub_url(@sub)
-      end
+      flash[:errors] = ["Unable to update #{ @sub.title }"]
+      redirect_to sub_url(@sub)
     end
   end
 

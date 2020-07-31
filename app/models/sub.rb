@@ -15,6 +15,11 @@ class Sub < ApplicationRecord
   extend FriendlyId
   friendly_id :title, :use => :slugged
 
+  # Resets slug on update
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
+
   # Sets per-page limits for pagination with Kaminari Gem
   paginates_per 15
 

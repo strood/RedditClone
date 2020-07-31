@@ -1,4 +1,4 @@
-<h1>Food:</h1>
+<h1>Post:</h1>
 <h2><%= @post.title %> -- <%= @post.score %></h2>
 <ul>
   <li>
@@ -16,10 +16,10 @@
 </ul>
 
 <% if current_user == @post.author %>
-  <a href="<%= edit_post_url(@post) %>">Edit Food</a>
+  <a href="<%= edit_post_url(@post) %>">Edit Post</a>
 <% end %>
 
-<h3>Location:</h3>
+<h3>Subs:</h3>
 <ul>
   <% @post.posted_subs.each do |sub| %>
   <li>
@@ -30,20 +30,21 @@
   <% end %>
 </ul>
 
-<h4>Suggester:</h4>
+<h4>Author:</h4>
 <h4>
   <a href="<%= user_url(@post.author) %>">
     <%= @post.author.username %>
   </a>
 </h4>
 
-<h3>Notes:</h3>
+<h3>Post Comment:</h3>
 <% if @post.content %>
   <p><%= @post.content %></p>
 <% else %>
-  <p>No notes</p>
+  <p>No Comment</p>
 <% end %>
-<h3>Comments</h3>
+
+<h3>Replies:</h3>
 
 <% if @all_comments[nil] %>
   <%= render 'comment', comments: @all_comments[nil] %>

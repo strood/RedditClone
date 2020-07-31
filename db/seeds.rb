@@ -20,16 +20,17 @@ ActiveRecord::Base.transaction do
     User.create!(username: Faker::Name.unique.first_name, password:'123456')
   end
 
-  # Make a list of 50 unique Subs (locations to eat a food)
+  # Make a list of 50 unique Subs
   50.times do
-    Sub.create!(title: Faker::Address.unique.country, description: Faker::Lorem.sentence(word_count: 7), user_id: User.find(Faker::Number.between(from:1, to:100)).id)
+    title = Faker::App.name + " " + Faker::Verb.ing_form + " " + Faker::Food.unique.dish
+    Sub.create!(title: title, description: Faker::Lorem.sentence(word_count: 7), user_id: User.find(Faker::Number.between(from:1, to:100)).id)
   end
 
-  # Make 10-20 unique posts in each sub(These will be "Dishes to be eaten" in this case)
+  # Make 10-20 unique posts in each sub
   (1..50).each do |i|
     Faker::Number.between(from:10, to:20).times do
-      title = Faker::Food.unique.dish
-      post = Post.create!(title: title, url: "www.wikipedia.com/wiki/" + title.html_safe + "/" , content: Faker::Lorem.sentence(word_count: 5), user_id: Faker::Number.between(from:1, to:100))
+      title = Faker::Marketing.buzzwords + " " + Faker::Verb.ing_form + " " + Faker::Dessert.flavor
+      post = Post.create!(title: title, content: Faker::Lorem.sentence(word_count: 5), user_id: Faker::Number.between(from:1, to:100))
       # Create a PostSub for each post, so each post is added to at least one sub at a time.
       PostSub.create!(post_id: post.id, sub_id: i)
     end

@@ -11,12 +11,13 @@
   <input type="submit" name="" value="Reply">
 </form>
 
+<h2>Other Replies:</h2>
 <ul>
   <% if !@comment.child_comments.nil? %>
     <%= render 'comment', comment:@comment.child_comments.order(:score) %>
   <% else %>
     <li>
-      No child_comments here yet
+      No other replies yet
     </li>
   <% end %>
 </ul>

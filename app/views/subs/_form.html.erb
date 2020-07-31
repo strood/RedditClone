@@ -1,6 +1,6 @@
 <% action = (sub.persisted? ? sub_url(sub) : subs_url) %>
 <% method = (sub.persisted? ? 'patch' : 'post') %>
-<% message =(sub.persisted? ? 'Update Location' : 'Add Location') %>
+<% message =(sub.persisted? ? 'Update Sub' : 'Add Sub') %>
 
 
 <form action="<%= action %>" method="post">
@@ -10,12 +10,11 @@
       value="<%= method %>">
     <%= auth_token %>
 
-    <label for="title">Name:</label>
+    <label for="title">Title:</label>
     <input
       type="text"
       name="sub[title]"
       value="<%= @sub.title %>">
-      <p style="color:red">**WARNING: Changing name will erase all foods for location**</p>
 
     <label for="description">Description:</label>
     <textarea id="description" name="sub[description]" rows="8" cols="60"><%= @sub.description %></textarea>

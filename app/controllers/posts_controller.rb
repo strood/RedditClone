@@ -23,7 +23,7 @@
     #  when post.save gets called, Post.sub_ids= is also called, and our checked
     #  subs are all created in relation to this post. handling all that for us.
     unless params[:posted_sub_ids].nil?
-
+      
       if @post.save!
         # now we have a post id to set, and can save our sub posts, done
         #  for us through the methods we gained from the post_subs association mentions above

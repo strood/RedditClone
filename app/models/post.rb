@@ -4,7 +4,6 @@
 #
 #  id         :bigint           not null, primary key
 #  title      :string           not null
-#  url        :string
 #  content    :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -15,13 +14,22 @@
 class Post < ApplicationRecord
   # Extend FriendlyID for nice URLs, set up slugged name.
   extend FriendlyId
-  friendly_id :title, :use => :slugged
+  friendly_id :post_and_sub, :use => :slugged
+
+  def post_and_sub
+    "#{title} from #{author.username}"
+  end
+
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
 
   # Sets per-page limits for pagination with Kaminari Gem
   paginates_per 10
 
   # Validations and Associations
   validates :title, :user_id, :slug, presence: true
+  validates :title, uniqueness: { scope: :posted_subs }
 
   belongs_to :author,
     primary_key: :id,

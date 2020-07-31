@@ -1,7 +1,7 @@
 <h1><%= @user.username %>'s UserPage</h1>
 <h2>VoteScore: <%= @user.votescore %></h2>
 
-<h2>Submitted Locations</h2>
+<h2>Owned Subs</h2>
 <ul>
   <% if !@user.subs.nil? %>
     <% @user.subs.each do |sub| %>
@@ -13,12 +13,12 @@
     <% end %>
   <% else %>
     <li>
-      No Locations suggested yet! - <a href="<%= new_sub_url %>">Add One!</a>
+      No Subs created yet! - <a href="<%= new_sub_url %>">Add One!</a>
     </li>
   <% end %>
 </ul>
 
-<h2>Subscribed Locations</h2>
+<h2>Subscriptions</h2>
 <ul>
   <% if !@user.subscriptions.nil? %>
     <% @user.subscriptions.each do |subscription| %>
@@ -30,11 +30,11 @@
     <% end %>
   <% else %>
     <li>
-      No Subscriptions yet! - <a href="<%= new_sub_url %>">Create One!</a>
+      No Subscriptions yet! - <a href="<%= subs_url %>">Find a new Sub!</a>
     </li>
   <% end %>
 </ul>
-<h2>Foods</h2>
+<h2>Posts</h2>
 <ul>
   <% if !@user.posts.nil? %>
     <% @user.posts.each do |post| %>
@@ -46,7 +46,7 @@
     <% end %>
   <% else %>
     <li>
-      No Foods yet!
+      No Posts yet!
     </li>
   <% end %>
 </ul>
