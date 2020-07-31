@@ -3,8 +3,23 @@ class SubsController < ApplicationController
   before_action :require_user_owns_sub!, only: [:edit]
 
   def index
-    @subs = Sub.order(:title).includes(:moderator).page params[:page]
-    render :index
+    if !params[:sub].nil?
+      if ['0', '1', '2'].include?(params[:sub][:option])
+        opt = [:title, :created_at, created_at: :desc]
+        # if params[:sub][:option] == '2'
+        #   @subs = Sub.order(opt[params[:sub][:option].to_i]).includes(:moderator).page params[:page]
+        # end
+        @subs = Sub.order(opt[params[:sub][:option].to_i]).includes(:moderator).page params[:page]
+        render :index
+      else
+        flash[:errors] = ["Invalid Order!"]
+        @subs = Sub.order(:title).includes(:moderator).page params[:page]
+        render :index
+      end
+    else
+      @subs = Sub.order(:title).includes(:moderator).page params[:page]
+      render :index
+    end
   end
 
 
@@ -109,6 +124,6 @@ class SubsController < ApplicationController
   private
 
   def sub_params
-    params.require(:sub).permit(:title, :description)
+    params.require(:sub).permit(:title, :description, :option)
   end
 end
