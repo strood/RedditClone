@@ -1,12 +1,12 @@
 <ul id="header_dropdown" class="header_dropdown hidden">
   <li>
       <a href="<%= user_url(current_user) %>">
-        <%= current_user.username %>
+      <p class="dropdown_dashes">-</p><%= current_user.username %><p class="dropdown_dashes">-</p>
       </a>
   </li>
   <li>
       <a href="<%= subscriptions_user_url(current_user) %>">
-        Your Locations
+        <p class="dropdown_dashes">-</p>Your Locations<p class="dropdown_dashes">-</p>
       </a>
   </li>
   <li>

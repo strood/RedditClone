@@ -15,6 +15,7 @@ module ApplicationHelper
     html.html_safe
   end
   # Use to add my google icon kit to head, otherwise breaks formatting.
+  # (not currently using)
   def google_icons_kit
     html = '<script src="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></script>'
     html.html_safe
