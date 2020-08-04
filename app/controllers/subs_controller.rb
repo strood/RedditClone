@@ -6,9 +6,6 @@ class SubsController < ApplicationController
     if !params[:sub].nil?
       if ['0', '1', '2'].include?(params[:sub][:option])
         opt = [:title, :created_at, created_at: :desc]
-        # if params[:sub][:option] == '2'
-        #   @subs = Sub.order(opt[params[:sub][:option].to_i]).includes(:moderator).page params[:page]
-        # end
         @subs = Sub.order(opt[params[:sub][:option].to_i]).includes(:moderator).page params[:page]
         render :index
       else
@@ -27,10 +24,28 @@ class SubsController < ApplicationController
     @sub = Sub.friendly.includes(:moderator).find(params[:id])
     # Paginating the query directly led to mis-ordering, now we have it
     # turning an array into a paginatable object then using that in the view, after
-    # being sorted beforehand, then ...reversed?
-    @sub_posts = @sub.sub_posts.includes(:author, :votes).order(:score).reverse
-    @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
-    render :show
+    # being sorted beforehand, then ...reversed? Looks ugly should simplify.
+    if !params[:sub].nil?
+      if ['0', '1', '2', '3'].include?(params[:sub][:option])
+        options = [:score, :title, :created_at, created_at: :desc]
+        @post_order = options[params[:sub][:option].to_i]
+        @sub_posts = @sub.sub_posts.includes(:author, :votes).order(@post_order)
+        @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
+        render :show
+      else
+        flash[:errors] = ["Invalid Order!"]
+        @post_order = :score
+        @sub_posts = @sub.sub_posts.includes(:author, :votes).order(@post_order).reverse
+        @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
+        render :show
+      end
+    else
+      @post_order = :score
+      @sub_posts = @sub.sub_posts.includes(:author, :votes).order(@post_order).reverse
+      @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
+      render :show
+    end
+
   end
 
 

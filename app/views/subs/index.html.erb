@@ -3,8 +3,8 @@ Sorted by:
 <form class="" action="<%=  %>" method="get">
   <select class="" name="sub[option]">
     <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Title</option>
-    <option value="2" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Newest</option>
-    <option value="1" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Oldest</option>
+    <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Oldest</option>
+    <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Newest</option>
   </select>
   <input type="submit" name="sort" value="Sort">
 </form>
