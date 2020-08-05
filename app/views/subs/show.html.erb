@@ -1,4 +1,4 @@
-<h1>Sub: <%= @sub.title %></h1>
+<h1 class="page_title">Sub: <%= @sub.title %></h1>
 <% if current_user == @sub.moderator %>
   <a href="<%= edit_sub_url(@sub) %>">Edit Sub</a>
 <% end %>
@@ -24,19 +24,23 @@
   <%= @sub.moderator.username  %>
 </h3>
 
-<h2>Posts:</h2>
-Sorted by:
-<form class="" action="<%=  %>" method="get">
-  <select class="" name="sub[option]">
-    <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Score</option>
-    <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Title</option>
-    <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Oldest</option>
-    <option value="3" <%= params[:sub] && params[:sub][:option] == '3' ? 'selected' : '' %>>Newest</option>
-  </select>
-  <input type="submit" name="sort" value="Sort">
-</form>
+<a href="<%= new_post_url %>">Add Post</a>
 
-<ul>
+<h2>Posts:</h2>
+<div class="sort_bar">
+  Sorted by:
+  <form class="" action="<%=  %>" method="get">
+    <select class="" name="sub[option]">
+      <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Score</option>
+      <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Title</option>
+      <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Oldest</option>
+      <option value="3" <%= params[:sub] && params[:sub][:option] == '3' ? 'selected' : '' %>>Newest</option>
+    </select>
+    <input type="submit" name="sort" value="Sort">
+  </form>
+</div>
+
+<ul class="subs_list">
   <% @paginate_posts.each do |sub_post| %>
   <li>
     <a href="<%= post_url(sub_post) %>">
@@ -68,7 +72,6 @@ Sorted by:
   </li>
   <% end %>
 </ul>
-<%= paginate @paginate_posts %>
-
-
-<a href="<%= new_post_url %>">Add Post</a>
+<div class="pagination">
+  <%= paginate @paginate_posts %>
+</div>

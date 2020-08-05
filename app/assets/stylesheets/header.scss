@@ -12,7 +12,7 @@ header {
   display: flex;
   justify-content: space-between;
   height: $header-height;
-  background-color: $dark-green;
+  background-color: $bright-green;
   color: $white;
   font-size: 20px;
   font-weight: bolder;
@@ -23,7 +23,7 @@ header {
     li {
       padding-left: 5px;
       padding-right: 5px;
-      border: 1px solid $dark-green;
+      border: 1px solid $bright-green;
     }
     li:hover {
       background-color: $medium-green;
