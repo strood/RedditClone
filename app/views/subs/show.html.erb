@@ -1,10 +1,23 @@
 <div class="sub_container">
   <div class="sub_top">
 
-  <h1 class="page_title"><%= @sub.title %></h1>
-    <% if current_user == @sub.moderator %>
-      <a href="<%= edit_sub_url(@sub) %>">Edit Sub</a>
-    <% end %>
+    <h1 class="page_title"><%= @sub.title %></h1>
+    <div class="sub_creator">
+      <h2>
+        Creator:
+      </h2>
+      <a href="<%= user_url(@sub.moderator.id) %>">
+        <h4>
+          <%= @sub.moderator.username  %>
+        </h4>
+      </a>
+    </div>
+    <h2>
+      Description:
+    </h2>
+    <h5>
+      <%= @sub.description %>
+    </h5>
     <ul>
       <li>
         <form action="<%= subscribe_sub_url(@sub) %>" method="post">
@@ -19,22 +32,14 @@
         </form>
       </li>
     </ul>
-    <p>
-      Description:
-    </p>
-    <h3>
-      <%= @sub.description %>
-    </h3>
-    <p>Creator:</p>
-    <a href="<%= user_url(@sub.moderator.id) %>">
-      <h3>
-        <%= @sub.moderator.username  %>
-      </h3>
-    </a>
-  </div>
 
+    <% if current_user == @sub.moderator %>
+      <a class="" href="<%= edit_sub_url(@sub) %>">Edit Sub</a>
+    <% end %>
+  </div>
+  <hr>
   <div class="sort_bar">
-    <h2>Posts:</h2>
+    <h2>Posts</h2>
     <p>
       Sorted by:
     </p>
@@ -49,41 +54,16 @@
     </form>
   </div>
 
+  <ul class="subs_list">
 
-    <ul class="subs_list">
-      <% @paginate_posts.each do |sub_post| %>
-      <li class="post_shadow_box">
-        <a href="<%= post_url(sub_post) %>">
-          <h3>
-            <%= sub_post.title %>
-          </h3>
-        </a>
-        <br>
-        Score:
-        <%= sub_post.score %>
-        <ul>
-          <li>
-            Added by:
-            <a href="<%= user_url(sub_post.author) %>">
-              <%= sub_post.author.username %>
-            </a>
-          </li>
-          <li>
-            <form action="<%= upvote_post_url(sub_post) %>" method="post">
-              <%= auth_token %>
-              <input type="submit" name="submit" value="Upvote">
-            </form>
-          </li>
-          <li>
-            <form action="<%= downvote_post_url(sub_post) %>" method="post">
-              <%= auth_token %>
-              <input type="submit" name="submit" value="Downvote">
-            </form>
-          </li>
-        </ul>
-      </li>
+    <% @paginate_posts.each do |sub_post| %>
+
+      <%= render 'shared/post_box', sub_post:sub_post %>
+
+
       <% end %>
     </ul>
+
 
     <%= paginate @paginate_posts %>
 

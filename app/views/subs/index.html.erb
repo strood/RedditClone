@@ -17,31 +17,9 @@
 
   <ul class="subs_list">
     <% @subs.each do |sub| %>
-    <li class="sub_shadow_box">
-        <h2>
-          <a href="<%= sub_url(sub) %>">
-            <%= sub.title %>
-          </a>
-        </h2>
-          <div class="">
-
-            <p>
-              Creator:
-            </p>
-            <a href="<%= user_url(sub.moderator) %>">
-              <h4>
-                <%= sub.moderator.username %>
-              </h4>
-            </a>
-          </div>
-
-          <p>
-            Description:
-            <%= sub.description %>
-          </p>
-        </li>
-        <% end %>
-      </ul>
+      <%= render 'sub_box', sub:sub %>
+    <% end %>
+  </ul>
 
       <%= paginate @subs %>
 </div>

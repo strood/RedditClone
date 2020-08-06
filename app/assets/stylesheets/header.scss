@@ -12,12 +12,12 @@ header {
   display: flex;
   justify-content: space-between;
   height: $header-height;
-  background-color: $bright-green;
+  background-color: $medium-green;
   color: $white;
   font-size: 20px;
   font-weight: bolder;
   width: 100%;
-  -webkit-box-shadow: 0px 12px 15px 0px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 0px 4px 15px 0px rgba(0,0,0,0.25);
   box-shadow: 0px 4px 15px 0px rgba(0,0,0,0.25);
   ul {
     display: flex;
@@ -25,10 +25,10 @@ header {
     li {
       padding-left: 5px;
       padding-right: 5px;
-      border: 1px solid $bright-green;
+      border: 1px solid $medium-green;
     }
     li:hover {
-      background-color: $medium-green;
+      background-color: $bright-green;
       color: $yellow;
     }
     .user_li a {

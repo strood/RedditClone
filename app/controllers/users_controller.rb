@@ -43,6 +43,7 @@ class UsersController < ApplicationController
   def subscriptions
     @user = User.friendly.includes(:subscriptions).find(params[:id])
     @posts = User.subscription_posts(@user.subscriptions)
+    @paginatable_posts = Kaminari.paginate_array(@posts).page(params[:page]).per(15)
     render :subscriptions
   end
 

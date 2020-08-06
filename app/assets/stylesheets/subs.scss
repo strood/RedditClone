@@ -3,13 +3,27 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 @import 'base';
 
+.sub_container {
+  margin-top: 1%;
+}
+
 .sub_top {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   margin-left: 3%;
-  h1, h2, h3 {
+  h1 {
       color: $dark-green;
+  }
+  h2 {
+    color: $violet;
+  }
+  h3 {
+    color: $violet;
+  }
+  h5 {
+    font-size: 20px;
+    margin-left: 1%;
   }
 }
 
@@ -24,29 +38,34 @@
   flex-direction: column;
   align-items: center;
   background-color: $white;
-  h2, h1 {
+  h1 {
     color: $dark-green;
     margin: 1%;
   }
-  div {
-    display: flex;
-    h4  {
-      color: $bright-green;
-      margin-left: 5%;
-    }
-    h4:hover {
-      text-decoration: underline;
-    }
+  h2, h3 {
+    color: $violet;
+    margin: 1%;
+  }
+  .sub_creator h3 {
+    padding-top: 3%;
+  }
+}
+.sub_creator {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1%;
+  align-items: baseline;
+  h4  {
+    color: $bright-green;
+    margin-left: 5%;
+    font-size: 20px;
+  }
+  h4:hover {
+    text-decoration: underline;
   }
 }
 
-
-.sort_bar {
+.score_div {
   display: flex;
-  flex-direction: column;
-  margin-top: 1%;
-  margin-left: 3%;
-  h2, h1  {
-    color: $dark-green;
-  }
+  align-items: baseline;
 }

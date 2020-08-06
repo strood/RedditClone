@@ -1,8 +1,37 @@
 <div class="post_container">
   <div class="post_top">
+    <h1><%= @post.title %></h1>
+    <h2>Posted Subs:</h2>
+    <ul class="posted_subs">
+      <% @post.posted_subs.each do |sub| %>
+      <li>
+        <a href="<%= sub_url(sub) %>">
+          <h3>
+            <%= sub.title %>
+          </h3>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+    <div class="post_creator">
+      <h2>
+        Poster:
+      </h2>
+      <a href="<%= user_url(@post.author) %>">
+        <h3>
+          <%= @post.author.username %>
+        </h3>
+      </a>
+    </div>
+    <div class="score_div">
+      <h2>
+        Score:
+        <h4>
+          <%= @post.score %>
+        </h4>
+      </h2>
+    </div>
 
-    <h1>Post:</h1>
-    <h2><%= @post.title %> -- <%= @post.score %></h2>
     <ul>
       <li>
         <form action="<%= upvote_post_url(@post) %>" method="post">
@@ -22,38 +51,14 @@
       <a href="<%= edit_post_url(@post) %>">Edit Post</a>
     <% end %>
 
-    <h3>Subs:</h3>
-    <ul>
-      <% @post.posted_subs.each do |sub| %>
-      <li>
-        <a href="<%= sub_url(sub) %>">
-          <%= sub.title %>
-        </a>
-      </li>
-      <% end %>
-    </ul>
-
-    <h4>Author:</h4>
-    <h4>
-      <a href="<%= user_url(@post.author) %>">
-        <%= @post.author.username %>
-      </a>
-    </h4>
-
-    <h3>Post Comment:</h3>
+    <hr>
+    <h2>Comment:</h2>
     <% if @post.content %>
-      <p><%= @post.content %></p>
+      <h4><%= @post.content %></h4>
     <% else %>
       <p>No Comment</p>
     <% end %>
-
-    <h3>Replies:</h3>
-  </div>
-
-    <% if @all_comments[nil] %>
-    <%= render 'comment', comments: @all_comments[nil] %>
-    <% end %>
-
+    <hr>
     <form class="comment_form" action="<%= comments_url %>" method="post">
       <%= auth_token %>
       <input type="hidden" name="comment[post_id]" value="<%= @post.id %>">
@@ -62,5 +67,13 @@
 
       <input type="submit" name="" value="Reply">
     </form>
+    <div class="replies_bar">
+      <h2>Replies:</h2>
+    </div>
+  </div>
+
+    <% if @all_comments[0] %>
+      <%= render 'comment', comments: @all_comments[nil] %>
+    <% end %>
 
 </div>

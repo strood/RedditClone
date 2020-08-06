@@ -1,35 +1,5 @@
 <ul class="sub_list">
   <% comments.reverse.each do |comment| %>
-    <li class="comment_shadow_box">
-
-      <a href="<%= user_url(comment.author.id) %>">
-        <h3>
-          <%= comment.author.username %>
-        </h3>
-      </a>
-
-      <%= comment.content %>
-      <a href="<%= comment_url(comment.id) %>">Reply</a>
-      Score: <%= comment.score %>
-
-      <ul>
-        <li>
-          <form action="<%= upvote_comment_url(comment) %>" method="post">
-            <%= auth_token %>
-            <input type="submit" name="submit" value="Upvote">
-          </form>
-        </li>
-        <li>
-          <form action="<%= downvote_comment_url(comment) %>" method="post">
-            <%= auth_token %>
-            <input type="submit" name="submit" value="Downvote">
-          </form>
-        </li>
-      </ul>
-
-      <% if @all_comments[comment.id] %>
-        <%= render 'comment', comments:@all_comments[comment.id].sort_by(&:score)%>
-        <% end %>
-      </li>
+    <%= render 'shared/comment_box', comment:comment %>
   <% end %>
 </ul>

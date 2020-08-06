@@ -8,7 +8,7 @@ body, html {
 }
 
 .content {
-  margin-top: $header-height + 10px;
+  margin-top: $header-height;
   margin-bottom: 2%;
   flex: 1;
   display: flex;
@@ -37,4 +37,13 @@ body, html {
   display: flex;
   justify-content: center;
 
+}
+
+hr {
+  width: 100%;
+  text-align: left;
+  margin-left: 0;
+  border-color: $violet;
+  background-color: $violet;
+  text-decoration-color: $violet;
 }
