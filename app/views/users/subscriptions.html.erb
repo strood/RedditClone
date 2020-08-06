@@ -1,16 +1,15 @@
-<h1>Top Foods from your subscribed Locations</h1>
+<h1>Posts from your Subscriptions</h1>
 
 
 <ul>
   <% @posts.reverse.each do |post| %>
-  <li>
-    Food:
+  <li class="post_shadow_box">
     <a href="<%= post_url(post.id) %>">
-      <%= post.title %>
+      <h3>
+        <%= post.title %>
+      </h3>
     </a>
     <br>
-    -----
-    Locations:
     <% post.posted_subs.each do |sub| %>
       <a href="<%= sub_url(sub.id) %>">
         <%= sub.title %>

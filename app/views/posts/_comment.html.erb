@@ -1,33 +1,35 @@
-<% comments.reverse.each do |comment| %>
-  <div style="background: gray; border: 1px solid green; margin-bottom: 3px;">
-    <ul>
-      <li>
+<ul class="sub_list">
+  <% comments.reverse.each do |comment| %>
+    <li class="comment_shadow_box">
 
-        <a href="<%= user_url(comment.author.id) %>"><%= comment.author.username %></a> says:
+      <a href="<%= user_url(comment.author.id) %>">
+        <h3>
+          <%= comment.author.username %>
+        </h3>
+      </a>
 
-        <%= comment.content %>
-        - <a href="<%= comment_url(comment.id) %>" style="font-size:12px;">Reply</a>
-        - Score: <%= comment.score %>
+      <%= comment.content %>
+      <a href="<%= comment_url(comment.id) %>">Reply</a>
+      Score: <%= comment.score %>
 
-        <ul>
-          <li>
-            <form action="<%= upvote_comment_url(comment) %>" method="post">
-              <%= auth_token %>
-              <input type="submit" name="submit" value="Upvote">
-            </form>
-          </li>
-          <li>
-            <form action="<%= downvote_comment_url(comment) %>" method="post">
-              <%= auth_token %>
-              <input type="submit" name="submit" value="Downvote">
-            </form>
-          </li>
-        </ul>
-
-        <% if @all_comments[comment.id] %>
-          <%= render 'comment', comments:@all_comments[comment.id].sort_by(&:score)%>
-          <% end %>
+      <ul>
+        <li>
+          <form action="<%= upvote_comment_url(comment) %>" method="post">
+            <%= auth_token %>
+            <input type="submit" name="submit" value="Upvote">
+          </form>
+        </li>
+        <li>
+          <form action="<%= downvote_comment_url(comment) %>" method="post">
+            <%= auth_token %>
+            <input type="submit" name="submit" value="Downvote">
+          </form>
         </li>
       </ul>
-    </div>
-<% end %>
+
+      <% if @all_comments[comment.id] %>
+        <%= render 'comment', comments:@all_comments[comment.id].sort_by(&:score)%>
+        <% end %>
+      </li>
+  <% end %>
+</ul>

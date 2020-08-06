@@ -4,11 +4,16 @@
   flex-direction: column;
   font-family: $main-font;
   li {
+    -webkit-box-shadow: -3px 3px 10px 3px rgba(0,0,0,0.30);
+    box-shadow: -3px 3px 10px 3px rgba(0,0,0,0.30);
     display: flex;
     justify-content: center;
     color: $white;
     font-size: 22px;
     font-weight: bolder;
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin-top: 2%;
   }
 }
 

@@ -20,13 +20,18 @@ class UsersController < ApplicationController
     @user.admin = false
 
     if !params[:user][:password].nil? && User.pass_valid?(params[:user][:password])
-      if @user.save!
-        # @user.update_attribute(:admin, false)
-        login!(@user)
-        flash[:notice] = ["Hello #{@user.username}, welcome to Foodie"]
-        redirect_to user_url(@user)
-      else
-        flash[:errors] = ["Invalid credentials, please try again"]
+      @existing_user = User.find_by(username: @user.username)
+      begin
+        if @user.save!
+          login!(@user)
+          flash[:notice] = ["Hello #{@user.username}, welcome to Foodie"]
+          redirect_to user_url(@user)
+        else
+          flash[:errors] = ["Invalid credentials, please try again"]
+          redirect_to new_user_url
+        end
+      rescue Exception => e
+        flash[:errors] = ["Username already taken, please try another"]
         redirect_to new_user_url
       end
     else

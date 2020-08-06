@@ -2,3 +2,41 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 @import 'base';
+
+.post_top {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-left: 1%;
+  h1 {
+      color: $dark-green;
+  }
+}
+
+.post_shadow_box {
+  border-radius: 10px;
+  -webkit-box-shadow: -3px 3px 10px 3px rgba(0,0,0,0.30);
+  box-shadow: -3px 3px 10px 3px rgba(0,0,0,0.30);
+  padding: 5%;
+  margin: 3% 3%;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    color: $dark-green;
+    margin: 1px;
+  }
+  li {
+
+  }
+}
+
+.post_container {
+  max-width: 624px;
+}
+
+@media all and(max-width: 650px) {
+  .post_container {
+    width: 99%;
+  }
+}

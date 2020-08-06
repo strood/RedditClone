@@ -1,60 +1,66 @@
-<h1>Post:</h1>
-<h2><%= @post.title %> -- <%= @post.score %></h2>
-<ul>
-  <li>
-    <form action="<%= upvote_post_url(@post) %>" method="post">
+<div class="post_container">
+  <div class="post_top">
+
+    <h1>Post:</h1>
+    <h2><%= @post.title %> -- <%= @post.score %></h2>
+    <ul>
+      <li>
+        <form action="<%= upvote_post_url(@post) %>" method="post">
+          <%= auth_token %>
+          <input type="submit" name="submit" value="Upvote">
+        </form>
+      </li>
+      <li>
+        <form action="<%= downvote_post_url(@post) %>" method="post">
+          <%= auth_token %>
+          <input type="submit" name="submit" value="Downvote">
+        </form>
+      </li>
+    </ul>
+
+    <% if current_user == @post.author %>
+      <a href="<%= edit_post_url(@post) %>">Edit Post</a>
+    <% end %>
+
+    <h3>Subs:</h3>
+    <ul>
+      <% @post.posted_subs.each do |sub| %>
+      <li>
+        <a href="<%= sub_url(sub) %>">
+          <%= sub.title %>
+        </a>
+      </li>
+      <% end %>
+    </ul>
+
+    <h4>Author:</h4>
+    <h4>
+      <a href="<%= user_url(@post.author) %>">
+        <%= @post.author.username %>
+      </a>
+    </h4>
+
+    <h3>Post Comment:</h3>
+    <% if @post.content %>
+      <p><%= @post.content %></p>
+    <% else %>
+      <p>No Comment</p>
+    <% end %>
+
+    <h3>Replies:</h3>
+  </div>
+
+    <% if @all_comments[nil] %>
+    <%= render 'comment', comments: @all_comments[nil] %>
+    <% end %>
+
+    <form class="comment_form" action="<%= comments_url %>" method="post">
       <%= auth_token %>
-      <input type="submit" name="submit" value="Upvote">
+      <input type="hidden" name="comment[post_id]" value="<%= @post.id %>">
+
+      <textarea name="comment[content]" rows="8" cols="80"></textarea>
+
+      <input type="submit" name="" value="Reply">
     </form>
-  </li>
-  <li>
-    <form action="<%= downvote_post_url(@post) %>" method="post">
-      <%= auth_token %>
-      <input type="submit" name="submit" value="Downvote">
-    </form>
-  </li>
-</ul>
 
-<% if current_user == @post.author %>
-  <a href="<%= edit_post_url(@post) %>">Edit Post</a>
-<% end %>
-
-<h3>Subs:</h3>
-<ul>
-  <% @post.posted_subs.each do |sub| %>
-  <li>
-    <a href="<%= sub_url(sub) %>">
-      <%= sub.title %>
-    </a>
-  </li>
-  <% end %>
-</ul>
-
-<h4>Author:</h4>
-<h4>
-  <a href="<%= user_url(@post.author) %>">
-    <%= @post.author.username %>
-  </a>
-</h4>
-
-<h3>Post Comment:</h3>
-<% if @post.content %>
-  <p><%= @post.content %></p>
-<% else %>
-  <p>No Comment</p>
-<% end %>
-
-<h3>Replies:</h3>
-
-<% if @all_comments[nil] %>
-  <%= render 'comment', comments: @all_comments[nil] %>
-<% end %>
-
-<form class="comment_form" action="<%= comments_url %>" method="post">
-  <%= auth_token %>
-  <input type="hidden" name="comment[post_id]" value="<%= @post.id %>">
-
-  <textarea name="comment[content]" rows="8" cols="80"></textarea>
-
-  <input type="submit" name="" value="Reply">
-</form>
+</div>
