@@ -29,19 +29,23 @@ class SubsController < ApplicationController
       if ['0', '1', '2', '3'].include?(params[:sub][:option])
         options = [:score, :title, :created_at, created_at: :desc]
         @post_order = options[params[:sub][:option].to_i]
-        @sub_posts = @sub.sub_posts.includes(:author, :votes).order(@post_order)
+        if @post_order == :score
+          @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order).reverse
+        else
+          @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order)
+        end
         @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
         render :show
       else
         flash[:errors] = ["Invalid Order!"]
         @post_order = :score
-        @sub_posts = @sub.sub_posts.includes(:author, :votes).order(@post_order).reverse
+        @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order).reverse
         @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
         render :show
       end
     else
       @post_order = :score
-      @sub_posts = @sub.sub_posts.includes(:author, :votes).order(@post_order).reverse
+      @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order).reverse
       @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
       render :show
     end
@@ -63,11 +67,13 @@ class SubsController < ApplicationController
       flash[:errors] = ["Location already added!"]
       redirect_to sub_url(@sub_check.id)
     else
-      if @sub.save!
-        flash[:notice] = ["#{@sub.title} successfully added!"]
-        redirect_to sub_url(@sub)
-      else
-        flash[:errors] = ["Invalid details, please try again"]
+      begin
+        if @sub.save!
+          flash[:notice] = ["#{@sub.title} successfully added!"]
+          redirect_to sub_url(@sub)
+        end
+      rescue Exception => e
+        flash[:errors] = [e.message]
         redirect_to new_sub_url
       end
     end
@@ -82,22 +88,28 @@ class SubsController < ApplicationController
 
   def update
     @sub = Sub.friendly.find(params[:id])
-    if @sub.update(sub_params)
-      flash[:notice] = ["Sucessfully updated #{@sub.title}"]
-      redirect_to sub_url(@sub)
-    else
+    begin
+      if @sub.update(sub_params)
+        flash[:notice] = ["Sucessfully updated #{@sub.title}"]
+        redirect_to sub_url(@sub)
+      end
+    rescue Exception => e
       flash[:errors] = ["Unable to update #{ @sub.title }"]
+      flash[:errors] << e.message
       redirect_to sub_url(@sub)
     end
   end
 
   def destroy
     @sub = Sub.friendly.find(params[:id])
-    if @sub.destroy!
-      flash[:notice] = ["#{@sub.title} successfully deleted"]
-      redirect_to subs_url
-    else
+    begin
+      if @sub.destroy!
+        flash[:notice] = ["#{@sub.title} successfully deleted"]
+        redirect_to subs_url
+      end
+    rescue Exception => e
       flash[:errors] = ["Unable to destroy #{@sub.title}"]
+      flash[:errors] << e.message
       redirect_to sub_url(@sub)
     end
   end

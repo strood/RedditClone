@@ -18,33 +18,53 @@ class UsersController < ApplicationController
 
     @user = User.new(user_params)
     @user.admin = false
-
-    if !params[:user][:password].nil? && User.pass_valid?(params[:user][:password])
-      @existing_user = User.find_by(username: @user.username)
+    @existing_user = User.find_by(username: @user.username)
+    if !@existing_user.nil?
+      flash[:errors] = ["Username already taken, please try another"]
+      redirect_to new_user_url
+    else
       begin
         if @user.save!
           login!(@user)
           flash[:notice] = ["Hello #{@user.username}, welcome to Foodie"]
           redirect_to user_url(@user)
-        else
-          flash[:errors] = ["Invalid credentials, please try again"]
-          redirect_to new_user_url
         end
       rescue Exception => e
-        flash[:errors] = ["Username already taken, please try another"]
+        flash[:errors] = [e.message]
+
         redirect_to new_user_url
       end
-    else
-      flash[:errors] = ["Invalid password, please try again"]
-      redirect_to new_user_url
     end
   end
 
   def subscriptions
-    @user = User.friendly.includes(:subscriptions).find(params[:id])
-    @posts = User.subscription_posts(@user.subscriptions)
-    @paginatable_posts = Kaminari.paginate_array(@posts).page(params[:page]).per(15)
-    render :subscriptions
+    if !params[:user].nil?
+      if ['0', '1', '2', '3'].include?(params[:user][:option])
+        options = [:score, :title, :created_at, created_at: :desc]
+        @post_order = options[params[:user][:option].to_i]
+        @user = User.friendly.includes(:subscriptions).find(params[:id])
+        if @post_order == :score
+          @posts = User.subscription_posts(@user.subscriptions, @post_order).reverse
+        else
+          @posts = User.subscription_posts(@user.subscriptions, @post_order)
+        end
+        @paginatable_posts = Kaminari.paginate_array(@posts).page(params[:page]).per(15)
+        render :subscriptions
+      else
+        flash[:errors] = ["Invalid Order!"]
+        @post_order = :score
+        @user = User.friendly.includes(:subscriptions).find(params[:id])
+        @posts = User.subscription_posts(@user.subscriptions, @post_order)
+        @paginatable_posts = Kaminari.paginate_array(@posts).page(params[:page]).per(15)
+        render :subscriptions
+      end
+    else
+      @post_order = :score
+      @user = User.friendly.includes(:subscriptions).find(params[:id])
+      @posts = User.subscription_posts(@user.subscriptions, @post_order).reverse
+      @paginatable_posts = Kaminari.paginate_array(@posts).page(params[:page]).per(15)
+      render :subscriptions
+    end
   end
 
   private

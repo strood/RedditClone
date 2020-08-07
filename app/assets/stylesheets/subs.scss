@@ -5,6 +5,8 @@
 
 .sub_container {
   margin-top: 1%;
+  min-width: 650px;
+  max-width: 780px;
 }
 
 .sub_top {
@@ -68,4 +70,11 @@
 .score_div {
   display: flex;
   align-items: baseline;
+}
+
+@media all and(max-width: 650px) {
+  .sub_container {
+    min-width: 0;
+    width: 99%;
+  }
 }

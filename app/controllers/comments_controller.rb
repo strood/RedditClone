@@ -15,19 +15,23 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
-    if @comment.save!
-      if @comment.parent_comment_id
-        flash[:notice] = ["Comment created successfully"]
-        redirect_to comment_url(@comment.parent_comment_id)
-      else
-        flash[:notice] = ["Comment created successfully"]
-        redirect_to post_url(@comment.post)
+
+    begin
+      if @comment.save!
+        if @comment.parent_comment_id
+          flash[:notice] = ["Comment created successfully"]
+          redirect_to comment_url(@comment.parent_comment_id)
+        else
+          flash[:notice] = ["Comment created successfully"]
+          redirect_to post_url(@comment.post)
+        end
       end
-    else
-      flash[:errors] = ["Invalid params, please try again"]
-      redirect_to new_post_comment_url(@comment.post_id)
+    rescue Exception => e
+      flash[:errors] = ["Invalid comment, please try again!"]
+      redirect_back(fallback_location: root_path)
     end
   end
+
 
   def upvote
     @comment = Comment.friendly.find(params[:id])

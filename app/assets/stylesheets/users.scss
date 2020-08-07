@@ -2,3 +2,43 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 @import 'base';
+
+.user_form {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  .form_section {
+    display: flex;
+    padding: 1%;
+  }
+
+  label {
+    color: $violet;
+    font-size: 22px;
+    font-weight: bolder;
+  }
+  input[type=text], input[type=password] {
+    border-bottom: 3px solid $medium-green;
+    padding: 1%;
+    font-size: 18px;
+  }
+  p {
+    font-size: 12px;
+    margin-bottom: 2%;
+  }
+  input[type=submit] {
+    align-self: baseline;
+    margin-top: 1%;
+    background-color: $bright-green;
+    color: $violet;
+    padding: 1% 5%;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+    border: 3px solid $medium-green;
+  }
+  input[type=submit]:hover {
+    color: $yellow;
+    background-color: $medium-green;
+  }
+}

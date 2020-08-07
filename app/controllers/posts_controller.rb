@@ -3,8 +3,7 @@
   before_action :require_user_owns_post!, only: [:edit]
 
   def show
-    @post = Post.friendly.includes(:author, :posted_subs).find(params[:id])
-    @all_comments = @post.comments_by_parent_id
+    @post = Post.friendly.includes(:author, :posted_subs, :comments).find(params[:id])
     render :show
   end
 
@@ -22,8 +21,8 @@
     # Becuase we get additional methods from our association of posts and post_subs
     #  when post.save gets called, Post.sub_ids= is also called, and our checked
     #  subs are all created in relation to this post. handling all that for us.
-    unless params[:posted_sub_ids].nil?
-      
+
+    begin
       if @post.save!
         # now we have a post id to set, and can save our sub posts, done
         #  for us through the methods we gained from the post_subs association mentions above
@@ -35,8 +34,8 @@
         flash[:errors] = ["Invalid details, please try again"]
         redirect_to new_post_url
       end
-    else
-      flash[:errors] = ["Food must belong to at least one Location"]
+    rescue Exception => e
+      flash[:errors] = ["Invalid Post, please try again"]
       redirect_to new_post_url
     end
 
@@ -50,20 +49,18 @@
 
   def update
     @post = Post.friendly.find(params[:id])
-    unless !params[:posted_sub_ids]
-      # This constructs our post_sub objects based on the selected subs in posts creation
-      @post.posted_sub_ids = params[:posted_sub_ids].each
-      if @post.update(post_params)
+    begin
+      if @post.update!(post_params)
+        @post.posted_sub_ids = params[:posted_sub_ids].each
         flash[:notice] = ["Sucessfully updated #{@post.title}"]
         redirect_to post_url(@post)
-      else
-        flash[:errors] = ["Unable to update #{@post.title}"]
-        redirect_to edit_post_url(@post)
       end
-    else
-      flash[:errors] = ["Food must belong to at least one Location"]
-      redirect_to edit_post_url(@post)
+    rescue Exception => e
+        flash[:errors] = ["Unable to update #{@post.title}"]
+        flash[:errors] << e.message
+        redirect_to edit_post_url(@post)
     end
+
   end
 
   def destroy

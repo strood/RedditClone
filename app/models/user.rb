@@ -14,16 +14,18 @@ class User < ApplicationRecord
     extend FriendlyId
     friendly_id :username
     validates_format_of :username, :with => /\A[a-z0-9]+\z/i
+    validates_length_of :username, maximum: 15
+    validates_length_of :password, { minimum: 6, allow_nil: true}
 
     attr_reader :password
 
     validates :username, presence: true, uniqueness: true
     validates :password_digest, presence: { message: 'Password can\'t be blank'}
     validates :session_token, :password_digest, presence: true
+
     # Need to allow blank otherwise false doesnt work as default.
     validates :admin, presence: true, allow_blank: true
 
-    validates :password, length: { minimum: 6, allow_nil: true }
 
     after_initialize :ensure_session_token
 
@@ -104,12 +106,12 @@ class User < ApplicationRecord
     end
 
     # Take array of subscruiptions and rank all posts in them by score
-    def self.subscription_posts(subscriptions)
+    def self.subscription_posts(subscriptions, order)
       @posts = []
       subscriptions.each do |sub|
-        @posts += sub.sub_posts
+        @posts += sub.sub_posts.order(order)
       end
-      @posts.sort_by { |post| post.score }
+      @posts
     end
 
 

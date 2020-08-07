@@ -1,6 +1,6 @@
 <% action = (post.persisted? ? post_url(post) : posts_url) %>
 <% method = (post.persisted? ? 'patch' : 'post') %>
-<% message =(post.persisted? ? 'Update Food' : 'Add Food') %>
+<% message =(post.persisted? ? 'Update Post' : 'Add Post') %>
 
 
 <form action="<%= action %>" method="post">
@@ -14,10 +14,11 @@
     <input
       type="text"
       name="post[title]"
-      value="<%= @post.title %>">
+      value="<%= @post.title %>"
+      required>
 
     <label for="content">Comment *optional*:</label>
-    <textarea id="description" name="post[content]" rows="8" cols="60"><%= @post.content %></textarea>
+    <textarea id="description" name="post[content]" rows="8" cols="60" required><%= @post.content %></textarea>
 
     <label for="subs">Add Subs:</label>
     <% Sub.all.each do |sub| %>

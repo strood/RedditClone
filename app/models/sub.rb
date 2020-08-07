@@ -15,6 +15,9 @@ class Sub < ApplicationRecord
   extend FriendlyId
   friendly_id :title, :use => :slugged
 
+  validates_length_of :title, maximum: 100
+  validates_length_of :description, maximum: 150
+
   # Resets slug on update
   def should_generate_new_friendly_id?
     title_changed?

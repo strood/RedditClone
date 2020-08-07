@@ -1,18 +1,23 @@
 <div class="post_container">
   <div class="post_top">
+
     <h1><%= @post.title %></h1>
+
     <h2>Posted Subs:</h2>
+
     <ul class="posted_subs">
+
       <% @post.posted_subs.each do |sub| %>
-      <li>
-        <a href="<%= sub_url(sub) %>">
-          <h3>
-            <%= sub.title %>
-          </h3>
-        </a>
-      </li>
+        <li>
+          <a href="<%= sub_url(sub) %>">
+            <h3>
+              <%= sub.title %>
+            </h3>
+          </a>
+        </li>
       <% end %>
     </ul>
+
     <div class="post_creator">
       <h2>
         Poster:
@@ -23,6 +28,7 @@
         </h3>
       </a>
     </div>
+
     <div class="score_div">
       <h2>
         Score:
@@ -39,6 +45,7 @@
           <input type="submit" name="submit" value="Upvote">
         </form>
       </li>
+
       <li>
         <form action="<%= downvote_post_url(@post) %>" method="post">
           <%= auth_token %>
@@ -52,11 +59,14 @@
     <% end %>
 
     <hr>
-    <h2>Comment:</h2>
+
+    <h2>Content:</h2>
+
     <% if @post.content %>
       <h4><%= @post.content %></h4>
     <% else %>
-      <p>No Comment</p>
+
+      <p>No Content</p>
     <% end %>
     <hr>
     <form class="comment_form" action="<%= comments_url %>" method="post">
@@ -65,15 +75,16 @@
 
       <textarea name="comment[content]" rows="8" cols="80"></textarea>
 
-      <input type="submit" name="" value="Reply">
+      <input type="submit" name="" value="Comment">
     </form>
+    <p>*Max 250 chars</p>
     <div class="replies_bar">
-      <h2>Replies:</h2>
+      <h2>Comments:</h2>
     </div>
   </div>
 
-    <% if @all_comments[0] %>
-      <%= render 'comment', comments: @all_comments[nil] %>
+    <% if @post.comments %>
+      <%= render 'shared/comment', comments: @post.comments.where(parent_comment_id:nil).order(:score) %>
     <% end %>
 
 </div>

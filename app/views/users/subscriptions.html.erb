@@ -7,19 +7,21 @@
       Sorted by:
     </p>
     <form action="#" method="get">
-      <select class="" name="sub[option]">
-        <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Score</option>
-        <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Title</option>
-        <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Oldest</option>
-        <option value="3" <%= params[:sub] && params[:sub][:option] == '3' ? 'selected' : '' %>>Newest</option>
+      <select class="" name="user[option]">
+        <option value="0" <%= params[:user] && params[:user][:option] == '0' ? 'selected' : '' %>>Score</option>
+        <option value="1" <%= params[:user] && params[:user][:option] == '1' ? 'selected' : '' %>>Title</option>
+        <option value="2" <%= params[:user] && params[:user][:option] == '2' ? 'selected' : '' %>>Oldest</option>
+        <option value="3" <%= params[:user] && params[:user][:option] == '3' ? 'selected' : '' %>>Newest</option>
       </select>
       <input type="submit" name="sort" value="Sort">
     </form>
   </div>
 
   <ul class="subs_list">
-    <% @paginatable_posts.reverse.each do |post| %>
-      <%= render 'shared/post_box', sub_post:post %>
+
+      <% @paginatable_posts.each do |post| %>
+
+        <%= render 'shared/post_box', sub_post:post %>
       <% end %>
     </ul>
     <%= paginate @paginatable_posts %>

@@ -14,10 +14,11 @@
     <input
       type="text"
       name="sub[title]"
-      value="<%= @sub.title %>">
+      value="<%= @sub.title %>"
+      required>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="sub[description]" rows="8" cols="60"><%= @sub.description %></textarea>
+    <textarea id="description" name="sub[description]" rows="8" cols="60" required><%= @sub.description %></textarea>
 
     <br>
 

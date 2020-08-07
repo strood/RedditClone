@@ -16,6 +16,10 @@ class Post < ApplicationRecord
   extend FriendlyId
   friendly_id :post_and_sub, :use => :slugged
 
+  validates_length_of :content, maximum: 100
+  validates_length_of :content, maximum: 150
+
+
   def post_and_sub
     "#{title} from #{author.username}"
   end

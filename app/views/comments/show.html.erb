@@ -1,26 +1,27 @@
 <div class="comment_container">
   <div class="comment_top">
 
-    <a href="<%= post_url(@comment.post_id) %>">Back to post</a>
+    <a class="button" href="<%= post_url(@comment.post_id) %>">Back to post</a>
 
-    <h1>Comment: <%= @comment.content %></h1>
+    <h1><%= @comment.content %></h1>
 
-  </div>
-  <hr>
-  <form class="comment_form" action="<%= comments_url %>" method="post">
-    <%= auth_token %>
-    <input type="hidden" name="comment[post_id]" value="<%= @comment.post.id %>">
-    <input type="hidden" name="comment[parent_comment_id]" value="<%= @comment.id %>">
-    <textarea name="comment[content]" rows="8" cols="80"></textarea>
+    <hr>
+    <form class="comment_form" action="<%= comments_url %>" method="post">
+      <%= auth_token %>
+      <input type="hidden" name="comment[post_id]" value="<%= @comment.post.id %>">
+      <input type="hidden" name="comment[parent_comment_id]" value="<%= @comment.id %>">
+      <textarea name="comment[content]" rows="8" cols="20"></textarea>
 
-    <input type="submit" name="" value="Reply">
-  </form>
-  <div class="replies_bar">
-    <h2>Other Replies:</h2>
+      <input type="submit" name="" value="Reply">
+    </form>
+    <p>*Max 250 chars</p>
+    <div class="replies_bar">
+      <h2>Replies:</h2>
+    </div>
   </div>
   <ul>
     <% if !@comment.child_comments.nil? %>
-      <%= render 'comment', comments:@comment.child_comments.order(:score) %>
+      <%= render 'shared/comment', comments:@comment.child_comments.order(:score) %>
       <% else %>
       <li>
         No other replies yet

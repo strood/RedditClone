@@ -8,7 +8,7 @@
     <h2>
       Commenter:
     </h2>
-      <a href="<%= user_url(comment.author.id) %>">
+      <a href="<%= user_url(comment.author) %>">
         <h3>
           <%= comment.author.username %>
         </h3>
@@ -23,7 +23,11 @@
     </h4>
   </div>
 
-  <a href="<%= comment_url(comment.id) %>">Reply</a>
+  <a href="<%= comment_url(comment.id) %>">
+    <h3>
+      Reply
+    </h3>
+  </a>
 
   <ul>
     <li>
@@ -41,6 +45,6 @@
   </ul>
 
   <% if !comment.child_comments.nil? %>
-    <%= render 'comment', comments:comment.child_comments.sort_by(&:score)%>
+    <%= render 'shared/comment', comments:comment.child_comments.order(:score)%>
     <% end %>
   </li>
