@@ -1,7 +1,9 @@
 <li class="comment_shadow_box">
-  <h4>
+  <a href="<%= comment_url(comment) %>">
+    <h4>
     <%= comment.content %>
-  </h4>
+    </h4>
+  </a>
   <hr>
   <div class="comment_creator">
 
@@ -14,20 +16,6 @@
         </h3>
       </a>
   </div>
-  <div class="score_div">
-    <h2>
-      Score:
-    </h2>
-    <h4>
-      <%= comment.score %>
-    </h4>
-  </div>
-
-  <a href="<%= comment_url(comment.id) %>">
-    <h3>
-      Reply
-    </h3>
-  </a>
 
   <ul>
     <li>
@@ -43,6 +31,30 @@
       </form>
     </li>
   </ul>
+
+  <div class="score_div">
+    <h2>
+      Score:
+    </h2>
+    <h4>
+      <%= comment.score %>
+    </h4>
+  </div>
+
+
+    <h3 id="reply_text_<%= comment.id %> " class="reply" onclick="toggleReplyBox(<%= comment.id %>)">
+      Reply
+    </h3>
+
+
+  <form id="reply_box_<%= comment.id %>" class="hidden comment_form" action="<%= comments_url %>" method="post">
+    <%= auth_token %>
+    <input type="hidden" name="comment[post_id]" value="<%= comment.post.id %>">
+    <input type="hidden" name="comment[parent_comment_id]" value="<%= comment.id %>">
+    <textarea name="comment[content]" rows="8" cols="20"></textarea>
+
+    <input type="submit" name="" value="Reply">
+  </form>
 
   <% if !comment.child_comments.nil? %>
     <%= render 'shared/comment', comments:comment.child_comments.order(:score)%>

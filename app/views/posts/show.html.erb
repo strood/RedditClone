@@ -29,15 +29,6 @@
       </a>
     </div>
 
-    <div class="score_div">
-      <h2>
-        Score:
-        <h4>
-          <%= @post.score %>
-        </h4>
-      </h2>
-    </div>
-
     <ul>
       <li>
         <form action="<%= upvote_post_url(@post) %>" method="post">
@@ -53,6 +44,15 @@
         </form>
       </li>
     </ul>
+
+    <div class="score_div">
+      <h2>
+        Score:
+        <h4>
+          <%= @post.score %>
+        </h4>
+      </h2>
+    </div>
 
     <% if current_user == @post.author %>
       <a href="<%= edit_post_url(@post) %>">Edit Post</a>

@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
         end
       end
     rescue Exception => e
-      flash[:errors] = ["Invalid comment, please try again!"]
+      flash[:errors] = [e.message]
       redirect_back(fallback_location: root_path)
     end
   end

@@ -6,6 +6,43 @@
     <h1><%= @comment.content %></h1>
 
     <hr>
+
+    <div class="comment_creator">
+
+      <h2>
+        Commenter:
+      </h2>
+        <a href="<%= user_url(@comment.author) %>">
+          <h3>
+            <%= @comment.author.username %>
+          </h3>
+        </a>
+    </div>
+
+    <ul>
+      <li>
+        <form action="<%= upvote_comment_url(@comment) %>" method="post">
+          <%= auth_token %>
+          <input type="submit" name="submit" value="Upvote">
+        </form>
+      </li>
+      <li>
+        <form action="<%= downvote_comment_url(@comment) %>" method="post">
+          <%= auth_token %>
+          <input type="submit" name="submit" value="Downvote">
+        </form>
+      </li>
+    </ul>
+
+    <div class="score_div">
+      <h2>
+        Score:
+      </h2>
+      <h4>
+        <%= @comment.score %>
+      </h4>
+    </div>
+
     <form class="comment_form" action="<%= comments_url %>" method="post">
       <%= auth_token %>
       <input type="hidden" name="comment[post_id]" value="<%= @comment.post.id %>">
@@ -14,18 +51,25 @@
 
       <input type="submit" name="" value="Reply">
     </form>
+
     <p>*Max 250 chars</p>
+
+    <hr>
+
     <div class="replies_bar">
       <h2>Replies:</h2>
     </div>
+
   </div>
+
   <ul>
     <% if !@comment.child_comments.nil? %>
-      <%= render 'shared/comment', comments:@comment.child_comments.order(:score) %>
+        <%= render 'shared/comment', comments:@comment.child_comments.order(:score) %>
       <% else %>
-      <li>
-        No other replies yet
-      </li>
-      <% end %>
-    </ul>
+        <li>
+          No other replies yet
+        </li>
+    <% end %>
+  </ul>
+
 </div>

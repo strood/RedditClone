@@ -2,6 +2,7 @@
 
 .comment_container {
   max-width: 780px;
+  min-width: 650px;
   margin-top: 1%;
   p {
     font-size: 12px;
@@ -10,15 +11,35 @@
 }
 
 .comment_top {
-  h1, h2 {
+  h1{
     margin-top: 2%;
     color: $dark-green;
+  }
+  h2 {
+    color: $violet;
+  }
+  h3 {
+    color: $bright-green;
+    margin-left: 1%;
+  }
+  h3:hover {
+    text-decoration: underline;
+  }
+  h4  {
+    color: $dark-green;
+    font-size: 22px;
+    font-weight: bolder;
+    margin-left: 1%;
+  }
+  p {
+    font-size: 12px;
+    margin-left: 5%
   }
 
   .button {
     display: flex;
     margin-top: 1%;
-    width: 155px;
+    width: 175px;
     justify-content: center;
     background-color: $bright-green;
     color: $violet;
@@ -32,6 +53,15 @@
   .button:hover {
     color: $yellow;
     background-color: $medium-green;
+  }
+}
+
+.comment_creator {
+  display: flex;
+  margin-top: 1%;
+  align-items: baseline;
+  h3 {
+    margin-left: 5%;
   }
 }
 
@@ -57,6 +87,7 @@
   }
   h3:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
   h4  {
     color: $dark-green;
@@ -68,14 +99,6 @@
     max-width: 100%;
   }
 
-  .comment_creator {
-    display: flex;
-    margin-top: 1%;
-    align-items: baseline;
-    h3 {
-      margin-left: 5%;
-    }
-  }
 
 }
 
@@ -89,7 +112,7 @@
     width: 90%;
     border-radius: 10px;
     margin-top: 1%;
-    max-length: 200;
+    padding: 1%;
   }
   input[type=submit] {
     align-self: baseline;
@@ -117,8 +140,14 @@
   }
 }
 
-@media all and(max-width: 650px) {
+.hidden {
+  display: none;
+}
+
+@media all and(max-width: 690px) {
   .comment_container {
+    min-width: 250px;
     width: 99%;
+    margin-left: 4%;
   }
 }

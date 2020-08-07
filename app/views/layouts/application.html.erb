@@ -8,6 +8,13 @@
     <%= csp_meta_tag %>
     <%= fontawesome_kit_tag %>
     <script type="text/javascript">
+      function toggleReplyBox(id) {
+        if(document.getElementById('reply_box' + id).classList.contains('hidden'))
+          document.getElementById('reply_box' + id).classList.remove('hidden');
+        else
+          document.getElementById('reply_box_' + id).classList.add('hidden')
+      }
+
       function toggleHeaderDropdown() {
         var e = document.getElementById('header_dropdown');
         var t = document.getElementById('option_dropdown');
