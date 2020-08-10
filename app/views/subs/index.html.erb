@@ -2,15 +2,18 @@
 
   <div class="sort_bar">
     <h1 class="page_title">All Subs</h1>
-    <p>
-      Sorted by:
-    </p>
     <form action="" method="get">
-      <select class="sort_options" name="sub[option]">
-        <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Title</option>
-        <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Oldest</option>
-        <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Newest</option>
-      </select>
+      <label for="sort_options">
+        Sorted by:
+      </label>
+      <div class="select_wrapper">
+
+        <select class="sort_options" name="sub[option]">
+          <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Title</option>
+          <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Oldest</option>
+          <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Newest</option>
+        </select>
+      </div>
       <input type="submit" name="sort" value="Sort">
     </form>
   </div>

@@ -1,107 +1,165 @@
-<div class="shadow_box">
+<div class="user_container">
 
+<div class="user_top">
   <h1><%= @user.username %>'s UserPage</h1>
-  <h2>VoteScore: <%= @user.votescore %></h2>
+</div>
+<hr>
 
-  <h2>Owned Subs</h2>
-  <ul>
-    <% if !@user.subs.nil? %>
-      <% @user.subs.each do |sub| %>
-      <li>
-        <a href="<%= sub_url(sub) %>">
-          <%= sub.title %>
-        </a>
-      </li>
-      <% end %>
-      <% else %>
-      <li>
-        No Subs created yet! - <a href="<%= new_sub_url %>">Add One!</a>
-      </li>
-      <% end %>
-    </ul>
 
-    <h2>Subscriptions</h2>
+  <div class="user_shadow_box">
+
+    <h2>Owned Subs:</h2>
+    <hr>
     <ul>
-      <% if !@user.subscriptions.nil? %>
+      <% if !@user.subs.empty? %>
+        <% @user.subs.each do |sub| %>
+          <li>
+            <a href="<%= sub_url(sub) %>">
+              <h3>
+                - <%= sub.title %>
+              </h3>
+            </a>
+          </li>
+          <% end %>
+      <% else %>
+          <li>
+            <h3>
+              No Subs created yet! - <a href="<%= new_sub_url %>">Add One!</a>
+            </h3>
+          </li>
+      <% end %>
+        </ul>
+  </div>
+
+  <div class="user_shadow_box">
+    <h2>Subscriptions:</h2>
+    <hr>
+
+    <ul>
+      <% if !@user.subscriptions.empty? %>
       <% @user.subscriptions.each do |subscription| %>
       <li>
         <a href="<%= sub_url(subscription) %>">
-          <%= subscription.title %>
+          <h3>
+            - <%= subscription.title %>
+          </h3>
         </a>
       </li>
       <% end %>
       <% else %>
       <li>
-        No Subscriptions yet! - <a href="<%= subs_url %>">Find a new Sub!</a>
+        <h3>
+          No Subscriptions yet! - <a href="<%= subs_url %>">Find a new Sub!</a>
+        </h3>
       </li>
       <% end %>
     </ul>
-    <h2>Posts</h2>
+  </div>
+  <div class="user_shadow_box">
+
+    <h2>Posts:</h2>
+    <hr>
     <ul>
-      <% if !@user.posts.nil? %>
+      <% if !@user.posts.empty? %>
       <% @user.posts.each do |post| %>
       <li>
         <a href="<%= post_url(post) %>">
-          <%= post.title %>
+          <h3>
+            - <%= post.title %>
+          </h3>
         </a>
       </li>
       <% end %>
       <% else %>
       <li>
-        No Posts yet!
+        <h3>
+          No Posts yet!
+        </h3>
       </li>
       <% end %>
     </ul>
+  </div>
 
-    <h2>Comments</h2>
+  <div class="user_shadow_box">
+
+    <h2>Comments:</h2>
+    <hr>
     <ul>
-      <% if !@user.comments.nil? %>
+      <% if !@user.comments.empty? %>
       <% @user.comments.each do |comment| %>
       <li>
         <a href="<%= comment_url(comment) %>">
-          <%= comment.content[0..15] %>
+          <h3>
+            - <%= comment.content[0..15] %>
+          </h3>
         </a>
       </li>
       <% end %>
       <% else %>
-      <li>No Comments yet!</li>
+      <li>
+        <h3>
+          No Comments yet!
+        </h3>
+      </li>
       <% end %>
     </ul>
+  </div>
 
-    <h2>Total Votes: <%= @user.votes.count %> </h2>
-    <h2>Upvotes</h2>
+  <h2>Total Votes: <%= @user.votes.length %> </h2>
+
+  <div class="user_shadow_box">
+
+
+    <h2>Upvotes:</h2>
+    <hr>
     <ul>
-      <% if !@user.votes.nil? %>
-      <% @user.votes.each do |vote| %>
-        <% if vote.value > 0 %>
+      <% if !@user.votes.empty? %>
+        <% @user.votes.includes(:votable).each do |vote| %>
+          <% if vote.value > 0 %>
+            <li>
+              <a href="<%= vote.votable_type == 'Post' ? post_url(vote.votable) : comment_url(vote.votable) %>">
+                <h3>
+                  - <%= vote.votable_type == 'Post' ? vote.votable.title : vote.votable.content[0..15] %>
+                </h3>
+              </a>
+            </li>
+          <% end %>
+        <% end %>
+      <% else %>
         <li>
-          <a href="<%= vote.votable_type == 'Post' ? post_url(vote.votable) : comment_url(vote.votable) %>">
-            <%= vote.votable_type == 'Post' ? vote.votable.title : vote.votable.content[0..15] %>
-
-          </a>
+          <h3>
+            No Upvotes yet!
+          </h3>
         </li>
-        <% end %>
-        <% end %>
-        <% else %>
-        <li>No Upvotes yet!</li>
-        <% end %>
-      </ul>
+      <% end %>
+    </ul>
+  </div>
 
-      <h2>Downvotes</h2>
-      <ul>
-        <% if !@user.votes.nil? %>
+  <div class="user_shadow_box">
+
+    <h2>Downvotes:</h2>
+    <hr>
+    <ul>
+      <% if !@user.votes.empty? %>
         <% @user.votes.each do |vote| %>
-        <% if vote.value < 0 %>
-        <li>
-          <a href="<%= vote.votable_type == 'Post' ? post_url(vote.votable) : comment_url(vote.votable) %>">
-            <%= vote.votable_type == 'Post' ? vote.votable.title : vote.votable.content[0..15] %>
-          </a>
-        </li>
-        <% end %>
-        <% end %>
-        <% else %>
-        <li>No Downvotes yet!</li>
-        <% end %>
-      </ul>
+          <% if vote.value < 0 %>
+            <li>
+              <a href="<%= vote.votable_type == 'Post' ? post_url(vote.votable) : comment_url(vote.votable) %>">
+                <h3>
+                  - <%= vote.votable_type == 'Post' ? vote.votable.title : vote.votable.content[0..15] %>
+                </h3>
+              </a>
+            </li>
+            <% end %>
+            <% end %>
+            <% else %>
+            <li>
+              <h3>
+                No Downvotes yet!
+              </h3>
+            </li>
+            <% end %>
+          </ul>
+  </div>
 
 </div>

@@ -94,6 +94,9 @@ class User < ApplicationRecord
       SecureRandom::urlsafe_base64(16)
     end
 
+    # Generating votescore on user page load was very costly,
+    # taken out until I can figure out a way to make it less intensive on
+    # requests
     def votescore
       @votescore ||= self.generate_vote_score
     end

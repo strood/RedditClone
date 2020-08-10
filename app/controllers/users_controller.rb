@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.friendly.includes(:subs, :votes, :posts, :comments).find(params[:id])
+    @user = User.friendly.includes(:subs, :votes, :posts, :comments, :subscriptions).find(params[:id])
     render :show
   end
 
