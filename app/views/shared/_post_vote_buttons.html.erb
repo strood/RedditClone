@@ -1,0 +1,15 @@
+
+<ul class="vote_buttons_ul">
+  <li>
+    <form action="<%= upvote_post_url(post) %>" method="post">
+      <%= auth_token %>
+      <input type="submit" class="upvote" value="&#xf0aa;" />
+    </form>
+  </li>
+  <li>
+    <form action="<%= downvote_post_url(post) %>" method="post">
+      <%= auth_token %>
+      <input type="submit" class="downvote" value="&#xf0ab;" />
+    </form>
+  </li>
+</ul>

@@ -25,17 +25,17 @@
       <textarea id="description" name="post[content]" rows="8" cols="60" required><%= @post.content %></textarea>
     </div>
 
+    <label for="subs">Add Subs:</label>
     <div class="form_section checkboxes">
 
-      <label for="subs">Add Subs:</label>
       <% Sub.all.each do |sub| %>
-      <div class="sub_box">
+        <div class="sub_box">
 
-        <input type="checkbox" name="posted_sub_ids[]" value="<%= sub.id %>"
-        <%= sub.sub_post_ids.include?(@post.id) ? "checked" : "" %>>
-        <label for="post[subs]"><%= sub.title %></label>
-      </div>
-        <% end %>
+          <input type="checkbox" name="posted_sub_ids[]" value="<%= sub.id %>"
+          <%= sub.sub_post_ids.include?(@post.id) ? "checked" : "" %>>
+          <label for="post[subs]"><%= sub.title %></label>
+        </div>
+      <% end %>
     </div>
 
     <br>

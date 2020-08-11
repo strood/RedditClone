@@ -1,0 +1,14 @@
+<ul class="subscription_buttons_ul">
+  <li>
+    <form action="<%= subscribe_sub_url(sub) %>" method="post">
+      <%= auth_token %>
+      <input class="button sub" type="submit" name="submit" value="Subscribe">
+    </form>
+  </li>
+  <li>
+    <form action="<%= unsubscribe_sub_url(sub) %>" method="post">
+      <%= auth_token %>
+      <input class="button unsub" type="submit" name="submit" value="Unsubscribe">
+    </form>
+  </li>
+</ul>

@@ -18,18 +18,7 @@
     <h5>
       <%= sub.description %>
     </h5>
-  <ul>
-    <li>
-      <form action="<%= subscribe_sub_url(sub) %>" method="post">
-        <%= auth_token %>
-        <input type="submit" name="submit" value="Subscribe">
-      </form>
-    </li>
-    <li>
-      <form action="<%= unsubscribe_sub_url(sub) %>" method="post">
-        <%= auth_token %>
-        <input type="submit" name="submit" value="Unsubscribe">
-      </form>
-    </li>
-  </ul>
+
+  <%= render 'shared/subscription_buttons', sub:sub %>
+
 </li>

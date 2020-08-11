@@ -130,11 +130,14 @@
     display: flex;
     flex-direction: column;
     padding: 1%;
+    flex-wrap: wrap;
   }
 
   .sub_box {
     label {
       color: $bright-green;
+      font-size: 18px;
+
     }
   }
 

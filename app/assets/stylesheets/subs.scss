@@ -104,11 +104,15 @@
   }
 
   textarea {
-    width: 80%;
+    width: 90%;
     resize: none;
     border: 1px solid $bright-green;
     padding: 1%;
   }
+ .description {
+   display: flex;
+   flex-direction: column;
+ }
 }
 
 

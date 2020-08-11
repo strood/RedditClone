@@ -1,0 +1,11 @@
+@import 'base';
+.subscription_buttons_ul {
+  display: flex;
+  li .button {
+    text-align: center;
+  }
+}
+
+.unsub {
+  margin-left: 3%;
+}

@@ -1,0 +1,22 @@
+@import 'base';
+
+ .vote_buttons_ul {
+  display: flex;
+
+  li {
+    margin-left: 1%;
+  }
+
+  input[type='submit'] {
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.3333333333333333em;
+    font-weight: 900;
+
+  }
+  .upvote {
+    color: $bright-green;
+  }
+  .downvote {
+    color: $red;
+  }
+ }

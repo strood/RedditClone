@@ -36,18 +36,6 @@
           </h4>
         </h2>
       </div>
-  <ul>
-    <li>
-      <form action="<%= upvote_post_url(sub_post) %>" method="post">
-        <%= auth_token %>
-        <input type="submit" name="submit" value="Upvote">
-      </form>
-    </li>
-    <li>
-      <form action="<%= downvote_post_url(sub_post) %>" method="post">
-        <%= auth_token %>
-        <input type="submit" name="submit" value="Downvote">
-      </form>
-    </li>
-  </ul>
+
+    <%= render 'shared/post_vote_buttons', post:sub_post %>
 </li>
