@@ -20,6 +20,7 @@
     display: flex;
     font-family: inherit;
     font-size: 100%;
+    color: $dark-green;
     margin: 0;
     box-sizing: border-box;
     width: 120px;
@@ -37,6 +38,7 @@
     left: 100px;
     position: absolute;
     pointer-events: none;
+    color: $violet;
   }
 
   input[type=submit] {
