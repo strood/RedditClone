@@ -1,0 +1,6 @@
+<ul class="sub_list">
+  <% comments.includes(:child_comments, :author).reverse.each do |comment| %>
+    <%= render 'shared/comment_box', comment:comment %>
+  <% end %>
+
+</ul>

@@ -1,60 +1,63 @@
-<h1>Welcome to <%= @sub.title %></h1>
-<% if current_user == @sub.moderator %>
-  <a href="<%= edit_sub_url(@sub) %>">Edit sub</a>
-<% end %>
-<ul>
-  <li>
-    <form action="<%= subscribe_sub_url(@sub) %>" method="post">
-      <%= auth_token %>
-      <input type="submit" name="submit" value="Subscribe">
-    </form>
-  </li>
-  <li>
-    <form action="<%= unsubscribe_sub_url(@sub) %>" method="post">
-      <%= auth_token %>
-      <input type="submit" name="submit" value="Unsubscribe">
-    </form>
-  </li>
-</ul>
-<h3>
-  <%= @sub.description %>
-</h3>
-<h3>Mod:
-  <%= @sub.moderator.username  %>
-</h3>
+<div class="sub_container">
+  <div class="sub_top">
 
-<h2>POSTS:</h2>
+    <h1 class="page_title"><%= @sub.title %></h1>
+    <div class="sub_creator">
+      <h2>
+        Creator:
+      </h2>
+      <a href="<%= user_url(@sub.moderator.id) %>">
+        <h4>
+          <%= @sub.moderator.username  %>
+        </h4>
+      </a>
+    </div>
+    <h2>
+      Description:
+    </h2>
+    <h5>
+      <%= @sub.description %>
+    </h5>
 
-<ul>
-  <% @sub.sub_posts.order(:score).includes(:author, :votes).reverse.each do |sub_post| %>
-  <li>
-    <a href="<%= post_url(sub_post) %>">
-      <%= sub_post.title %>
-    </a>
-    Score:
-    <%= sub_post.score %>
-    <ul>
-      <li>
-        Poster:
-        <a href="<%= user_url(sub_post.author) %>">
-          <%= sub_post.author.username %>
-        </a>
-      </li>
-      <li>
-        <form action="<%= upvote_post_url(sub_post) %>" method="post">
-          <%= auth_token %>
-          <input type="submit" name="submit" value="Upvote">
-        </form>
-      </li>
-      <li>
-        <form action="<%= downvote_post_url(sub_post) %>" method="post">
-          <%= auth_token %>
-          <input type="submit" name="submit" value="Downvote">
-        </form>
-      </li>
+    <%= render 'shared/subscription_buttons', sub:@sub %>
+
+
+    <% if current_user == @sub.moderator %>
+      <a class="button" href="<%= edit_sub_url(@sub) %>">Edit Sub</a>
+    <% end %>
+    
+  </div>
+  <hr>
+  <div class="sort_bar">
+    <h2>Posts</h2>
+    <form action="<%=  %>" method="get">
+      <label>
+        Sorted by:
+      </label>
+      <div class="select_wrapper">
+
+        <select class="sort_options" name="sub[option]">
+          <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Score</option>
+          <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Title</option>
+          <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Oldest</option>
+          <option value="3" <%= params[:sub] && params[:sub][:option] == '3' ? 'selected' : '' %>>Newest</option>
+        </select>
+      </div>
+      <input type="submit" name="sort" value="Sort">
+    </form>
+  </div>
+
+  <ul class="subs_list">
+
+    <% @paginate_posts.each do |sub_post| %>
+
+      <%= render 'shared/post_box', sub_post:sub_post %>
+
+
+      <% end %>
     </ul>
-  </li>
-  <% end %>
-</ul>
 
-<a href="<%= new_post_url %>">Create New Post</a>
+
+    <%= paginate @paginate_posts %>
+
+</div>

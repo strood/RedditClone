@@ -1,7 +1,7 @@
 <% if flash[:notice] %>
-  <ul>
+  <ul class="message notice_bar">
     <% flash[:notice].each do |notice| %>
     <li><%=h(notice)%></li>
-    <% end %> 
+    <% end %>
   </ul>
 <% end %>

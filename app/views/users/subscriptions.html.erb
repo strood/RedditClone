@@ -1,21 +1,31 @@
-<h1>Top posts from your subscriptions</h1>
 
+<div class="sub_container">
 
-<ul>
-  <% @posts.reverse.each do |post| %>
-  <li>
-    <%= post.title %>
-    <br>
-    -----
-    Subs:
-    <% post.posted_subs.each do |sub| %>
-      <%= sub.title %>
-    <% end %>
-    <br>
-    -----
-    Score:
-    <%= post.score %>
-    <br>
-  </li>
-  <% end %>
-</ul>
+  <div class="sort_bar">
+    <h1>Posts from your Subscriptions</h1>
+    <form action="#" method="get">
+      <label for="sort_options">
+        Sorted by:
+      </label>
+      <div class="select_wrapper">
+
+        <select class="" name="user[option]">
+          <option value="0" <%= params[:user] && params[:user][:option] == '0' ? 'selected' : '' %>>Score</option>
+          <option value="1" <%= params[:user] && params[:user][:option] == '1' ? 'selected' : '' %>>Title</option>
+          <option value="2" <%= params[:user] && params[:user][:option] == '2' ? 'selected' : '' %>>Oldest</option>
+          <option value="3" <%= params[:user] && params[:user][:option] == '3' ? 'selected' : '' %>>Newest</option>
+        </select>
+      </div>
+      <input type="submit" name="sort" value="Sort">
+    </form>
+  </div>
+
+  <ul class="subs_list">
+
+      <% @paginatable_posts.each do |post| %>
+
+        <%= render 'shared/post_box', sub_post:post %>
+      <% end %>
+    </ul>
+    <%= paginate @paginatable_posts %>
+</div>

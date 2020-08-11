@@ -1,41 +1,44 @@
 <% action = (post.persisted? ? post_url(post) : posts_url) %>
 <% method = (post.persisted? ? 'patch' : 'post') %>
-<% message =(post.persisted? ? 'Update Post' : 'Create Post') %>
+<% message =(post.persisted? ? 'Update Post' : 'Add Post') %>
 
 
-<form action="<%= action %>" method="post">
+<form class="post_form" action="<%= action %>" method="post">
     <input
       type="hidden"
       name="_method"
       value="<%= method %>">
     <%= auth_token %>
+    <div class="form_section">
 
-    <label for="title">Title:</label>
-    <input
-      type="text"
-      name="post[title]"
-      value="<%= @post.title %>">
+      <label class="label" for="title">Title:</label>
+      <input
+        type="text"
+        name="post[title]"
+        value="<%= @post.title %>"
+        required>
+    </div>
 
-    <label for="url">URL *optional*: </label>
-    <input
-      type="text"
-      name="post[url]"
-      value="<%= @post.url %>">
+    <div class="form_section">
 
-    <label for="content">Content *optional*:</label>
-    <textarea id="description" name="post[content]" rows="8" cols="60"><%= @post.content %></textarea>
+      <label class="label" for="content">Comment *optional*:</label>
+      <textarea id="description" name="post[content]" rows="8" cols="60" required><%= @post.content %></textarea>
+    </div>
 
-    <!-- This will be chanmged out for a checkbox list instead
-          or a searchbar/ dropdown that then stacks the selected subs in
-          boxes that can be 'X'/closed/removed independently.-->
-    <label for="subs">Subs:</label>
-    <% Sub.all.each do |sub| %>
-    <input type="checkbox" name="posted_sub_ids[]" value="<%= sub.id %>"
-      <%= sub.sub_post_ids.include?(@post.id) ? "checked" : "" %>>
-      <label for="post[subs]"><%= sub.title %></label>
-    <% end %>
+    <label for="subs">Add Subs:</label>
+    <div class="form_section checkboxes">
+
+      <% Sub.all.each do |sub| %>
+        <div class="sub_box">
+
+          <input type="checkbox" name="posted_sub_ids[]" value="<%= sub.id %>"
+          <%= sub.sub_post_ids.include?(@post.id) ? "checked" : "" %>>
+          <label for="post[subs]"><%= sub.title %></label>
+        </div>
+      <% end %>
+    </div>
 
     <br>
 
-    <input type="submit" value="<%= message %>">
+    <input  type="submit" value="<%= message %>">
 </form>

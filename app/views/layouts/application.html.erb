@@ -1,19 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RedditClone</title>
+    <title>
+      Foodie
+    </title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= fontawesome_kit_tag %>
+    <script type="text/javascript">
+      function toggleReplyBox(id) {
+        if(document.getElementById('reply_box' + id).classList.contains('hidden'))
+          document.getElementById('reply_box' + id).classList.remove('hidden');
+        else
+          document.getElementById('reply_box_' + id).classList.add('hidden')
+      }
 
+      function toggleHeaderDropdown() {
+        var e = document.getElementById('header_dropdown');
+        var t = document.getElementById('option_dropdown');
+        if(e.style.display == 'flex')
+            e.style.display = 'none';
+        else
+            e.style.display = 'flex';
+            t.style.display = 'none';
+      }
+      function toggleOptionDropdown() {
+
+        var e = document.getElementById('option_dropdown');
+        var t = document.getElementById('header_dropdown');
+        if(e.style.display == 'flex')
+            e.style.display = 'none';
+        else
+            e.style.display = 'flex';
+            t.style.display = 'none';
+      }
+      function getYear() {
+        document.write(new Date().getFullYear());
+      }
+    </script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+</head>
 
-  <body>
-    <%= render "shared/userbar" %>
-    <%= render "shared/errors" %>
-    <%= render "shared/messages" %>
+  <body id='body'>
+    <%= render "shared/header" %>
+    <div id="content" class="content">
 
-    <%= yield %>
+      <%= render "shared/errors" %>
+      <%= render "shared/messages" %>
+      <%= yield %>
+    </div>
+    <%= render "shared/footer" %>
   </body>
 </html>

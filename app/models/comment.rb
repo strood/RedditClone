@@ -14,8 +14,15 @@
 #
 class Comment < ApplicationRecord
   validates :content, :user_id, :post_id, :slug, presence: true
+  validates_length_of :content, maximum: 250
+
   extend FriendlyId
   friendly_id :slug_candidates, :use => :slugged
+
+  def should_generate_new_friendly_id?
+    content_changed?
+  end
+
 
   belongs_to :post,
     primary_key: :id,
@@ -48,20 +55,5 @@ class Comment < ApplicationRecord
       [:content, :post, :author]
     ]
   end
-
-    # Calculate a rating for a comment based on history of all votes on it.
-    # Not adapted for (hotness) yet
-    # No longer used, but may frame hotness from the idea of it so just preserving
-    # def rating
-    #   @rating = 0
-    #   self.votes.each do |vote|
-    #     if vote.value > 0
-    #       @rating += 1
-    #     else
-    #       @rating -= 1
-    #     end
-    #   end
-    #   @rating
-    # end
 
 end

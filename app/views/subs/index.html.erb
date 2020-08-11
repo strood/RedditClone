@@ -1,18 +1,29 @@
-<h1>All Subs</h1>
-<ul>
-<% @subs.each do |sub| %>
-  <li>
-      <h2>
-        <a href="<%= sub_url(sub) %>">
-          <%= sub.title %>
-        </a>
-      </h2>
-      <p>
-        Mod:<a href="<%= user_url(sub.moderator) %>"><%= sub.moderator.username %></a>
-      </p>
-      <p>
-        <%= sub.description %>
-      </p>
-  </li>
-<% end %>
-</ul>
+<div class="sub_container">
+
+  <div class="sort_bar">
+    <h1 class="page_title">All Subs</h1>
+    <form action="" method="get">
+      <label for="sort_options">
+        Sorted by:
+      </label>
+      <div class="select_wrapper">
+
+        <select class="sort_options" name="sub[option]">
+          <option value="0" <%= params[:sub] && params[:sub][:option] == '0' ? 'selected' : '' %>>Title</option>
+          <option value="1" <%= params[:sub] && params[:sub][:option] == '1' ? 'selected' : '' %>>Oldest</option>
+          <option value="2" <%= params[:sub] && params[:sub][:option] == '2' ? 'selected' : '' %>>Newest</option>
+        </select>
+      </div>
+      <input type="submit" name="sort" value="Sort">
+    </form>
+  </div>
+
+  <ul class="subs_list">
+    <% @subs.each do |sub| %>
+      <%= render 'sub_box', sub:sub %>
+    <% end %>
+  </ul>
+
+      <%= paginate @subs %>
+      
+</div>

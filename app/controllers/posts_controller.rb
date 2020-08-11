@@ -3,8 +3,7 @@
   before_action :require_user_owns_post!, only: [:edit]
 
   def show
-    @post = Post.friendly.includes(:author, :posted_subs).find(params[:id])
-    @all_comments = @post.comments_by_parent_id
+    @post = Post.friendly.includes(:author, :posted_subs, :comments).find(params[:id])
     render :show
   end
 
@@ -22,21 +21,21 @@
     # Becuase we get additional methods from our association of posts and post_subs
     #  when post.save gets called, Post.sub_ids= is also called, and our checked
     #  subs are all created in relation to this post. handling all that for us.
-    unless params[:posted_sub_ids].nil?
 
+    begin
       if @post.save!
         # now we have a post id to set, and can save our sub posts, done
         #  for us through the methods we gained from the post_subs association mentions above
         @post.posted_sub_ids = params[:posted_sub_ids].each
 
-        flash[:notice] = ["Post successfully created!"]
+        flash[:notice] = ["#{@post.title} successfully added!"]
         redirect_to post_url(@post)
       else
-        flash[:errors] = ["Invalid credentials, please try again"]
+        flash[:errors] = ["Invalid details, please try again"]
         redirect_to new_post_url
       end
-    else
-      flash[:errors] = ["Post must belong to at least one sub"]
+    rescue Exception => e
+      flash[:errors] = ["Invalid Post, please try again"]
       redirect_to new_post_url
     end
 
@@ -50,29 +49,27 @@
 
   def update
     @post = Post.friendly.find(params[:id])
-    unless !params[:posted_sub_ids]
-      # This constructs our post_sub objects based on the selected subs in posts creation
-      @post.posted_sub_ids = params[:posted_sub_ids].each
-      if @post.update(post_params)
-        flash[:notice] = ["Sucessfully updated post"]
+    begin
+      if @post.update!(post_params)
+        @post.posted_sub_ids = params[:posted_sub_ids].each
+        flash[:notice] = ["Sucessfully updated #{@post.title}"]
         redirect_to post_url(@post)
-      else
-        flash[:errors] = ["Unable to update post"]
-        redirect_to edit_post_url(@post)
       end
-    else
-      flash[:errors] = ["Post must belong to at least one sub"]
-      redirect_to edit_post_url(@post)
+    rescue Exception => e
+        flash[:errors] = ["Unable to update #{@post.title}"]
+        flash[:errors] << e.message
+        redirect_to edit_post_url(@post)
     end
+
   end
 
   def destroy
     @post = Post.friendly.find(params[:id])
     if @post.destroy!
-      flash[:notice] = ["Post deleted"]
+      flash[:notice] = ["#{@post.title} deleted"]
       redirect_to subs_url
     else
-      flash[:errors] = ["Unable to delete post"]
+      flash[:errors] = ["Unable to delete #{@post.title}"]
       redirect_to post_url(@post)
     end
   end
@@ -84,10 +81,10 @@
       upvote.save!
       @post.increment(:score)
       @post.save
-      flash[:notice] = ["Upvote successful!"]
+      flash[:notice] = ["Upvote #{@post.title} successful!"]
       redirect_back(fallback_location: root_path)
     rescue
-      flash[:errors] = ["Already voted on this post"]
+      flash[:errors] = ["Already voted on #{@post.title}"]
       redirect_back(fallback_location: root_path)
     end
   end
@@ -99,10 +96,10 @@
       downvote.save!
       @post.decrement(:score)
       @post.save
-      flash[:notice] = ["Downvote successful!"]
+      flash[:notice] = ["Downvote #{@post.title} successful!"]
       redirect_back(fallback_location: root_path)
     rescue
-      flash[:errors] = ["Already voted on this post"]
+      flash[:errors] = ["Already voted on #{@post.title}"]
       redirect_back(fallback_location: root_path)
     end
   end
@@ -111,7 +108,7 @@
   private
 
   def post_params
-    params.require(:post).permit(:title, :url, :content)
+    params.require(:post).permit(:title, :content)
   end
 
 

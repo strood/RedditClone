@@ -1,0 +1,19 @@
+<ul id="header_dropdown" class="header_dropdown hidden">
+  <li>
+      <a href="<%= user_url(current_user) %>">
+      <p class="dropdown_dashes">-</p><%= current_user.username %><p class="dropdown_dashes">-</p>
+      </a>
+  </li>
+  <li>
+      <a href="<%= subscriptions_user_url(current_user) %>">
+        <p class="dropdown_dashes">-</p>Subscriptions<p class="dropdown_dashes">-</p>
+      </a>
+  </li>
+  <li>
+    <form action="<%= session_url %>" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <%= auth_token %>
+      <input type="submit" value="Log Out">
+    </form>
+  </li>
+</ul>

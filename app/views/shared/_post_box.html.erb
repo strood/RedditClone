@@ -1,0 +1,43 @@
+<li class="post_shadow_box">
+  <a href="<%= post_url(sub_post) %>">
+    <h1>
+      <%= sub_post.title %>
+    </h1>
+  </a>
+   <hr>
+   <h2>Posted Subs:</h2>
+   <ul class="posted_subs">
+     <% sub_post.posted_subs.each do |sub| %>
+     <li>
+       <a href="<%= sub_url(sub) %>">
+
+         <h3>
+           <%= sub.title %>
+         </h3>
+       </a>
+     </li>
+     <% end %>
+   </ul>
+      <div class="post_creator">
+        <h2>
+          Poster:
+        </h2>
+        <a href="<%= user_url(sub_post.author) %>">
+          <h3>
+            <%= sub_post.author.username %>
+          </h3>
+        </a>
+      </div>
+
+      <%= render 'shared/post_vote_buttons', post:sub_post %>
+
+      <div class="score_div">
+        <h2>
+          Score:
+          <h4>
+            <%= sub_post.score %>
+          </h4>
+        </h2>
+      </div>
+
+</li>

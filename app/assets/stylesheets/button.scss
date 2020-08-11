@@ -1,0 +1,20 @@
+@import 'base';
+
+.button {
+  display: flex;
+  margin-top: 1%;
+  width: 175px;
+  justify-content: center;
+  background-color: $bright-green;
+  color: $violet;
+  padding: 1% 0%;
+  font-size: 20px;
+  font-weight: bolder;
+  border-radius: 10px;
+  border: 3px solid $medium-green;
+}
+
+.button:hover {
+  color: $yellow;
+  background-color: $medium-green;
+}

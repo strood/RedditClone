@@ -4,7 +4,6 @@
 #
 #  id         :bigint           not null, primary key
 #  title      :string           not null
-#  url        :string
 #  content    :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -13,10 +12,28 @@
 #  slug       :string
 #
 class Post < ApplicationRecord
+  # Extend FriendlyID for nice URLs, set up slugged name.
   extend FriendlyId
-  friendly_id :title, :use => :slugged
+  friendly_id :post_and_sub, :use => :slugged
 
+  validates_length_of :content, maximum: 100
+  validates_length_of :content, maximum: 150
+
+
+  def post_and_sub
+    "#{title} from #{author.username}"
+  end
+
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
+
+  # Sets per-page limits for pagination with Kaminari Gem
+  paginates_per 10
+
+  # Validations and Associations
   validates :title, :user_id, :slug, presence: true
+  validates :title, uniqueness: { scope: :posted_subs }
 
   belongs_to :author,
     primary_key: :id,
@@ -44,20 +61,5 @@ class Post < ApplicationRecord
     end
     @comment_hash
   end
-
-  # Calculate a rating for a post based on history of all votes on it.
-  # Not adapted for (hotness) yet
-  # No longer used, but may frame hotness from the idea of it so just preserving
-  # def rating
-  #   @rating = 0
-  #   self.votes.each do |vote|
-  #     if vote.value > 0
-  #       @rating += 1
-  #     else
-  #       @rating -= 1
-  #     end
-  #   end
-  #   @rating
-  # end
 
 end

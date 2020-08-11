@@ -1,3 +1,138 @@
-// Place all the styles related to the Comments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+@import 'base';
+
+.comment_container {
+  max-width: 780px;
+  min-width: 650px;
+  margin-top: 1%;
+  p {
+    font-size: 12px;
+    margin-left: 5%
+  }
+}
+
+.comment_top {
+  h1{
+    margin-top: 2%;
+    color: $dark-green;
+  }
+  h2 {
+    color: $violet;
+  }
+  h3 {
+    color: $bright-green;
+    margin-left: 1%;
+  }
+  h3:hover {
+    text-decoration: underline;
+  }
+  h4  {
+    color: $dark-green;
+    font-size: 22px;
+    font-weight: bolder;
+    margin-left: 1%;
+  }
+  p {
+    font-size: 12px;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+
+}
+
+.comment_creator {
+  display: flex;
+  margin-top: 1%;
+  align-items: baseline;
+  h3 {
+    margin-left: 5%;
+  }
+}
+
+.comment_shadow_box {
+  -webkit-box-shadow: -3px 3px 10px 3px rgba(0,0,0,0.50);
+  box-shadow: -3px 3px 10px 3px rgba(0,0,0,0.50);
+  border-radius: 10px;
+  padding: 2%;
+  margin: 2% 1%;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+      color: $dark-green;
+  }
+  h2 {
+    color: $violet;
+  }
+  h3 {
+    color: $bright-green;
+    margin-left: 1%;
+  }
+  h3:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  h4  {
+    color: $dark-green;
+    font-size: 22px;
+    font-weight: bolder;
+    margin-left: 1%;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+
+}
+
+.comment_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  textarea {
+    -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.50);
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.50);
+    width: 90%;
+    border-radius: 10px;
+    margin-top: 2%;
+    padding: 1%;
+  }
+
+  input[type=submit] {
+    -webkit-box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.45);
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.45);
+    align-self: baseline;
+    margin-left: 5%;
+    margin-top: 3%;
+    background-color: $bright-green;
+    color: $violet;
+    padding: 1% 5%;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+    border: 3px solid $medium-green;
+  }
+  input[type=submit]:hover {
+    color: $yellow;
+    background-color: $medium-green;
+  }
+}
+
+.replies_bar {
+  margin-top: 3%;
+  h2 {
+    color: $violet;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+@media all and(max-width: 690px) {
+  .comment_container {
+    min-width: 250px;
+    width: 99%;
+    margin-left: 4%;
+  }
+}

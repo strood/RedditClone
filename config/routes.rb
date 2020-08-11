@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  # Static pages
+  get "pages/:page" => "pages#show"
+
   resources :users, only: [:new, :show, :create] do
     member do
       get :subscriptions, to: "users#subscriptions", as: "subscriptions"
@@ -30,5 +34,5 @@ Rails.application.routes.draw do
 
   resource :session, only: [:new, :create, :destroy]
 
-  root to: redirect('/session/new')
+  root to: redirect('/pages/about')
 end

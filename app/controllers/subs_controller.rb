@@ -3,14 +3,53 @@ class SubsController < ApplicationController
   before_action :require_user_owns_sub!, only: [:edit]
 
   def index
-    @subs = Sub.includes(:moderator).all
-    render :index
+    if !params[:sub].nil?
+      if ['0', '1', '2'].include?(params[:sub][:option])
+        opt = [:title, :created_at, created_at: :desc]
+        @subs = Sub.order(opt[params[:sub][:option].to_i]).includes(:moderator).page params[:page]
+        render :index
+      else
+        flash[:errors] = ["Invalid Order!"]
+        @subs = Sub.order(:title).includes(:moderator).page params[:page]
+        render :index
+      end
+    else
+      @subs = Sub.order(:title).includes(:moderator).page params[:page]
+      render :index
+    end
   end
 
 
   def show
     @sub = Sub.friendly.includes(:moderator).find(params[:id])
-    render :show
+    # Paginating the query directly led to mis-ordering, now we have it
+    # turning an array into a paginatable object then using that in the view, after
+    # being sorted beforehand, then ...reversed? Looks ugly should simplify.
+    if !params[:sub].nil?
+      if ['0', '1', '2', '3'].include?(params[:sub][:option])
+        options = [:score, :title, :created_at, created_at: :desc]
+        @post_order = options[params[:sub][:option].to_i]
+        if @post_order == :score
+          @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order).reverse
+        else
+          @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order)
+        end
+        @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
+        render :show
+      else
+        flash[:errors] = ["Invalid Order!"]
+        @post_order = :score
+        @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order).reverse
+        @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
+        render :show
+      end
+    else
+      @post_order = :score
+      @sub_posts = @sub.sub_posts.includes(:author, :votes, :posted_subs).order(@post_order).reverse
+      @paginate_posts = Kaminari.paginate_array(@sub_posts).page(params[:page]).per(10)
+      render :show
+    end
+
   end
 
 
@@ -23,13 +62,20 @@ class SubsController < ApplicationController
   def create
     @sub = Sub.create(sub_params)
     @sub.user_id = current_user.id
-
-    if @sub.save!
-      flash[:notice] = ["Sub #{@sub.title} successfully created!"]
-      redirect_to sub_url(@sub)
+    @sub_check = Sub.friendly.find_by(title: @sub.title)
+    if !@sub_check.nil?
+      flash[:errors] = ["Location already added!"]
+      redirect_to sub_url(@sub_check.id)
     else
-      flash[:errors] = ["Invalid credentials, please try again"]
-      redirect_to new_sub_url
+      begin
+        if @sub.save!
+          flash[:notice] = ["#{@sub.title} successfully added!"]
+          redirect_to sub_url(@sub)
+        end
+      rescue Exception => e
+        flash[:errors] = [e.message]
+        redirect_to new_sub_url
+      end
     end
   end
 
@@ -42,22 +88,28 @@ class SubsController < ApplicationController
 
   def update
     @sub = Sub.friendly.find(params[:id])
-    if @sub.update(sub_params)
-      flash[:notice] = ["Sucessfully updated #{@sub.title}"]
-      redirect_to sub_url(@sub)
-    else
-      flash[:errors] = ["Unable to update sub"]
+    begin
+      if @sub.update(sub_params)
+        flash[:notice] = ["Sucessfully updated #{@sub.title}"]
+        redirect_to sub_url(@sub)
+      end
+    rescue Exception => e
+      flash[:errors] = ["Unable to update #{ @sub.title }"]
+      flash[:errors] << e.message
       redirect_to sub_url(@sub)
     end
   end
 
   def destroy
     @sub = Sub.friendly.find(params[:id])
-    if @sub.destroy!
-      flash[:notice] = ["Sub: #{@sub.title} successfully deleted"]
-      redirect_to subs_url
-    else
+    begin
+      if @sub.destroy!
+        flash[:notice] = ["#{@sub.title} successfully deleted"]
+        redirect_to subs_url
+      end
+    rescue Exception => e
       flash[:errors] = ["Unable to destroy #{@sub.title}"]
+      flash[:errors] << e.message
       redirect_to sub_url(@sub)
     end
   end
@@ -67,10 +119,10 @@ class SubsController < ApplicationController
     unless UserSub.find_by(sub_id: @sub.id, user_id: current_user.id)
       @user_sub = UserSub.new(sub_id: @sub.id, user_id: current_user.id)
       if @user_sub.save!
-        flash[:notice] = ["Subscribed!"]
+        flash[:notice] = ["Subscribed to #{ @sub.title }!"]
         redirect_back(fallback_location: root_path)
       else
-        flash[:errors] = ["Unable to subscribe"]
+        flash[:errors] = ["Unable to subscribe to #{ @sub.title }"]
         redirect_back(fallback_location: root_path)
       end
     else
@@ -84,10 +136,10 @@ class SubsController < ApplicationController
     @user_sub = UserSub.find_by(sub_id: @sub.id, user_id: current_user.id)
     if @user_sub
       if @user_sub.destroy!
-        flash[:notice] = ["Unsubscribed!"]
+        flash[:notice] = ["Unsubscribed from #{ @sub.title }!"]
         redirect_back(fallback_location: root_path)
       else
-        flash[:errors] = ["Unable to unsubscribe"]
+        flash[:errors] = ["Unable to unsubscribe from #{ @sub.title }"]
         redirect_back(fallback_location: root_path)
       end
     else
@@ -99,6 +151,6 @@ class SubsController < ApplicationController
   private
 
   def sub_params
-    params.require(:sub).permit(:title, :description)
+    params.require(:sub).permit(:title, :description, :option)
   end
 end

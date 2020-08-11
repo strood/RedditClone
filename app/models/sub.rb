@@ -11,11 +11,24 @@
 #  slug        :string
 #
 class Sub < ApplicationRecord
+  # Extend FriendlyID for nice URLs, set up slugged name.
   extend FriendlyId
   friendly_id :title, :use => :slugged
 
+  validates_length_of :title, maximum: 100
+  validates_length_of :description, maximum: 150
 
+  # Resets slug on update
+  def should_generate_new_friendly_id?
+    title_changed?
+  end
+
+  # Sets per-page limits for pagination with Kaminari Gem
+  paginates_per 15
+
+  # Validations and Associations
   validates :title, :description, :user_id, :slug, presence: true
+  validates :title, uniqueness: true
 
   belongs_to :moderator,
     primary_key: :id,

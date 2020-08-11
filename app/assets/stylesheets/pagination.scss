@@ -1,0 +1,22 @@
+@import 'base';
+
+.pagination {
+  display: flex;
+  color: $bright-green;
+  span {
+    padding: 3px;
+  }
+
+  span:hover {
+    text-decoration: underline;
+  }
+
+  .current {
+    color: $violet;
+  }
+  .current:hover {
+    text-decoration: none;
+  }
+
+
+}

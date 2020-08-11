@@ -1,0 +1,24 @@
+<li class="sub_shadow_box">
+  <h1>
+    <a href="<%= sub_url(sub) %>">
+      <%= sub.title %>
+    </a>
+  </h1>
+  <div class="sub_creator">
+    <h2>
+      Creator:
+    </h2>
+    <a href="<%= user_url(sub.moderator) %>">
+      <h4>
+        <%= sub.moderator.username %>
+      </h4>
+    </a>
+  </div>
+  <h3>Description:</h3>
+    <h5>
+      <%= sub.description %>
+    </h5>
+
+  <%= render 'shared/subscription_buttons', sub:sub %>
+
+</li>

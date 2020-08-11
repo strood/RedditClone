@@ -1,0 +1,50 @@
+
+<header id='userbar'>
+  <a href="<%= subs_url %>">
+  <%= render 'shared/logo' %>
+  </a>
+
+  <% if !current_user.nil? %>
+    <ul class="user_ul">
+      <li>
+        <a href="<%= new_post_url %>">
+          <p>
+            New Post
+          </p>
+        </a>
+      </li>
+      <li>
+        <a href="<%= new_sub_url %>">
+          <p>
+            New Sub
+          </p>
+        </a>
+      </li>
+      <li class="menu_li hidden" onclick="toggleOptionDropdown()">
+        <a class="menu_a">
+          <i class="fas fa-bars"></i>
+        </a>
+      </li>
+      <li class="user_li" onclick="toggleHeaderDropdown()">
+        <a class="user_a" >
+          <i class="far fa-user"></i>
+        </a>
+      </li>
+    </ul>
+
+
+  <%= render 'shared/option_dropdown' %>
+
+  <%= render 'shared/header_dropdown' %>
+
+    <% else %>
+    <ul class="signup_ul">
+      <li>
+        <a href="<%= new_user_url %>">Sign Up</a>
+      </li>
+      <li>
+        <a href="<%= new_session_url %>">Log In</a>
+      </li>
+    </ul>
+    <% end %>
+</header>

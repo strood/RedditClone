@@ -2,24 +2,28 @@
 <% method = (user.persisted? ? 'patch' : 'post') %>
 <% message = (user.persisted? ? 'Update User' : 'Create User') %>
 
-<form action="<%= action %>" method="post">
+<form class="user_form" action="<%= action %>" method="post">
     <input
       type="hidden"
       name="_method"
       value="<%= method %>">
     <%= auth_token %>
+    <div class="form_section">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        name="user[username]"
+        required>
+    </div>
+    <div class="form_section">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        name="user[password]"
+        autocomplete="off"
+        required>
+    </div>
 
-    <label for="username">Username:</label>
-    <input
-      type="text"
-      name="user[username]">
-
-    <label for="password">Password:</label>
-    <input
-      type="password"
-      name="user[password]">
-
-    <br>
 
     <input type="submit" value="<%= message %>">
 </form>

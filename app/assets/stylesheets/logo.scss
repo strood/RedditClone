@@ -1,0 +1,19 @@
+@import 'base';
+
+.logo_div {
+  display: flex;
+  font-size: 39px;
+  height: $header-height - 20px;
+  padding: 10px;
+  i {
+    padding-top: 4px;
+    padding-right: 4px;
+  }
+  p {
+    font-family: $logo-font;
+  }
+}
+
+.logo_div:hover {
+  pointer-events: none;
+}
