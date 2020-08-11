@@ -3,23 +3,25 @@
 <% message =(sub.persisted? ? 'Update Sub' : 'Add Sub') %>
 
 
-<form action="<%= action %>" method="post">
+<form class="sub_form" action="<%= action %>" method="post">
     <input
       type="hidden"
       name="_method"
       value="<%= method %>">
     <%= auth_token %>
+    <div class="form_section">
+    <label class="label" for="title">Title:</label>
+      <input
+        type="text"
+        name="sub[title]"
+        value="<%= @sub.title %>"
+        required>
+    </div>
 
-    <label for="title">Title:</label>
-    <input
-      type="text"
-      name="sub[title]"
-      value="<%= @sub.title %>"
-      required>
-
-    <label for="description">Description:</label>
-    <textarea id="description" name="sub[description]" rows="8" cols="60" required><%= @sub.description %></textarea>
-
+    <div class="form_section">
+      <label class="label" for="description">Description:</label>
+      <textarea id="description" maxlength: "250"; name="sub[description]" rows="8" cols="60" required><%= @sub.description %></textarea>
+    </div>
     <br>
 
     <input type="submit" value="<%= message %>">

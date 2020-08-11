@@ -76,6 +76,7 @@
 
 .post_container {
   max-width: 780px;
+  min-width: 650px;
   margin-top: 1%;
 }
 
@@ -89,9 +90,71 @@
   }
 }
 
+.post_form {
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  .form_section {
+    display: flex;
+    padding: 1%;
+  }
+
+  label {
+    color: $violet;
+    font-size: 22px;
+    font-weight: bolder;
+  }
+  input[type=submit] {
+    align-self: baseline;
+    margin-top: 1%;
+    background-color: $bright-green;
+    color: $violet;
+    padding: 1% 5%;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+    border: 3px solid $medium-green;
+  }
+  input[type=submit]:hover {
+    color: $yellow;
+    background-color: $medium-green;
+  }
+
+  input[type="text"] {
+    border-bottom: 3px solid $medium-green;
+    padding: 1%;
+    font-size: 18px;
+  }
+
+  .checkboxes {
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+  }
+
+  .sub_box {
+    label {
+      color: $bright-green;
+    }
+  }
+
+  textarea {
+    width: 80%;
+    resize:none;
+    border: 1px solid $bright-green;
+    padding: 1%;
+  }
+
+
+}
+
 @media all and(max-width: 650px) {
   .post_container {
     width: 99%;
     margin-left: 2%;
+  }
+
+  .form_section {
+    flex-direction: column;
   }
 }

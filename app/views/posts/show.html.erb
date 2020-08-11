@@ -55,7 +55,7 @@
     </div>
 
     <% if current_user == @post.author %>
-      <a href="<%= edit_post_url(@post) %>">Edit Post</a>
+      <a class="button" href="<%= edit_post_url(@post) %>">Edit Post</a>
     <% end %>
 
     <hr>
