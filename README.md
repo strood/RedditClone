@@ -4,7 +4,11 @@
 
 - [LIVE DEMO](https://foodit-project.herokuapp.com) - Try it out!
 
-# Basic Setup
+## Useful Gems
+- Pagination with [kaminari](https://github.com/kaminari/kaminari)
+- Fancy urls/plugs with [friendly_id](https://github.com/norman/friendly_id)
+
+## Basic Setup
  > $ bundle update<br>
 
  > $ bundle install<br>
@@ -16,5 +20,5 @@
  > $ rails s<br>
  
 
-# Test Framework Setup
+## Test Framework Setup
  > $ bundle exec guard
