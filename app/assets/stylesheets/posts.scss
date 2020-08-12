@@ -154,10 +154,15 @@
 @media all and(max-width: 650px) {
   .post_container {
     width: 99%;
+    min-width: 0;
     margin-left: 2%;
   }
 
   .form_section {
     flex-direction: column;
+  }
+
+  .post_top p {
+    margin-top: 1%;
   }
 }
